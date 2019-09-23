@@ -1,0 +1,21 @@
+行情模块 lhdata.prices
+======================
+* 数据库中保存两种数据：**原始行情** 和 **复权数据** 。
+
+* 查询前复权行情时，分别获取这两份数据，使用复权数据对原始行情实时修改。
+
+* 这样的好处是：数据一旦入数据库，除非有更新或校正，就无需更改。
+
+获取行情
+--------
+.. autofunction:: lhdata.prices.get_px
+
+获取日涨跌幅
+------------
+.. autofunction:: lhdata.prices.get_dailyR
+
+ 
+其他接口
+--------
+.. automodule:: lhdata.prices
+   :members: get_px_orig, get_adj, get_px_adj, get_prev

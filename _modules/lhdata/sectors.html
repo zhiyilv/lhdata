@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>lhdata.sectors &mdash; lhdata 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> lhdata
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Install lhdata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">QuickStart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../prices.html">行情模块 lhdata.prices</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">lhdata</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>lhdata.sectors</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for lhdata.sectors</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">@Time   : 2019-08-28 11:21 AM\n</span>
+<span class="sd">@Author : Zhiyi Lu\n</span>
+<span class="sd">@Email  : zhiyi.lu@lighthorseam.com\n</span>
+<span class="sd">@File   : sectors.py\n</span>
+<span class="sd">@Desc   : 查询行业相关的信息</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">.dispatcher</span> <span class="k">import</span> <span class="n">get_db_config</span>
+<span class="kn">from</span> <span class="nn">.dbgetter</span> <span class="k">import</span> <span class="n">get</span>
+
+<span class="kn">import</span> <span class="nn">pymssql</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Union</span>
+
+<span class="n">db_config_sectors</span> <span class="o">=</span> <span class="n">get_db_config</span><span class="p">(</span><span class="s1">&#39;sectors&#39;</span><span class="p">)</span>
+<span class="n">sector_sys_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;gics&#39;</span><span class="p">:</span>       <span class="s1">&#39;INDUS1_CL&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;exchange&#39;</span><span class="p">:</span>   <span class="s1">&#39;INDUS2_CL&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;investoday&#39;</span><span class="p">:</span> <span class="s1">&#39;INDUS3_CL&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;swhy&#39;</span><span class="p">:</span>       <span class="s1">&#39;INDUS4_CL&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;citic&#39;</span><span class="p">:</span>      <span class="s1">&#39;INDUS5_CL&#39;</span>
+<span class="p">}</span>
+<span class="n">tb_symbol_indus</span> <span class="o">=</span> <span class="s1">&#39;[dbo].[ISSR_D_FACT]&#39;</span>  <span class="c1"># 股票和行业代码对应表</span>
+<span class="n">tb_indus_info</span> <span class="o">=</span> <span class="s1">&#39;[dbo].[ISSR_R_INDUS]&#39;</span>  <span class="c1"># 各体系行业分类信息表</span>
+<span class="n">tb_symbol_info</span> <span class="o">=</span> <span class="s1">&#39;[dbo].[SEC_D_FACT]&#39;</span>  <span class="c1"># 股票基本信息表</span>
+
+
+<div class="viewcode-block" id="get_sector"><a class="viewcode-back" href="../../index - Copy.html#lhdata.sectors.get_sector">[docs]</a><span class="k">def</span> <span class="nf">get_sector</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sys_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;swhy&#39;</span><span class="p">,</span> <span class="n">level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">db_config_sectors</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    给定股票，查询所属行业。</span>
+
+<span class="sd">    :param symbol: 如000001 CH Equity</span>
+<span class="sd">    :param sys_: in [&#39;gics&#39;, &#39;exchange&#39;, &#39;investoday&#39;, &#39;swhy&#39;, &#39;citic&#39;]</span>
+<span class="sd">    :param level: 如果超出该体系的级别范围，返回该体系所有级别的对应信息</span>
+<span class="sd">    :param db_config:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sys_</span> <span class="o">=</span> <span class="n">sys_</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">idu_cl</span> <span class="o">=</span> <span class="n">sector_sys_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sys_</span><span class="p">)</span>
+    <span class="n">symbol</span> <span class="o">=</span> <span class="n">symbol</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">con</span> <span class="o">=</span> <span class="n">pymssql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="o">**</span><span class="n">db_config</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">sys_</span> <span class="o">==</span> <span class="s1">&#39;swhy&#39;</span><span class="p">:</span>
+        <span class="n">code_str</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;concat(left(</span><span class="si">{tb_symbol_indus}</span><span class="s2">.</span><span class="si">{idu_cl}</span><span class="s2">, {level * 2}), &#39;{&#39;0&#39; * (6 - level * 2)}&#39;)&quot;</span> \
+            <span class="k">if</span> <span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="k">else</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{tb_symbol_indus}</span><span class="s1">.</span><span class="si">{idu_cl}</span><span class="s1">&#39;</span>
+
+        <span class="n">sql_string</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;SELECT </span><span class="si">{tb_symbol_info}</span><span class="s2">.SEC_CD as &#39;symbol&#39;, </span>
+<span class="s2">                                </span><span class="si">{tb_symbol_info}</span><span class="s2">.SEC_SNM as &#39;name&#39;, </span>
+<span class="s2">                                </span><span class="si">{code_str}</span><span class="s2"> as &#39;code&#39;, </span>
+<span class="s2">                                </span><span class="si">{tb_indus_info}</span><span class="s2">.F0010 as &#39;sector&#39;</span>
+<span class="s2">                         From </span><span class="si">{tb_symbol_indus}</span><span class="s2"></span>
+<span class="s2">                            inner join </span><span class="si">{tb_symbol_info}</span><span class="s2"></span>
+<span class="s2">                                on </span><span class="si">{tb_symbol_indus}</span><span class="s2">.ORG_ID = </span><span class="si">{tb_symbol_info}</span><span class="s2">.ORG_ID</span>
+<span class="s2">                            left join </span><span class="si">{tb_indus_info}</span><span class="s2"></span>
+<span class="s2">                                on </span><span class="si">{tb_indus_info}</span><span class="s2">.IDU_CL = &#39;</span><span class="si">{idu_cl}</span><span class="s2">&#39;</span>
+<span class="s2">                                and </span><span class="si">{tb_indus_info}</span><span class="s2">.INDUS_CL = </span><span class="si">{code_str}</span><span class="s2"></span>
+<span class="s2">                         WHERE </span><span class="si">{tb_symbol_indus}</span><span class="s2">.IS_VLD = 1</span>
+<span class="s2">                            AND </span><span class="si">{tb_indus_info}</span><span class="s2">.IS_VLD = 1</span>
+<span class="s2">                            AND </span><span class="si">{tb_symbol_info}</span><span class="s2">.IS_VLD = 1</span>
+<span class="s2">                            AND </span><span class="si">{tb_symbol_info}</span><span class="s2">.SEC_CD = &#39;</span><span class="si">{symbol}</span><span class="s2">&#39;&quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">sql_string</span><span class="o">=</span><span class="n">sql_string</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">con</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">symbol</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{x}</span><span class="s1"> CH Equity&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Error getting </span><span class="si">{sys_}</span><span class="s1"> sector for </span><span class="si">{symbol}</span><span class="s1"> :</span><span class="se">\n</span><span class="si">{e}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">level</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>  <span class="c1"># all levels</span>
+            <span class="n">code</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">iat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">sector_table</span> <span class="o">=</span> <span class="n">get_sector_table</span><span class="p">(</span><span class="n">sys_</span><span class="o">=</span><span class="n">sys_</span><span class="p">,</span> <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">df2</span> <span class="o">=</span> <span class="n">sector_table</span><span class="p">[</span><span class="n">sector_table</span><span class="o">.</span><span class="n">code</span> <span class="o">==</span> <span class="n">code</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">]],</span> <span class="n">df2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="get_sector_table"><a class="viewcode-back" href="../../index - Copy.html#lhdata.sectors.get_sector_table">[docs]</a><span class="k">def</span> <span class="nf">get_sector_table</span><span class="p">(</span><span class="n">sys_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;swhy&#39;</span><span class="p">,</span> <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">db_config_sectors</span><span class="p">,</span> <span class="n">transform</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    指定体系的行业分类代码表</span>
+
+<span class="sd">    :param sys_: in [&#39;gics&#39;, &#39;exchange&#39;, &#39;investoday&#39;, &#39;swhy&#39;, &#39;citic&#39;]</span>
+<span class="sd">    :param db_config:</span>
+<span class="sd">    :param transform:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sys_</span> <span class="o">=</span> <span class="n">sys_</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">idu_cl</span> <span class="o">=</span> <span class="n">sector_sys_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sys_</span><span class="p">)</span>
+
+    <span class="n">sql_string</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;SELECT IDU_LEVEL, INDUS_CL, F0010, F0030, RMRK, UPDT_TM FROM [dbo].[ISSR_R_INDUS]</span>
+<span class="s2">                        WHERE IS_VLD = 1</span>
+<span class="s2">                        AND IDU_CL = &#39;</span><span class="si">{idu_cl}</span><span class="s2">&#39;</span>
+<span class="s2">                        ORDER BY INDUS_CL&quot;&quot;&quot;</span>
+    <span class="n">parse_dates</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;UPDT_TM&#39;</span><span class="p">]</span>
+    <span class="n">rename_col</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;IDU_LEVEL&#39;</span><span class="p">:</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;UPDT_TM&#39;</span><span class="p">:</span>  <span class="s1">&#39;updatetime&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;INDUS_CL&#39;</span><span class="p">:</span> <span class="s1">&#39;code&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;F0010&#39;</span><span class="p">:</span>    <span class="s1">&#39;sector&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;F0030&#39;</span><span class="p">:</span>    <span class="s1">&#39;sector_eng&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;RMRK&#39;</span><span class="p">:</span>     <span class="s1">&#39;system&#39;</span><span class="p">}</span>
+    <span class="n">con</span> <span class="o">=</span> <span class="n">pymssql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="o">**</span><span class="n">db_config</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">sql_string</span><span class="o">=</span><span class="n">sql_string</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">con</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="n">parse_dates</span><span class="p">,</span> <span class="n">rename_col</span><span class="o">=</span><span class="n">rename_col</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Error getting sector table of </span><span class="si">{sys_}</span><span class="s1">:</span><span class="se">\n</span><span class="si">{e}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">transform</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">_transform_sector_table</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">sys_</span><span class="o">=</span><span class="n">sys_</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+<span class="k">def</span> <span class="nf">_transform_sector_table</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">sys_</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    整理下载好的行业分类表</span>
+
+<span class="sd">    :param df:</span>
+<span class="sd">    :param sys_:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sys_</span> <span class="o">==</span> <span class="s1">&#39;swhy&#39;</span><span class="p">:</span>
+        <span class="n">df_lv3</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="s1">&#39;sector&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;sector&#39;</span><span class="p">:</span> <span class="s1">&#39;lv3&#39;</span><span class="p">})</span>
+        <span class="k">for</span> <span class="n">lv</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]:</span>
+            <span class="n">df_lv</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">lv</span><span class="p">]</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;code&#39;</span><span class="p">)</span>
+            <span class="n">len2use</span> <span class="o">=</span> <span class="n">lv</span> <span class="o">*</span> <span class="mi">2</span>
+            <span class="n">df_lv3</span><span class="p">[</span><span class="n">f</span><span class="s1">&#39;lv</span><span class="si">{lv}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_lv3</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">df_lv</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">f</span><span class="s1">&#39;</span><span class="si">{c[:len2use]}</span><span class="s1">{&quot;0&quot;*(6-len2use)}&#39;</span><span class="p">,</span> <span class="s1">&#39;sector&#39;</span><span class="p">])</span>
+        <span class="n">df_lv3</span> <span class="o">=</span> <span class="n">df_lv3</span><span class="p">[[</span><span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="s1">&#39;lv3&#39;</span><span class="p">,</span> <span class="s1">&#39;lv2&#39;</span><span class="p">,</span> <span class="s1">&#39;lv1&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df_lv3</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">df</span>
+
+
+<div class="viewcode-block" id="get_sector_symbol"><a class="viewcode-back" href="../../index - Copy.html#lhdata.sectors.get_sector_symbol">[docs]</a><span class="k">def</span> <span class="nf">get_sector_symbol</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">sys_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;swhy&#39;</span><span class="p">,</span> <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">db_config_sectors</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    给定一个体系的行业代码，返回该行业涵盖的股票。</span>
+
+<span class="sd">    :param code:</span>
+<span class="sd">    :param sys_: in [&#39;gics&#39;, &#39;exchange&#39;, &#39;investoday&#39;, &#39;swhy&#39;, &#39;citic&#39;]</span>
+<span class="sd">    :param db_config:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+    <span class="n">sys_</span> <span class="o">=</span> <span class="n">sys_</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">idu_cl</span> <span class="o">=</span> <span class="n">sector_sys_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sys_</span><span class="p">)</span>
+    <span class="n">con</span> <span class="o">=</span> <span class="n">pymssql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="o">**</span><span class="n">db_config</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">sys_</span> <span class="o">==</span> <span class="s1">&#39;swhy&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">code</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;0000&#39;</span><span class="p">):</span>
+            <span class="n">code_str</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{tb_symbol_indus}</span><span class="s2">.INDUS4_CL LIKE &#39;</span><span class="si">{code[:2]}</span><span class="s2">____&#39;&quot;</span>
+        <span class="k">elif</span> <span class="n">code</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;00&#39;</span><span class="p">):</span>
+            <span class="n">code_str</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{tb_symbol_indus}</span><span class="s2">.INDUS4_CL LIKE &#39;</span><span class="si">{code[:4]}</span><span class="s2">__&#39;&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">code_str</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{tb_symbol_indus}</span><span class="s2">.INDUS4_CL = </span><span class="si">{code}</span><span class="s2">&quot;</span>
+
+        <span class="n">sql_string</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;SELECT </span><span class="si">{tb_symbol_info}</span><span class="s2">.SEC_CD as &#39;symbol&#39;, </span>
+<span class="s2">                                </span><span class="si">{tb_symbol_info}</span><span class="s2">.SEC_SNM as &#39;name&#39;, </span>
+<span class="s2">                                </span><span class="si">{tb_symbol_indus}</span><span class="s2">.</span><span class="si">{idu_cl}</span><span class="s2"> as &#39;code&#39;, </span>
+<span class="s2">                                </span><span class="si">{tb_indus_info}</span><span class="s2">.F0010 as &#39;sector&#39;</span>
+<span class="s2">                         From </span><span class="si">{tb_symbol_indus}</span><span class="s2"></span>
+<span class="s2">                            inner join </span><span class="si">{tb_symbol_info}</span><span class="s2"></span>
+<span class="s2">                                on </span><span class="si">{tb_symbol_indus}</span><span class="s2">.ORG_ID = </span><span class="si">{tb_symbol_info}</span><span class="s2">.ORG_ID</span>
+<span class="s2">                            left join </span><span class="si">{tb_indus_info}</span><span class="s2"></span>
+<span class="s2">                                on </span><span class="si">{tb_indus_info}</span><span class="s2">.IDU_CL = &#39;</span><span class="si">{idu_cl}</span><span class="s2">&#39;</span>
+<span class="s2">                                and </span><span class="si">{tb_indus_info}</span><span class="s2">.INDUS_CL = </span><span class="si">{tb_symbol_indus}</span><span class="s2">.</span><span class="si">{idu_cl}</span><span class="s2"></span>
+<span class="s2">                         WHERE </span><span class="si">{tb_symbol_indus}</span><span class="s2">.IS_VLD = 1</span>
+<span class="s2">                            AND </span><span class="si">{tb_indus_info}</span><span class="s2">.IS_VLD = 1</span>
+<span class="s2">                            AND </span><span class="si">{tb_symbol_info}</span><span class="s2">.IS_VLD = 1</span>
+<span class="s2">                            AND </span><span class="si">{tb_symbol_info}</span><span class="s2">.VAR_CL in (&#39;a&#39;) and </span><span class="si">{tb_symbol_info}</span><span class="s2">.MKT_CL in (&#39;s&#39;,&#39;z&#39;) </span>
+<span class="s2">                            AND </span><span class="si">{code_str}</span><span class="s2">&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">sql_string</span><span class="o">=</span><span class="n">sql_string</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">con</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">symbol</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{x}</span><span class="s1"> CH Equity&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Error getting info for sector </span><span class="si">{code}</span><span class="s1">:</span><span class="se">\n</span><span class="si">{e}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Lighthorseam
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
