@@ -25,4 +25,19 @@ QuickStart
  from lhdata import get_sector
  df = get_sector('000001 CH Equity')
  
+获取Alpha Feature
+--------------------
+:: 
+
+ # 获取000001 CH Equity 2019-09-23的Alpha ratio
+ from lhdata import get_alpha
+ df = get_alpha('000001 CH Equity', day='2019-09-23', fields='alpha_ratio')
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  

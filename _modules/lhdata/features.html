@@ -85,6 +85,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../features.html">特征模块 lhdata.features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../calendar.html">日历模块 lhdata.calendar</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../sectors.html">行业模块 lhdata.sectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../status.html">数据状态</a></li>
 </ul>
 
             
@@ -199,7 +200,7 @@
 <span class="sd">    :param tb_name: 指定 特征 表名，格式为{db_name}.{tb_name}，None则自动分配。</span>
 <span class="sd">    :param area: in [&#39;CH&#39;, &#39;US&#39;, ...]。指定symbol区域，不指定则根据symbol（或symbol list的第一个）判定。为空时，自动设置为&#39;CH&#39;。</span>
 <span class="sd">    :param hk: 在香港使用需设置为True。</span>
-<span class="sd">    :param fmt: 返回数据类型，支持DataFrame、DataFrame list、DataFrame dict. 默认为&#39;df&#39;。</span>
+<span class="sd">    :param fmt: 返回数据类型，支持[&#39;df&#39;, &#39;list&#39;, &#39;dict&#39;]，即DataFrame、DataFrame list、DataFrame dict. 默认为&#39;df&#39;。</span>
 <span class="sd">    :param kwargs: 其他lhdata.dbgetter.get_fields支持传入的参数。</span>
 
 <span class="sd">    :return: DataFrame 或 DataFrame list 或 DataFrame dict</span>

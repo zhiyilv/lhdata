@@ -86,11 +86,14 @@
 <li class="toctree-l2"><a class="reference internal" href="#id1">获取前复权行情</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id2">获取前一个正常交易日</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">获取股票的行业信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#alpha-feature">获取Alpha Feature</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="prices.html">行情模块 lhdata.prices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">特征模块 lhdata.features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calendar.html">日历模块 lhdata.calendar</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sectors.html">行业模块 lhdata.sectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="status.html">数据状态</a></li>
 </ul>
 
             
@@ -178,6 +181,14 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 获取000001 CH Equity 所属的行业信息</span>
 <span class="kn">from</span> <span class="nn">lhdata</span> <span class="k">import</span> <span class="n">get_sector</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">get_sector</span><span class="p">(</span><span class="s1">&#39;000001 CH Equity&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="alpha-feature">
+<h2>获取Alpha Feature<a class="headerlink" href="#alpha-feature" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 获取000001 CH Equity 2019-09-23的Alpha ratio</span>
+<span class="kn">from</span> <span class="nn">lhdata</span> <span class="k">import</span> <span class="n">get_alpha</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">get_alpha</span><span class="p">(</span><span class="s1">&#39;000001 CH Equity&#39;</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="s1">&#39;2019-09-23&#39;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s1">&#39;alpha_ratio&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to lhdata documentation! &mdash; lhdata 0.1 documentation</title>
+  <title>数据状态 &mdash; lhdata 0.1 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Install lhdata" href="install.html" /> 
+    <link rel="prev" title="行业模块 lhdata.sectors" href="sectors.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -49,7 +49,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> lhdata
+            <a href="index.html" class="icon icon-home"> lhdata
           
 
           
@@ -79,14 +79,20 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Install lhdata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prices.html">行情模块 lhdata.prices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="features.html">特征模块 lhdata.features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calendar.html">日历模块 lhdata.calendar</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sectors.html">行业模块 lhdata.sectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="status.html">数据状态</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">数据状态</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#a">A股行情</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">外盘行情</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">特征</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">其他信息</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -101,7 +107,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">lhdata</a>
+          <a href="index.html">lhdata</a>
         
       </nav>
 
@@ -130,15 +136,15 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Welcome to lhdata documentation!</li>
+      <li>数据状态</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/status.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -151,47 +157,56 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-lhdata-documentation">
-<h1>Welcome to lhdata documentation!<a class="headerlink" href="#welcome-to-lhdata-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
+  <div class="section" id="id1">
+<h1>数据状态<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="a">
+<h2>A股行情<a class="headerlink" href="#a" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Install lhdata</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id1">获取前复权行情</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id2">获取前一个正常交易日</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id3">获取股票的行业信息</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#alpha-feature">获取Alpha Feature</a></li>
-</ul>
+<li><p class="first">深圳 <strong>OK</strong></p>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="prices.html">行情模块 lhdata.prices</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="prices.html#id1">获取行情</a></li>
-<li class="toctree-l2"><a class="reference internal" href="prices.html#id2">获取日涨跌幅</a></li>
-<li class="toctree-l2"><a class="reference internal" href="prices.html#module-lhdata.prices">其他接口</a></li>
-</ul>
+<li><p class="first">香港因为复权数据库未同步，<strong>不可用</strong></p>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="features.html">特征模块 lhdata.features</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="features.html#alpha-features">Alpha features</a></li>
+<li><p class="first">质量可靠</p>
+<blockquote>
+<div><ul class="simple">
+<li>已测试1000支股票（hs300+zz500+随机200）原始行情，2009-01-01~2019-09-10</li>
+<li>复权信息由今日投资维护</li>
+<li>详细报告见：行情API测试-report.pdf、test_exp_2_09-19_bbg.xlsx</li>
 </ul>
+</div></blockquote>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="calendar.html">日历模块 lhdata.calendar</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="calendar.html#id1">获取某市场的交易日历</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calendar.html#id2">获取某市场某日的前一个交易日</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calendar.html#id3">获取某股票某日的前一个交易日</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calendar.html#module-lhdata.calendar">其他接口</a></li>
 </ul>
+</div>
+<div class="section" id="id2">
+<h2>外盘行情<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">深圳、香港 <strong>OK</strong></p>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="sectors.html">行业模块 lhdata.sectors</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sectors.html#id1">获取某股票所属行业</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sectors.html#module-lhdata.sectors">其他接口</a></li>
+<li><p class="first">美股质量可靠</p>
+<blockquote>
+<div><ul class="simple">
+<li>已测试订阅的580支股票原始行情，2009-01-01~2019-08-12</li>
+<li>已测试订阅股票的复权信息，2000-01-01~2019-09-17</li>
+<li>详细报告见：行情API测试-report.pdf、test_exp_7_0924.xlsx</li>
 </ul>
+</div></blockquote>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="status.html">数据状态</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="status.html#a">A股行情</a></li>
-<li class="toctree-l2"><a class="reference internal" href="status.html#id2">外盘行情</a></li>
-<li class="toctree-l2"><a class="reference internal" href="status.html#id3">特征</a></li>
-<li class="toctree-l2"><a class="reference internal" href="status.html#id4">其他信息</a></li>
+<li><p class="first">港股行情测试中</p>
+</li>
+<li><p class="first">日股行情测试中</p>
+</li>
 </ul>
-</li>
+</div>
+<div class="section" id="id3">
+<h2>特征<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>建设中</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2>其他信息<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>建设中</li>
 </ul>
 </div>
 </div>
@@ -204,8 +219,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="install.html" class="btn btn-neutral float-right" title="Install lhdata" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
+        <a href="sectors.html" class="btn btn-neutral float-left" title="行业模块 lhdata.sectors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
