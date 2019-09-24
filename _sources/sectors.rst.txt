@@ -9,7 +9,7 @@
 
 
 获取某股票所属行业
---------------------
+------------------
 .. autofunction:: lhdata.sectors.get_sector
 
  

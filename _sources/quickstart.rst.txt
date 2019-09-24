@@ -6,6 +6,23 @@ QuickStart
 :: 
 
  # 获取000001 CH Equity 2009-01-01~2009-09-01的前复权行情
- from lhdata import *
+ from lhdata import get_px
  df = get_px('000001 CH Equity', start='2009-01-01', end='2019-09-01')
+ 
+获取前一个正常交易日
+--------------------
+:: 
+
+ # 获取000001 CH Equity 2019-09-01前的最近一个非停牌交易日
+ from lhdata import get_symbol_prev_day
+ prev_day = get_symbol_prev_day('000001 CH Equity', start='2009-01-01', end='2019-09-01')
+ 
+获取股票的行业信息
+--------------------
+:: 
+
+ # 获取000001 CH Equity 所属的行业信息
+ from lhdata import get_sector
+ df = get_sector('000001 CH Equity')
+ 
  
