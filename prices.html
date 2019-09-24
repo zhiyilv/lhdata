@@ -35,6 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="日历模块 lhdata.calendar" href="calendar.html" />
     <link rel="prev" title="QuickStart" href="quickstart.html" /> 
 </head>
 
@@ -88,6 +89,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-lhdata.prices">其他接口</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="calendar.html">日历模块 lhdata.calendar</a></li>
 </ul>
 
             
@@ -183,7 +185,7 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>symbol</strong> – 如‘000001 CH Equity’；空(‘’ 或 [] 或 () ) 代表所有股票；支持股票列表或股票元组。</li>
-<li><strong>start</strong> – 起始日期（含），格式如‘2019-01-01’；空(‘’ 或 None) 则自动设置为1991-01-01。</li>
+<li><strong>start</strong> – 起始日期（含），格式如‘2019-01-01’；空(‘’ 或 None) 则自动设置为1992-01-01。</li>
 <li><strong>end</strong> – 终止日期（含），格式如‘2019-09-01’；空(‘’ 或 None) 则自动设置为查询当日。</li>
 <li><strong>day</strong> – 指定日期，等效于设置了start=end=day, 会忽略start、end的输入。</li>
 <li><strong>fields</strong> – 指定字段，如’close’ 或 [‘open’, ‘close’]; 会自动添加‘datetime’和‘symbol’两个字段。默认为所有字段。</li>
@@ -227,7 +229,7 @@ chunksize：每个进程处理多少个查询。默认为1。</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>symbol</strong> – 如‘000001 CH Equity’. 只支持单只股票。</li>
-<li><strong>start</strong> – 起始日期（含），格式如‘2019-01-01’；空(‘’ 或 None) 则自动设置为1991-01-01。</li>
+<li><strong>start</strong> – 起始日期（含），格式如‘2019-01-01’；空(‘’ 或 None) 则自动设置为1992-01-01。</li>
 <li><strong>end</strong> – 终止日期（含），格式如‘2019-09-01’；空(‘’ 或 None) 则自动设置为查询当日。</li>
 <li><strong>day</strong> – 指定日期，等效于设置了start=end=day, 会忽略start、end的输入。</li>
 <li><strong>db_config</strong> – 指定行情数据库连接，None则自动分配。</li>
@@ -261,7 +263,7 @@ chunksize：每个进程处理多少个查询。默认为1。</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>symbol</strong> – 如‘000001 CH Equity’；空(‘’ 或 [] 或 () ) 代表所有股票；支持股票列表或股票元组。</li>
-<li><strong>start</strong> – 起始日期（含），格式如‘2019-01-01’；空(‘’ 或 None) 则自动设置为1991-01-01。</li>
+<li><strong>start</strong> – 起始日期（含），格式如‘2019-01-01’；空(‘’ 或 None) 则自动设置为1992-01-01。</li>
 <li><strong>end</strong> – 终止日期（含），格式如‘2019-09-01’；空(‘’ 或 None) 则自动设置为查询当日。</li>
 <li><strong>day</strong> – 指定日期，等效于设置了start=end=day, 会忽略start、end的输入。</li>
 <li><strong>fields</strong> – 指定字段，如’close’ 或 [‘open’, ‘close’]; 会自动添加‘datetime’和‘symbol’两个字段。默认为所有字段。</li>
@@ -323,7 +325,7 @@ chunksize：每个进程处理多少个查询。默认为1。</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>symbol</strong> – 如‘000001 CH Equity’；空(‘’ 或 [] 或 () ) 代表所有股票；支持股票列表或股票元组。</li>
-<li><strong>start</strong> – 起始日期（含），格式如‘2019-01-01’；空(‘’ 或 None) 则自动设置为1991-01-01。</li>
+<li><strong>start</strong> – 起始日期（含），格式如‘2019-01-01’；空(‘’ 或 None) 则自动设置为1992-01-01。</li>
 <li><strong>end</strong> – 终止日期（含），格式如‘2019-09-01’；空(‘’ 或 None) 则自动设置为查询当日。</li>
 <li><strong>day</strong> – 指定日期，等效于设置了start=end=day, 会忽略start、end的输入。</li>
 <li><strong>fields</strong> – 指定字段，如’close’ 或 [‘open’, ‘close’]; 会自动添加‘datetime’和‘symbol’两个字段。默认为所有字段。</li>
@@ -388,6 +390,8 @@ chunksize：每个进程处理多少个查询。默认为1。</li>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="calendar.html" class="btn btn-neutral float-right" title="日历模块 lhdata.calendar" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="quickstart.html" class="btn btn-neutral float-left" title="QuickStart" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
