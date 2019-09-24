@@ -1,0 +1,19 @@
+行业模块 lhdata.sectors
+========================
+* A股由今日投资维护
+
+* 目前支持申万宏源行业体系
+
+* 外盘正在建设
+
+
+
+获取某股票所属行业
+--------------------
+.. autofunction:: lhdata.sectors.get_sector
+
+ 
+其他接口
+--------
+.. automodule:: lhdata.sectors
+   :members: get_sector_table, get_sector_symbol

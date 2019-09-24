@@ -1,0 +1,23 @@
+日历模块 lhdata.calendar
+========================
+* 从Bloomberg下载的除周末以外的假期，标记为holiday。
+
+* 非holiday，但数据库中无数据，判断为临时停牌，标记为temp。
+
+
+获取某市场的交易日历
+--------------------
+.. autofunction:: lhdata.calendar.get_calendar
+
+获取某市场某日的前一个交易日
+----------------------------
+.. autofunction:: lhdata.calendar.get_prev_day
+
+获取某股票某日的前一个交易日
+----------------------------
+.. autofunction:: lhdata.calendar.get_symbol_prev_day
+ 
+其他接口
+--------
+.. automodule:: lhdata.calendar
+   :members: get_holidays

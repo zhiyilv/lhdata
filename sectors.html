@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>行业模块 lhdata.sectors &mdash; lhdata 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="日历模块 lhdata.calendar" href="calendar.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> lhdata
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install lhdata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prices.html">行情模块 lhdata.prices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calendar.html">日历模块 lhdata.calendar</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">行业模块 lhdata.sectors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">获取某股票所属行业</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lhdata.sectors">其他接口</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">lhdata</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>行业模块 lhdata.sectors</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/sectors.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="lhdata-sectors">
+<h1>行业模块 lhdata.sectors<a class="headerlink" href="#lhdata-sectors" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>A股由今日投资维护</li>
+<li>目前支持申万宏源行业体系</li>
+<li>外盘正在建设</li>
+</ul>
+<div class="section" id="id1">
+<h2>获取某股票所属行业<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="lhdata.sectors.get_sector">
+<code class="descclassname">lhdata.sectors.</code><code class="descname">get_sector</code><span class="sig-paren">(</span><em>symbol: str</em>, <em>sys_: str = 'swhy'</em>, <em>level: int = 3</em>, <em>db_config: dict = None</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/sectors.html#get_sector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.sectors.get_sector" title="Permalink to this definition">¶</a></dt>
+<dd><p>给定股票，查询所属行业。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>symbol</strong> – 如‘000001 CH Equity’.</li>
+<li><strong>sys</strong> – 行业体系，in [‘gics’, ‘exchange’, ‘investoday’, ‘swhy’, ‘citic’]。</li>
+<li><strong>level</strong> – 如果超出该体系的级别范围，返回该体系所有级别的对应信息</li>
+<li><strong>db_config</strong> – 指定数据库连接，None则自动分配。</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">DataFrame， 包含列：symbol、name、code_sector</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-lhdata.sectors">
+<span id="id2"></span><h2>其他接口<a class="headerlink" href="#module-lhdata.sectors" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="lhdata.sectors.get_sector_table">
+<code class="descclassname">lhdata.sectors.</code><code class="descname">get_sector_table</code><span class="sig-paren">(</span><em>sys_: str = 'swhy'</em>, <em>db_config: dict = {'database': 'FGFUND'</em>, <em>'host': '192.168.16.232'</em>, <em>'password': 'fgfund_guest*#123'</em>, <em>'user': 'fgfund_guest'}</em>, <em>transform: bool = True</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/sectors.html#get_sector_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.sectors.get_sector_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>指定体系的行业分类代码表。由今日投资维护。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sys</strong> – 行业体系，in [‘gics’, ‘exchange’, ‘investoday’, ‘swhy’, ‘citic’]</li>
+<li><strong>db_config</strong> – 指定数据库连接，None则自动分配。</li>
+<li><strong>transform</strong> – 查询到的表各个级别的code混在一起，将表转换为更易读的形式。</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="lhdata.sectors.get_sector_symbol">
+<code class="descclassname">lhdata.sectors.</code><code class="descname">get_sector_symbol</code><span class="sig-paren">(</span><em>code: Union[str, int], sys_: str = 'swhy', db_config: dict = {'database': 'FGFUND', 'host': '192.168.16.232', 'password': 'fgfund_guest*#123', 'user': 'fgfund_guest'}</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/sectors.html#get_sector_symbol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.sectors.get_sector_symbol" title="Permalink to this definition">¶</a></dt>
+<dd><p>给定一个体系的行业代码，返回该行业涵盖的股票。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>code</strong> – 行业代码，如110101</li>
+<li><strong>sys</strong> – 行业体系，in [‘gics’, ‘exchange’, ‘investoday’, ‘swhy’, ‘citic’]</li>
+<li><strong>db_config</strong> – 指定数据库连接，None则自动分配。</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="calendar.html" class="btn btn-neutral float-left" title="日历模块 lhdata.calendar" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Lighthorseam
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
