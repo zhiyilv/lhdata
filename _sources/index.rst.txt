@@ -12,6 +12,7 @@ Welcome to lhdata documentation!
    install
    quickstart
    prices
+   calendar
 
 
 
