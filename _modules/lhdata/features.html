@@ -157,7 +157,7 @@
 <span class="c1"># @Desc   : xxx</span>
 
 <span class="kn">from</span> <span class="nn">.dbgetter</span> <span class="k">import</span> <span class="n">get_fields</span>
-<span class="kn">from</span> <span class="nn">.dispatcher</span> <span class="k">import</span> <span class="n">get_db_config</span><span class="p">,</span> <span class="n">get_tb_name</span>
+<span class="kn">from</span> <span class="nn">.dispatcher</span> <span class="k">import</span> <span class="n">get_db_config</span><span class="p">,</span> <span class="n">get_tb_name</span><span class="p">,</span> <span class="n">WF_FEATURES</span>
 <span class="kn">from</span> <span class="nn">.util_data</span> <span class="k">import</span> <span class="n">decide_area</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Union</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -194,7 +194,7 @@
 <span class="sd">    :param start: 起始日期（含），格式如&#39;2019-01-01&#39;；空(&#39;&#39; 或 None) 则自动设置为1992-01-01。</span>
 <span class="sd">    :param end: 终止日期（含），格式如&#39;2019-09-01&#39;；空(&#39;&#39; 或 None) 则自动设置为查询当日。</span>
 <span class="sd">    :param day: 指定日期，等效于设置了start=end=day, 会忽略start、end的输入。</span>
-<span class="sd">    :param index_ref: A股：[&#39;hs300&#39;, &#39;zz500&#39;, &#39;gemb]; US: [&#39;indu&#39;, &#39;spx&#39;, &#39;ndx&#39;]; HK: [&#39;hsi&#39;, &#39;hscei&#39;]; JP: [&#39;nky&#39;]</span>
+<span class="sd">    :param index_ref: A股：[&#39;hs300&#39;, &#39;zz500&#39;, &#39;gemb&#39;]; US: [&#39;indu&#39;, &#39;spx&#39;, &#39;ndx&#39;]; HK: [&#39;hsi&#39;, &#39;hscei&#39;]; JP: [&#39;nky&#39;]</span>
 <span class="sd">    :param fields: 指定&#39;datetime&#39;、&#39;symbol&#39;以外的字段，默认所有字段。</span>
 <span class="sd">    :param db_config: 指定 特征 数据库连接，None则自动分配。</span>
 <span class="sd">    :param tb_name: 指定 特征 表名，格式为{db_name}.{tb_name}，None则自动分配。</span>
@@ -214,6 +214,74 @@
                          <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                          <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span> <span class="n">must_have</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">],</span>
                          <span class="n">day</span><span class="o">=</span><span class="n">day</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_wf"><a class="viewcode-back" href="../../features.html#lhdata.features.get_wf">[docs]</a><span class="k">def</span> <span class="nf">get_wf</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+           <span class="n">day</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+           <span class="n">fields</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">incl_week</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">incl_val</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+           <span class="n">live</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+           <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+           <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;df&#39;</span><span class="p">,</span>
+           <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    获取Wave Features。</span>
+
+<span class="sd">    :param symbol: 如&#39;000001 CH Equity&#39;；空(&#39;&#39; 或 [] 或 () ) 代表所有股票；支持股票列表或股票元组。</span>
+<span class="sd">    :param start: 起始日期（含），格式如&#39;2019-01-01&#39;；空(&#39;&#39; 或 None) 则自动设置为1992-01-01。</span>
+<span class="sd">    :param end: 终止日期（含），格式如&#39;2019-09-01&#39;；空(&#39;&#39; 或 None) 则自动设置为查询当日。</span>
+<span class="sd">    :param day: 指定日期，等效于设置了start=end=day, 会忽略start、end的输入。</span>
+<span class="sd">    :param fields: 指定&#39;datetime&#39;、&#39;symbol&#39;以外的字段，默认为WF0010~WF0060。</span>
+<span class="sd">    :param incl_week: 是否自动添加week后缀的feature。默认不添加。</span>
+<span class="sd">    :param incl_val: 是否自动添加feature的原始值。默认不添加。</span>
+<span class="sd">    :param live: True -&gt; 盘中值; False -&gt; 盘后值。默认为盘后值。</span>
+<span class="sd">    :param db_config: 指定 特征 数据库连接，None则自动分配。</span>
+<span class="sd">    :param tb_name: 指定 特征 表名，格式为{db_name}.{tb_name}，None则自动分配。</span>
+<span class="sd">    :param area: in [&#39;CH&#39;, &#39;US&#39;, ...]。指定symbol区域，不指定则根据symbol（或symbol list的第一个）判定。为空时，自动设置为&#39;CH&#39;。</span>
+<span class="sd">    :param hk: 在香港使用需设置为True。</span>
+<span class="sd">    :param fmt: 返回数据类型，支持[&#39;df&#39;, &#39;list&#39;, &#39;dict&#39;]，即DataFrame、DataFrame list、DataFrame dict. 默认为&#39;df&#39;。</span>
+<span class="sd">    :param kwargs: 其他lhdata.dbgetter.get_fields支持传入的参数。</span>
+
+<span class="sd">    :return: DataFrame 或 DataFrame list 或 DataFrame dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># db</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">area</span> <span class="ow">or</span> <span class="n">decide_area</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+    <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;wf&#39;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
+    <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;wf&#39;</span><span class="p">,</span> <span class="n">live</span><span class="o">=</span><span class="n">live</span><span class="p">)</span>
+
+    <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;WF0010&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0011&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0020&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0030&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0031&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0032&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0040&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0041&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0050&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0060&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;WF0010_val&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0011_val&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0020_val&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0030_val&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;WF0040_val&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0041_val&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0050_val&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0060_val&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;smoothed&#39;</span><span class="p">,</span> <span class="s1">&#39;atr&#39;</span><span class="p">,</span> <span class="s1">&#39;y_linear&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="s1">&#39;w_up&#39;</span><span class="p">,</span> <span class="s1">&#39;w_down&#39;</span><span class="p">,</span>
+
+            <span class="s1">&#39;WF0010_week&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0011_week&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0020_week&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0030_week&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0031_week&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0032_week&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;WF0040_week&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0041_week&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0050_week&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0060_week&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;WF0010_val_week&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0011_val_week&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0020_val_week&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0030_val_week&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;WF0040_val_week&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0041_val_week&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0050_val_week&#39;</span><span class="p">,</span> <span class="s1">&#39;WF0060_val_week&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;y_linear_week&#39;</span><span class="p">,</span> <span class="s1">&#39;std_week&#39;</span><span class="p">,</span> <span class="s1">&#39;w_up_week&#39;</span><span class="p">,</span> <span class="s1">&#39;w_down_week&#39;</span><span class="p">,</span>
+
+            <span class="s1">&#39;UPTIME&#39;</span><span class="p">]</span>
+    <span class="c1"># fields</span>
+    <span class="k">if</span> <span class="n">fields</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="n">WF_FEATURES</span>
+
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">fields</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="nb">list</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">incl_val</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">+=</span> <span class="p">[</span><span class="n">f</span><span class="s1">&#39;</span><span class="si">{f}</span><span class="s1">_val&#39;</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">incl_week</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">+=</span> <span class="p">[</span><span class="n">f</span><span class="s1">&#39;</span><span class="si">{f}</span><span class="s1">_week&#39;</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">]</span>
+
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span> <span class="k">if</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span>
+    <span class="n">must_have</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;DATE&#39;</span><span class="p">,</span> <span class="s1">&#39;SYMBOL&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">live</span><span class="p">:</span>
+        <span class="n">must_have</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;UPTIME&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_get_features</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="n">fmt</span><span class="p">,</span>
+                         <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                         <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span> <span class="n">must_have</span><span class="o">=</span><span class="n">must_have</span><span class="p">,</span>
+                         <span class="n">day</span><span class="o">=</span><span class="n">day</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">dt_col</span><span class="o">=</span><span class="s1">&#39;DATE&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DATE&#39;</span><span class="p">],</span>
+                         <span class="n">symbol_col</span><span class="o">=</span><span class="s1">&#39;SYMBOL&#39;</span><span class="p">,</span> <span class="n">rename_col</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;UPTIME&#39;</span><span class="p">:</span> <span class="s1">&#39;updatetime&#39;</span><span class="p">},</span>
+                         <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

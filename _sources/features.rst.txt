@@ -2,6 +2,10 @@
 ========================
 * 正在建设
 
-Alpha features
---------------------
+WF特征 Wave Features
+---------------------
+.. autofunction:: lhdata.features.get_wf
+
+Alpha特征 Alpha features
+------------------------
 .. autofunction:: lhdata.features.get_alpha

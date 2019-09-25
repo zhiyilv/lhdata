@@ -85,7 +85,8 @@
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prices.html">行情模块 lhdata.prices</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">特征模块 lhdata.features</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#alpha-features">Alpha features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#wf-wave-features">WF特征 Wave Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#alpha-alpha-features">Alpha特征 Alpha features</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="calendar.html">日历模块 lhdata.calendar</a></li>
@@ -160,8 +161,44 @@
 <ul class="simple">
 <li>正在建设</li>
 </ul>
-<div class="section" id="alpha-features">
-<h2>Alpha features<a class="headerlink" href="#alpha-features" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="wf-wave-features">
+<h2>WF特征 Wave Features<a class="headerlink" href="#wf-wave-features" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="lhdata.features.get_wf">
+<code class="descclassname">lhdata.features.</code><code class="descname">get_wf</code><span class="sig-paren">(</span><em>symbol: Union[str</em>, <em>list</em>, <em>tuple] = ''</em>, <em>day: str = None</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>fields: Union[str</em>, <em>list</em>, <em>tuple] = '*'</em>, <em>incl_week: bool = False</em>, <em>incl_val: bool = False</em>, <em>live: bool = False</em>, <em>db_config: dict = None</em>, <em>tb_name: str = None</em>, <em>area: str = None</em>, <em>hk: bool = False</em>, <em>fmt: str = 'df'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/features.html#get_wf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.features.get_wf" title="Permalink to this definition">¶</a></dt>
+<dd><p>获取Wave Features。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>symbol</strong> – 如‘000001 CH Equity’；空(‘’ 或 [] 或 () ) 代表所有股票；支持股票列表或股票元组。</li>
+<li><strong>start</strong> – 起始日期（含），格式如‘2019-01-01’；空(‘’ 或 None) 则自动设置为1992-01-01。</li>
+<li><strong>end</strong> – 终止日期（含），格式如‘2019-09-01’；空(‘’ 或 None) 则自动设置为查询当日。</li>
+<li><strong>day</strong> – 指定日期，等效于设置了start=end=day, 会忽略start、end的输入。</li>
+<li><strong>fields</strong> – 指定’datetime’、’symbol’以外的字段，默认为WF0010~WF0060。</li>
+<li><strong>incl_week</strong> – 是否自动添加week后缀的feature。默认不添加。</li>
+<li><strong>incl_val</strong> – 是否自动添加feature的原始值。默认不添加。</li>
+<li><strong>live</strong> – True -&gt; 盘中值; False -&gt; 盘后值。默认为盘后值。</li>
+<li><strong>db_config</strong> – 指定 特征 数据库连接，None则自动分配。</li>
+<li><strong>tb_name</strong> – 指定 特征 表名，格式为{db_name}.{tb_name}，None则自动分配。</li>
+<li><strong>area</strong> – in [‘CH’, ‘US’, …]。指定symbol区域，不指定则根据symbol（或symbol list的第一个）判定。为空时，自动设置为’CH’。</li>
+<li><strong>hk</strong> – 在香港使用需设置为True。</li>
+<li><strong>fmt</strong> – 返回数据类型，支持[‘df’, ‘list’, ‘dict’]，即DataFrame、DataFrame list、DataFrame dict. 默认为’df’。</li>
+<li><strong>kwargs</strong> – 其他lhdata.dbgetter.get_fields支持传入的参数。</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">DataFrame 或 DataFrame list 或 DataFrame dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="alpha-alpha-features">
+<h2>Alpha特征 Alpha features<a class="headerlink" href="#alpha-alpha-features" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.features.get_alpha">
 <code class="descclassname">lhdata.features.</code><code class="descname">get_alpha</code><span class="sig-paren">(</span><em>symbol: Union[str</em>, <em>list</em>, <em>tuple] = ''</em>, <em>day: str = None</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>index_ref: str = 'hs300'</em>, <em>fields: Union[str</em>, <em>list</em>, <em>tuple] = '*'</em>, <em>db_config: dict = None</em>, <em>tb_name: str = None</em>, <em>area: str = None</em>, <em>hk: bool = False</em>, <em>fmt: str = 'df'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/features.html#get_alpha"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.features.get_alpha" title="Permalink to this definition">¶</a></dt>
@@ -175,7 +212,7 @@
 <li><strong>start</strong> – 起始日期（含），格式如‘2019-01-01’；空(‘’ 或 None) 则自动设置为1992-01-01。</li>
 <li><strong>end</strong> – 终止日期（含），格式如‘2019-09-01’；空(‘’ 或 None) 则自动设置为查询当日。</li>
 <li><strong>day</strong> – 指定日期，等效于设置了start=end=day, 会忽略start、end的输入。</li>
-<li><strong>index_ref</strong> – A股：[‘hs300’, ‘zz500’, ‘gemb]; US: [‘indu’, ‘spx’, ‘ndx’]; HK: [‘hsi’, ‘hscei’]; JP: [‘nky’]</li>
+<li><strong>index_ref</strong> – A股：[‘hs300’, ‘zz500’, ‘gemb’]; US: [‘indu’, ‘spx’, ‘ndx’]; HK: [‘hsi’, ‘hscei’]; JP: [‘nky’]</li>
 <li><strong>fields</strong> – 指定’datetime’、’symbol’以外的字段，默认所有字段。</li>
 <li><strong>db_config</strong> – 指定 特征 数据库连接，None则自动分配。</li>
 <li><strong>tb_name</strong> – 指定 特征 表名，格式为{db_name}.{tb_name}，None则自动分配。</li>
