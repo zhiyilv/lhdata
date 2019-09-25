@@ -7,7 +7,8 @@ Welcome to lhdata documentation!
 ==================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+   :caption: lhdata docs
 
    install
    quickstart
@@ -20,3 +21,7 @@ Welcome to lhdata documentation!
 
 
 
+Indices and tables
+------------------
+
+* :ref:`genindex`

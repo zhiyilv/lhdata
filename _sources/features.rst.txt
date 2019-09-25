@@ -9,3 +9,9 @@ WF特征 Wave Features
 Alpha特征 Alpha features
 ------------------------
 .. autofunction:: lhdata.features.get_alpha
+
+---------------------------------
+
+其他
+----
+.. module:: lhdata.features
