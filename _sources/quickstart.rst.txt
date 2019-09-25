@@ -18,6 +18,15 @@ Note: lhdata各个模块的功能都可以 **直接通过lhdata调用** 。
  from lhdata import get_symbol_prev_day
  prev_day = get_symbol_prev_day('000001 CH Equity', start='2009-01-01', end='2019-09-01')
  
+获取指数成分股
+--------------------
+:: 
+
+ # 获取hs300指数2019-09-24的成分股
+ from lhdata import get_memb
+ df = get_memb('hs300', day='2019-09-24)
+
+
 获取股票的行业信息
 --------------------
 :: 

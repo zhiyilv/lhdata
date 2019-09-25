@@ -1,0 +1,16 @@
+股票池模块 lhdata.pool
+========================
+* 沪深300、中证500 由今日投资维护
+
+* 创业板指、恒指、国企指数、道指、纳斯达克100、标普500、日经225 由Lighthorse维护
+
+
+获取某指数成分股
+------------------
+.. autofunction:: lhdata.pool.get_memb
+
+ 
+其他接口
+--------
+.. automodule:: lhdata.pool
+   :members: get_pool
