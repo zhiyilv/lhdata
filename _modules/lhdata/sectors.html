@@ -163,7 +163,7 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Union</span>
 
-<span class="n">db_config_sectors</span> <span class="o">=</span> <span class="n">get_db_config</span><span class="p">(</span><span class="s1">&#39;sectors&#39;</span><span class="p">)</span>
+<span class="c1"># db_config_sectors = get_db_config(&#39;sectors&#39;)</span>
 <span class="n">sector_sys_map</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;gics&#39;</span><span class="p">:</span>       <span class="s1">&#39;INDUS1_CL&#39;</span><span class="p">,</span>
         <span class="s1">&#39;exchange&#39;</span><span class="p">:</span>   <span class="s1">&#39;INDUS2_CL&#39;</span><span class="p">,</span>
@@ -226,7 +226,7 @@
         <span class="k">return</span> <span class="n">df</span></div>
 
 
-<div class="viewcode-block" id="get_sector_table"><a class="viewcode-back" href="../../sectors.html#lhdata.sectors.get_sector_table">[docs]</a><span class="k">def</span> <span class="nf">get_sector_table</span><span class="p">(</span><span class="n">sys_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;swhy&#39;</span><span class="p">,</span> <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">db_config_sectors</span><span class="p">,</span> <span class="n">transform</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<div class="viewcode-block" id="get_sector_table"><a class="viewcode-back" href="../../sectors.html#lhdata.sectors.get_sector_table">[docs]</a><span class="k">def</span> <span class="nf">get_sector_table</span><span class="p">(</span><span class="n">sys_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;swhy&#39;</span><span class="p">,</span> <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">transform</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    指定体系的行业分类代码表。由今日投资维护。</span>
 
@@ -251,6 +251,7 @@
             <span class="s1">&#39;F0010&#39;</span><span class="p">:</span>    <span class="s1">&#39;sector&#39;</span><span class="p">,</span>
             <span class="s1">&#39;F0030&#39;</span><span class="p">:</span>    <span class="s1">&#39;sector_eng&#39;</span><span class="p">,</span>
             <span class="s1">&#39;RMRK&#39;</span><span class="p">:</span>     <span class="s1">&#39;system&#39;</span><span class="p">}</span>
+    <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="s1">&#39;ivt&#39;</span><span class="p">)</span>
     <span class="n">con</span> <span class="o">=</span> <span class="n">pymssql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="o">**</span><span class="n">db_config</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">sql_string</span><span class="o">=</span><span class="n">sql_string</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">con</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="n">parse_dates</span><span class="p">,</span> <span class="n">rename_col</span><span class="o">=</span><span class="n">rename_col</span><span class="p">)</span>
@@ -283,7 +284,7 @@
         <span class="k">return</span> <span class="n">df</span>
 
 
-<div class="viewcode-block" id="get_sector_symbol"><a class="viewcode-back" href="../../sectors.html#lhdata.sectors.get_sector_symbol">[docs]</a><span class="k">def</span> <span class="nf">get_sector_symbol</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">sys_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;swhy&#39;</span><span class="p">,</span> <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">db_config_sectors</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<div class="viewcode-block" id="get_sector_symbol"><a class="viewcode-back" href="../../sectors.html#lhdata.sectors.get_sector_symbol">[docs]</a><span class="k">def</span> <span class="nf">get_sector_symbol</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">sys_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;swhy&#39;</span><span class="p">,</span> <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    给定一个体系的行业代码，返回该行业涵盖的股票。</span>
 
@@ -296,6 +297,7 @@
     <span class="n">code</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
     <span class="n">sys_</span> <span class="o">=</span> <span class="n">sys_</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="n">idu_cl</span> <span class="o">=</span> <span class="n">sector_sys_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sys_</span><span class="p">)</span>
+    <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="s1">&#39;ivt&#39;</span><span class="p">)</span>
     <span class="n">con</span> <span class="o">=</span> <span class="n">pymssql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="o">**</span><span class="n">db_config</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">sys_</span> <span class="o">==</span> <span class="s1">&#39;swhy&#39;</span><span class="p">:</span>

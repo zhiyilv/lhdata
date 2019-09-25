@@ -35,6 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="数据状态" href="status.html" />
     <link rel="prev" title="日历模块 lhdata.calendar" href="calendar.html" /> 
 </head>
 
@@ -90,6 +91,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-lhdata.sectors">其他接口</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="status.html">数据状态</a></li>
 </ul>
 
             
@@ -191,7 +193,7 @@
 <span id="id2"></span><h2>其他接口<a class="headerlink" href="#module-lhdata.sectors" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.sectors.get_sector_table">
-<code class="descclassname">lhdata.sectors.</code><code class="descname">get_sector_table</code><span class="sig-paren">(</span><em>sys_: str = 'swhy'</em>, <em>db_config: dict = {'database': 'FGFUND'</em>, <em>'host': '192.168.16.232'</em>, <em>'password': 'fgfund_guest*#123'</em>, <em>'user': 'fgfund_guest'}</em>, <em>transform: bool = True</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/sectors.html#get_sector_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.sectors.get_sector_table" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.sectors.</code><code class="descname">get_sector_table</code><span class="sig-paren">(</span><em>sys_: str = 'swhy'</em>, <em>db_config: dict = None</em>, <em>transform: bool = True</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/sectors.html#get_sector_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.sectors.get_sector_table" title="Permalink to this definition">¶</a></dt>
 <dd><p>指定体系的行业分类代码表。由今日投资维护。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -213,7 +215,7 @@
 
 <dl class="function">
 <dt id="lhdata.sectors.get_sector_symbol">
-<code class="descclassname">lhdata.sectors.</code><code class="descname">get_sector_symbol</code><span class="sig-paren">(</span><em>code: Union[str, int], sys_: str = 'swhy', db_config: dict = {'database': 'FGFUND', 'host': '192.168.16.232', 'password': 'fgfund_guest*#123', 'user': 'fgfund_guest'}</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/sectors.html#get_sector_symbol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.sectors.get_sector_symbol" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.sectors.</code><code class="descname">get_sector_symbol</code><span class="sig-paren">(</span><em>code: Union[str, int], sys_: str = 'swhy', db_config: dict = None</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/sectors.html#get_sector_symbol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.sectors.get_sector_symbol" title="Permalink to this definition">¶</a></dt>
 <dd><p>给定一个体系的行业代码，返回该行业涵盖的股票。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -243,6 +245,8 @@
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="status.html" class="btn btn-neutral float-right" title="数据状态" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="calendar.html" class="btn btn-neutral float-left" title="日历模块 lhdata.calendar" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
