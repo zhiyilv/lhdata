@@ -169,21 +169,23 @@
 <h2>获取某股票所属行业<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.sectors.get_sector">
-<code class="descclassname">lhdata.sectors.</code><code class="descname">get_sector</code><span class="sig-paren">(</span><em>symbol: str</em>, <em>sys_: str = 'swhy'</em>, <em>level: int = 3</em>, <em>db_config: dict = None</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/sectors.html#get_sector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.sectors.get_sector" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.sectors.</code><code class="descname">get_sector</code><span class="sig-paren">(</span><em>symbol: Union[str, list], sys_: str = 'swhy', level: int = 3, db_config: dict = None, progress: bool = False, **kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/sectors.html#get_sector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.sectors.get_sector" title="Permalink to this definition">¶</a></dt>
 <dd><p>给定股票，查询所属行业。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>symbol</strong> – 如‘000001 CH Equity’.</li>
+<li><strong>symbol</strong> – 如‘000001 CH Equity’. 支持股票列表。</li>
 <li><strong>sys</strong> – 行业体系，in [‘gics’, ‘exchange’, ‘investoday’, ‘swhy’, ‘citic’]。</li>
 <li><strong>level</strong> – 如果超出该体系的级别范围，返回该体系所有级别的对应信息</li>
 <li><strong>db_config</strong> – 指定数据库连接，None则自动分配。</li>
+<li><strong>progress</strong> – 显示下载进度条。</li>
+<li><strong>kwargs</strong> – 其他shadow_split支持传入的参数</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">DataFrame， 包含列：symbol、name、code_sector</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">DataFrame， 包含列：symbol、name、code_sector, 或 DataFrame list</p>
 </td>
 </tr>
 </tbody>
@@ -218,20 +220,22 @@
 
 <dl class="function">
 <dt id="lhdata.sectors.get_sector_symbol">
-<code class="descclassname">lhdata.sectors.</code><code class="descname">get_sector_symbol</code><span class="sig-paren">(</span><em>code: Union[str, int], sys_: str = 'swhy', db_config: dict = None</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/sectors.html#get_sector_symbol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.sectors.get_sector_symbol" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.sectors.</code><code class="descname">get_sector_symbol</code><span class="sig-paren">(</span><em>code: Union[str, int, list], sys_: str = 'swhy', db_config: dict = None, progress: bool = False, **kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/sectors.html#get_sector_symbol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.sectors.get_sector_symbol" title="Permalink to this definition">¶</a></dt>
 <dd><p>给定一个体系的行业代码，返回该行业涵盖的股票。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>code</strong> – 行业代码，如110101</li>
+<li><strong>code</strong> – 行业代码，如110101。支持代码列表。</li>
 <li><strong>sys</strong> – 行业体系，in [‘gics’, ‘exchange’, ‘investoday’, ‘swhy’, ‘citic’]</li>
 <li><strong>db_config</strong> – 指定数据库连接，None则自动分配。</li>
+<li><strong>progress</strong> – 显示下载进度条。</li>
+<li><strong>kwargs</strong> – 其他shadow_split支持传入的参数</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">DataFrame</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">DataFrame，或 DataFrame list</p>
 </td>
 </tr>
 </tbody>

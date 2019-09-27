@@ -586,7 +586,7 @@
 <span class="sd">    :param adj_db_config: 指定 复权数据 数据库连接，None则自动分配。</span>
 <span class="sd">    :param adj_tb_name: 指定 复权数据 表名，格式为{db_name}.{tb_name}，None则自动分配。</span>
 <span class="sd">    :param suspend: 停牌处理。&#39;&#39; -&gt; 不包括停牌；&#39;nan&#39;/&#39;null&#39; -&gt; 填充nan；&#39;px&#39; -&gt; 填充最近的有效价格。默认为&#39;&#39;。</span>
-<span class="sd">    :param trim: 是否强制对齐到同一个交易日历。不强制时，指定的start之后上市的股票只对齐到上市之后的交易日历。</span>
+<span class="sd">    :param trim: 是否强制对齐到同一个交易日历。不强制时，指定的start之后上市的股票只对齐到其上市之后的交易日历。</span>
 <span class="sd">    :param hk: 在香港使用需设置为True。</span>
 <span class="sd">    :param area: in [&#39;CH&#39;, &#39;US&#39;, ...]。指定symbol区域，不指定则根据symbol（或symbol list的第一个）判定。为空时，自动设置为&#39;CH&#39;。</span>
 <span class="sd">    :param fmt: 返回数据类型，支持DataFrame、DataFrame list、DataFrame dict. 默认为&#39;df&#39;。</span>

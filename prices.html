@@ -202,7 +202,7 @@
 <li><strong>adj_db_config</strong> – 指定 复权数据 数据库连接，None则自动分配。</li>
 <li><strong>adj_tb_name</strong> – 指定 复权数据 表名，格式为{db_name}.{tb_name}，None则自动分配。</li>
 <li><strong>suspend</strong> – 停牌处理。’’ -&gt; 不包括停牌；’nan’/’null’ -&gt; 填充nan；’px’ -&gt; 填充最近的有效价格。默认为’‘。</li>
-<li><strong>trim</strong> – 是否强制对齐到同一个交易日历。不强制时，指定的start之后上市的股票只对齐到上市之后的交易日历。</li>
+<li><strong>trim</strong> – 是否强制对齐到同一个交易日历。不强制时，指定的start之后上市的股票只对齐到其上市之后的交易日历。</li>
 <li><strong>hk</strong> – 在香港使用需设置为True。</li>
 <li><strong>area</strong> – in [‘CH’, ‘US’, …]。指定symbol区域，不指定则根据symbol（或symbol list的第一个）判定。为空时，自动设置为’CH’。</li>
 <li><strong>fmt</strong> – 返回数据类型，支持DataFrame、DataFrame list、DataFrame dict. 默认为’df’。</li>
