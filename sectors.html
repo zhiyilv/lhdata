@@ -169,7 +169,7 @@
 <h2>获取某股票所属行业<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.sectors.get_sector">
-<code class="descclassname">lhdata.sectors.</code><code class="descname">get_sector</code><span class="sig-paren">(</span><em>symbol: Union[str, list], sys_: str = 'swhy', level: int = 3, db_config: dict = None, progress: bool = False, **kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/sectors.html#get_sector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.sectors.get_sector" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.sectors.</code><code class="descname">get_sector</code><span class="sig-paren">(</span><em>symbol: Union[str, list], sys_: str = None, level: int = 3, db_config: dict = None, df_static: pandas.core.frame.DataFrame = None, progress: bool = False, **kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/sectors.html#get_sector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.sectors.get_sector" title="Permalink to this definition">¶</a></dt>
 <dd><p>给定股票，查询所属行业。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -177,9 +177,10 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>symbol</strong> – 如‘000001 CH Equity’. 支持股票列表。</li>
-<li><strong>sys</strong> – 行业体系，in [‘gics’, ‘exchange’, ‘investoday’, ‘swhy’, ‘citic’]。</li>
+<li><strong>sys</strong> – 行业体系，in [‘gics’, ‘exchange’, ‘investoday’, ‘swhy’, ‘citic’]。None则自动分配： A股swhy， 外盘gics。</li>
 <li><strong>level</strong> – 如果超出该体系的级别范围，返回该体系所有级别的对应信息</li>
 <li><strong>db_config</strong> – 指定数据库连接，None则自动分配。</li>
+<li><strong>df_static</strong> – 存储好的股票、代码表</li>
 <li><strong>progress</strong> – 显示下载进度条。</li>
 <li><strong>kwargs</strong> – 其他shadow_split支持传入的参数</li>
 </ul>
@@ -198,8 +199,8 @@
 <span id="id2"></span><h2>其他接口<a class="headerlink" href="#module-lhdata.sectors" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.sectors.get_sector_table">
-<code class="descclassname">lhdata.sectors.</code><code class="descname">get_sector_table</code><span class="sig-paren">(</span><em>sys_: str = 'swhy'</em>, <em>db_config: dict = None</em>, <em>transform: bool = True</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/sectors.html#get_sector_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.sectors.get_sector_table" title="Permalink to this definition">¶</a></dt>
-<dd><p>指定体系的行业分类代码表。由今日投资维护。</p>
+<code class="descclassname">lhdata.sectors.</code><code class="descname">get_sector_table</code><span class="sig-paren">(</span><em>sys_: str = 'swhy'</em>, <em>db_config: dict = None</em>, <em>transform: bool = True</em>, <em>max_lv: int = None</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/sectors.html#get_sector_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.sectors.get_sector_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>指定体系的行业分类代码表。A股由今日投资维护，外盘由天马资产维护。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -207,6 +208,7 @@
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>sys</strong> – 行业体系，in [‘gics’, ‘exchange’, ‘investoday’, ‘swhy’, ‘citic’]</li>
 <li><strong>db_config</strong> – 指定数据库连接，None则自动分配。</li>
+<li><strong>max_lv</strong> – 最大到什么级别，None为不限制。</li>
 <li><strong>transform</strong> – 查询到的表各个级别的code混在一起，将表转换为更易读的形式。</li>
 </ul>
 </td>
@@ -220,7 +222,7 @@
 
 <dl class="function">
 <dt id="lhdata.sectors.get_sector_symbol">
-<code class="descclassname">lhdata.sectors.</code><code class="descname">get_sector_symbol</code><span class="sig-paren">(</span><em>code: Union[str, int, list], sys_: str = 'swhy', db_config: dict = None, progress: bool = False, **kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/sectors.html#get_sector_symbol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.sectors.get_sector_symbol" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.sectors.</code><code class="descname">get_sector_symbol</code><span class="sig-paren">(</span><em>code: Union[str, int, list], sys_: str = 'swhy', db_config: dict = None, df_static: pandas.core.frame.DataFrame = None, area: str = None, progress: bool = False, **kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/sectors.html#get_sector_symbol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.sectors.get_sector_symbol" title="Permalink to this definition">¶</a></dt>
 <dd><p>给定一个体系的行业代码，返回该行业涵盖的股票。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -230,6 +232,8 @@
 <li><strong>code</strong> – 行业代码，如110101。支持代码列表。</li>
 <li><strong>sys</strong> – 行业体系，in [‘gics’, ‘exchange’, ‘investoday’, ‘swhy’, ‘citic’]</li>
 <li><strong>db_config</strong> – 指定数据库连接，None则自动分配。</li>
+<li><strong>df_static</strong> – 存储好的股票、代码表</li>
+<li><strong>area</strong> – like ‘us’. 当sys_=’gics’的时候有用。None则不对区域做限制。</li>
 <li><strong>progress</strong> – 显示下载进度条。</li>
 <li><strong>kwargs</strong> – 其他shadow_split支持传入的参数</li>
 </ul>
