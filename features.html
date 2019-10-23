@@ -204,19 +204,21 @@
 <h2>Alpha特征 Alpha features<a class="headerlink" href="#alpha-alpha-features" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.features.get_alpha">
-<code class="descclassname">lhdata.features.</code><code class="descname">get_alpha</code><span class="sig-paren">(</span><em>symbol: Union[str</em>, <em>list</em>, <em>tuple] = ''</em>, <em>day: str = None</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>index_ref: str = 'hs300'</em>, <em>fields: Union[str</em>, <em>list</em>, <em>tuple] = '*'</em>, <em>db_config: dict = None</em>, <em>tb_name: str = None</em>, <em>area: str = None</em>, <em>hk: bool = False</em>, <em>fmt: str = 'df'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/features.html#get_alpha"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.features.get_alpha" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.features.</code><code class="descname">get_alpha</code><span class="sig-paren">(</span><em>index_ref: str = None</em>, <em>symbol: Union[str</em>, <em>list</em>, <em>tuple] = ''</em>, <em>day: str = None</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>fields: Union[str</em>, <em>list</em>, <em>tuple] = '*'</em>, <em>order_by: str = 'datetime'</em>, <em>db_config: dict = None</em>, <em>tb_name: str = None</em>, <em>area: str = None</em>, <em>hk: bool = False</em>, <em>fmt: str = 'df'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/features.html#get_alpha"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.features.get_alpha" title="Permalink to this definition">¶</a></dt>
 <dd><p>获取Alpha Features。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>index_ref</strong> – A股：[‘hs300’, ‘zz500’, ‘gemb’]; US: [‘indu’, ‘spx’, ‘ndx’]; HK: [‘hsi’, ‘hscei’]; JP: [‘nky’].
+None则自动选择默认，A股默认’hs300’, 美股默认’spx’, 港股默认’hsi’。</li>
 <li><strong>symbol</strong> – 如‘000001 CH Equity’；空(‘’ 或 [] 或 () ) 代表所有股票；支持股票列表或股票元组。</li>
 <li><strong>start</strong> – 起始日期（含），格式如‘2019-01-01’；空(‘’ 或 None) 则自动设置为1992-01-01。</li>
 <li><strong>end</strong> – 终止日期（含），格式如‘2019-09-01’；空(‘’ 或 None) 则自动设置为查询当日。</li>
 <li><strong>day</strong> – 指定日期，等效于设置了start=end=day, 会忽略start、end的输入。</li>
-<li><strong>index_ref</strong> – A股：[‘hs300’, ‘zz500’, ‘gemb’]; US: [‘indu’, ‘spx’, ‘ndx’]; HK: [‘hsi’, ‘hscei’]; JP: [‘nky’]</li>
 <li><strong>fields</strong> – 指定’datetime’、’symbol’以外的字段，默认所有字段。</li>
+<li><strong>order_by</strong> – 按日期排序</li>
 <li><strong>db_config</strong> – 指定 特征 数据库连接，None则自动分配。</li>
 <li><strong>tb_name</strong> – 指定 特征 表名，格式为{db_name}.{tb_name}，None则自动分配。</li>
 <li><strong>area</strong> – in [‘CH’, ‘US’, …]。指定symbol区域，不指定则根据symbol（或symbol list的第一个）判定。为空时，自动设置为’CH’。</li>

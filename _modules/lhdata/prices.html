@@ -206,7 +206,7 @@
         <span class="n">start</span> <span class="o">=</span> <span class="n">end</span> <span class="o">=</span> <span class="n">day</span>
 
     <span class="n">sql_template</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;SELECT {__px_fields_str(fields=fields)} FROM </span><span class="si">{tb_template}</span><span class="s2"></span>
-<span class="s2">                            WHERE TRUE</span>
+<span class="s2">                            WHERE close &gt; 0</span>
 <span class="s2">                            {_date_str(day=day, start=start, end=end, key=&#39;date1&#39;)}</span>
 <span class="s2">                            ORDER BY date1 ASC&quot;&quot;&quot;</span>
     <span class="n">start</span> <span class="o">=</span> <span class="n">start</span> <span class="ow">or</span> <span class="n">DEFAULT_START</span>
@@ -237,6 +237,7 @@
 
     <span class="n">sql_template</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;SELECT {__px_fields_str(fields=fields)} FROM </span><span class="si">{tb_template}</span><span class="s2"></span>
 <span class="s2">                            WHERE symbol = &#39;</span><span class="si">{symbol}</span><span class="s2">&#39;</span>
+<span class="s2">                            AND close &gt; 0</span>
 <span class="s2">                            {_date_str(day=day, start=start, end=end, key=&#39;date1&#39;)}</span>
 <span class="s2">                            ORDER BY date1 ASC&quot;&quot;&quot;</span>
     <span class="n">start</span> <span class="o">=</span> <span class="n">start</span> <span class="ow">or</span> <span class="n">DEFAULT_START</span>
@@ -655,9 +656,11 @@
                                <span class="n">earliest</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">presort</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">,</span>
                                <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_px</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">data_px</span> <span class="o">=</span> <span class="n">data_px</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="c1"># 返回数据</span>
-    <span class="k">if</span> <span class="n">index_col</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">index_col</span><span class="p">:</span>  <span class="c1"># 返回数据时统一处理，不传递给get_fields</span>
         <span class="n">index_col</span> <span class="o">=</span> <span class="p">[</span><span class="n">index_col</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">index_col</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="nb">list</span><span class="p">(</span><span class="n">index_col</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s1">&#39;df&#39;</span><span class="p">:</span>
