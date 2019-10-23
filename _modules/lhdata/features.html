@@ -185,8 +185,8 @@
         <span class="k">return</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="n">df</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">results</span><span class="p">)}</span>
 
 
-<div class="viewcode-block" id="get_alpha"><a class="viewcode-back" href="../../features.html#lhdata.features.get_alpha">[docs]</a><span class="k">def</span> <span class="nf">get_alpha</span><span class="p">(</span><span class="n">index_ref</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-              <span class="n">symbol</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+<div class="viewcode-block" id="get_alpha"><a class="viewcode-back" href="../../features.html#lhdata.features.get_alpha">[docs]</a><span class="k">def</span> <span class="nf">get_alpha</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+              <span class="n">index_ref</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
               <span class="n">day</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
               <span class="n">fields</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">order_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;datetime&#39;</span><span class="p">,</span>
               <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -195,14 +195,14 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    获取Alpha Features。</span>
 
+<span class="sd">    :param symbol: 如&#39;000001 CH Equity&#39;；空(&#39;&#39; 或 [] 或 () ) 代表所有股票；支持股票列表或股票元组。</span>
 <span class="sd">    :param index_ref: A股：[&#39;hs300&#39;, &#39;zz500&#39;, &#39;gemb&#39;]; US: [&#39;indu&#39;, &#39;spx&#39;, &#39;ndx&#39;]; HK: [&#39;hsi&#39;, &#39;hscei&#39;]; JP: [&#39;nky&#39;].</span>
 <span class="sd">                    None则自动选择默认，A股默认&#39;hs300&#39;, 美股默认&#39;spx&#39;, 港股默认&#39;hsi&#39;。</span>
-<span class="sd">    :param symbol: 如&#39;000001 CH Equity&#39;；空(&#39;&#39; 或 [] 或 () ) 代表所有股票；支持股票列表或股票元组。</span>
 <span class="sd">    :param start: 起始日期（含），格式如&#39;2019-01-01&#39;；空(&#39;&#39; 或 None) 则自动设置为1992-01-01。</span>
 <span class="sd">    :param end: 终止日期（含），格式如&#39;2019-09-01&#39;；空(&#39;&#39; 或 None) 则自动设置为查询当日。</span>
 <span class="sd">    :param day: 指定日期，等效于设置了start=end=day, 会忽略start、end的输入。</span>
 <span class="sd">    :param fields: 指定&#39;datetime&#39;、&#39;symbol&#39;以外的字段，默认所有字段。</span>
-<span class="sd">    :param order_by: 按日期排序</span>
+<span class="sd">    :param order_by: 默认按日期排序</span>
 <span class="sd">    :param db_config: 指定 特征 数据库连接，None则自动分配。</span>
 <span class="sd">    :param tb_name: 指定 特征 表名，格式为{db_name}.{tb_name}，None则自动分配。</span>
 <span class="sd">    :param area: in [&#39;CH&#39;, &#39;US&#39;, ...]。指定symbol区域，不指定则根据symbol（或symbol list的第一个）判定。为空时，自动设置为&#39;CH&#39;。</span>

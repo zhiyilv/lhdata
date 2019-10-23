@@ -399,6 +399,8 @@
         <span class="k">pass</span>
 
     <span class="c1"># shortcut</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">symbol</span><span class="p">:</span>
+        <span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>  <span class="c1"># 超过50个采用全部下载再过滤的方式</span>
         <span class="n">df_all</span> <span class="o">=</span> <span class="n">get_adj</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span>
                          <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -453,14 +455,8 @@
                         <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="c1"># 处理capital change相关</span>
-        <span class="n">cap_change_flag</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;dvd_type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">({</span>
-                <span class="s2">&quot;Stock Dividend&quot;</span><span class="p">,</span> <span class="s2">&quot;Bonus&quot;</span><span class="p">,</span> <span class="s2">&quot;Gratis&quot;</span><span class="p">,</span> <span class="s2">&quot;Scrip&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Stock Split&quot;</span>
-        <span class="p">})</span>
-        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;adj_cap_r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;adj&#39;</span><span class="p">]</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">cap_change_flag</span><span class="p">,</span> <span class="s1">&#39;adj_cap_r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cap_change_flag</span><span class="p">,</span> <span class="s1">&#39;adj&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cap_change_flag</span><span class="p">,</span> <span class="s1">&#39;adj&#39;</span><span class="p">]</span>
-
+        <span class="n">df_list</span> <span class="o">=</span> <span class="n">df</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">df</span><span class="p">]</span>
+        <span class="n">cap_change_type</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Stock Dividend&quot;</span><span class="p">,</span> <span class="s2">&quot;Bonus&quot;</span><span class="p">,</span> <span class="s2">&quot;Gratis&quot;</span><span class="p">,</span> <span class="s2">&quot;Scrip&quot;</span><span class="p">,</span> <span class="s2">&quot;Stock Split&quot;</span><span class="p">]</span>
         <span class="n">incl_dvd_type</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="s2">&quot;Stock Dividend&quot;</span><span class="p">,</span> <span class="s2">&quot;Bonus&quot;</span><span class="p">,</span> <span class="s2">&quot;Gratis&quot;</span><span class="p">,</span> <span class="s2">&quot;Scrip&quot;</span><span class="p">,</span> <span class="s2">&quot;Stock Split&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;Regular Cash&quot;</span><span class="p">,</span> <span class="s2">&quot;Special Cash&quot;</span><span class="p">,</span> <span class="s2">&quot;Interim&quot;</span><span class="p">,</span> <span class="s2">&quot;Final&quot;</span><span class="p">,</span>
@@ -468,7 +464,26 @@
                 <span class="s2">&quot;Return of Capital&quot;</span><span class="p">,</span> <span class="s2">&quot;Capital Gains&quot;</span><span class="p">,</span> <span class="s2">&quot;Long Term Cap Gain&quot;</span><span class="p">,</span> <span class="s2">&quot;Short Term Cap Gain&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;Memorial&quot;</span><span class="p">,</span> <span class="s2">&quot;Income&quot;</span><span class="p">,</span> <span class="s2">&quot;Pro Rata&quot;</span>
         <span class="p">]</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">dvd_type</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">incl_dvd_type</span><span class="p">)]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">df_ae_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># ae: after effects</span>
+        <span class="k">for</span> <span class="n">df_raw</span> <span class="ow">in</span> <span class="n">df_list</span><span class="p">:</span>
+            <span class="n">cap_change_flag</span> <span class="o">=</span> <span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;dvd_type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">cap_change_type</span><span class="p">)</span>
+            <span class="n">df_ae</span> <span class="o">=</span> <span class="n">df_raw</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">df_ae</span><span class="p">[</span><span class="s1">&#39;adj_cap_r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;adj&#39;</span><span class="p">]</span>
+            <span class="n">df_ae</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">cap_change_flag</span><span class="p">,</span> <span class="s1">&#39;adj_cap_r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">df_ae</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cap_change_flag</span><span class="p">,</span> <span class="s1">&#39;adj&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">df_ae</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cap_change_flag</span><span class="p">,</span> <span class="s1">&#39;adj&#39;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">df_ae</span> <span class="o">=</span> <span class="n">df_ae</span><span class="p">[</span><span class="n">df_ae</span><span class="o">.</span><span class="n">dvd_type</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">incl_dvd_type</span><span class="p">)]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">df_ae_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_ae</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_ae_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df_ae_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df_ae_list</span>
 
     <span class="k">return</span> <span class="n">df</span></div>
 
@@ -504,6 +519,9 @@
 
 <span class="sd">    :return: one symbol -&gt; one DataFrame; otherwise -&gt; DataFrame list</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">symbol</span> <span class="o">=</span> <span class="n">symbol</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
     <span class="c1"># 确定数据库信息</span>
     <span class="n">px_db_config</span> <span class="o">=</span> <span class="n">px_db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;prices&#39;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
     <span class="n">area</span> <span class="o">=</span> <span class="n">area</span> <span class="ow">or</span> <span class="n">decide_area</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
@@ -538,6 +556,10 @@
     <span class="n">data_adj</span> <span class="o">=</span> <span class="n">get_adj</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start_df_adj</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end_df_adj</span><span class="p">,</span>
                        <span class="n">db_config</span><span class="o">=</span><span class="n">adj_db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">adj_tb_name</span><span class="p">,</span>
                        <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="c1"># NOTE: 如果symbol为list</span>
+    <span class="c1"># data_px一定为list</span>
+    <span class="c1"># adj_px在list中只有一个股票的时候，会是一个dataframe</span>
 
     <span class="c1"># 复权行情</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">symbol</span><span class="p">:</span>  <span class="c1"># 所有股票, dfs_list</span>
@@ -606,6 +628,9 @@
 <span class="sd">        chunksize：每个进程处理多少个查询。默认为1。</span>
 <span class="sd">    :return: DataFrame 或 DataFrame list 或 DataFrame dict</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">symbol</span> <span class="o">=</span> <span class="n">symbol</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
     <span class="c1"># NOTE: 包括停牌时，需要下载start之前一个交易日的数据</span>
     <span class="k">if</span> <span class="n">suspend</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">symbol</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;当包括停牌时，只支持查询 单支股票 或 股票列表 的行情，而symbol=&#39;</span><span class="si">{symbol}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
@@ -812,6 +837,16 @@
         <span class="n">df_close</span><span class="p">[</span><span class="s1">&#39;abs_chg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_close</span><span class="o">.</span><span class="n">close</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
     <span class="n">df_close</span><span class="p">[</span><span class="s1">&#39;pct_chg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_close</span><span class="o">.</span><span class="n">close</span><span class="o">.</span><span class="n">pct_change</span><span class="p">(</span><span class="n">fill_method</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df_close</span></div>
+
+
+
+
+
+
+
+
+
+
 </pre></div>
 
            </div>
