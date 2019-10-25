@@ -18,6 +18,7 @@ Welcome to lhdata documentation!
    pool
    sectors
    status
+   version
 
 
 
