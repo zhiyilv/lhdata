@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Changelog &mdash; lhdata 19.10.25 documentation</title>
+  <title>Changelog &mdash; lhdata 19.10.29 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                19.10.25
+                19.10.29
               </div>
             
           
@@ -94,12 +94,17 @@
 <li class="toctree-l1"><a class="reference internal" href="sectors.html">行业模块 lhdata.sectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="status.html">数据状态</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">19.10.25</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#dispatcher-py">dispatcher.py</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#prices-alt-py">prices_alt.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">19.10.29</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bbg-hk-py-new"><code class="docutils literal notranslate"><span class="pre">bbg_hk.py</span></code> (new)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#prices-alt-py"><code class="docutils literal notranslate"><span class="pre">prices_alt.py</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">19.10.25</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dispatcher-py"><code class="docutils literal notranslate"><span class="pre">dispatcher.py</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3"><code class="docutils literal notranslate"><span class="pre">prices_alt.py</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">0.1</a></li>
 </ul>
 </li>
 </ul>
@@ -170,24 +175,48 @@
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <p>通过 <code class="docutils literal notranslate"><span class="pre">lhdata.__version__</span></code> 确认为最新版本</p>
 <div class="section" id="id1">
-<h2>19.10.25<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="dispatcher-py">
-<h3>dispatcher.py<a class="headerlink" href="#dispatcher-py" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>更新今日投资数据库地址</li>
+<h2>19.10.29<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bbg-hk-py-new">
+<h3><code class="docutils literal notranslate"><span class="pre">bbg_hk.py</span></code> (new)<a class="headerlink" href="#bbg-hk-py-new" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>在香港可以通过Bloomberg下载信息</li>
+<li>已实现复权信息</li>
 </ul>
+</div></blockquote>
 </div>
 <div class="section" id="prices-alt-py">
-<h3>prices_alt.py<a class="headerlink" href="#prices-alt-py" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
+<h3><code class="docutils literal notranslate"><span class="pre">prices_alt.py</span></code><a class="headerlink" href="#prices-alt-py" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>添加逻辑：从AlphaVantage下载失败后重试</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>19.10.25<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dispatcher-py">
+<h3><code class="docutils literal notranslate"><span class="pre">dispatcher.py</span></code><a class="headerlink" href="#dispatcher-py" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>更新今日投资数据库地址</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id3">
+<h3><code class="docutils literal notranslate"><span class="pre">prices_alt.py</span></code><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
 <li>更新从AlphaVantage下载行情的流程</li>
 <li>添加对 BRK/B 此类股票代码的支持</li>
 </ul>
+</div></blockquote>
 </div>
 </div>
 <hr class="docutils" />
-<div class="section" id="id2">
-<h2>0.1<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2>0.1<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>首次发布</p>
 </div>
 </div>
