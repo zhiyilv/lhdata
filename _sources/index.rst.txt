@@ -15,6 +15,7 @@ Welcome to lhdata documentation!
    prices
    features
    calendar
+   fund
    pool
    sectors
    status
