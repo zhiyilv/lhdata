@@ -180,7 +180,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    获取ipo日期。注意外盘股票有可能上市日期为空。</span>
 
-<span class="sd">    :param symbol: 如&#39;000001 CH Equity&#39;；空(&#39;&#39; 或 [] 或 () ) 代表所有股票；支持股票列表或股票元组。</span>
+<span class="sd">    :param symbol: 如&#39;000001 CH Equity&#39;；只支持单只股票，或股票列表(元组)。</span>
 <span class="sd">    :param db_config: 指定行情数据库连接，None则自动分配。</span>
 <span class="sd">    :param tb_name: 指定行情表名，格式为{db_name}.{tb_name}，None则自动分配。</span>
 <span class="sd">    :param area: in [&#39;CH&#39;, &#39;US&#39;, ...]。指定symbol区域，不指定则根据symbol（或symbol list的第一个）判定。为空时，自动设置为&#39;CH&#39;。</span>
@@ -251,12 +251,12 @@
 
 <span class="sd">    :param area: in [&#39;ch&#39;, &#39;us&#39;, &#39;hk&#39;, &#39;jp&#39;]。</span>
 <span class="sd">    :param active: 是否正常交易。A股判断标准是退市日期为空，外盘通过market_status确认。</span>
-<span class="sd">    :param type_: 品种代码, in [&#39;A&#39;, &#39;B&#39;], 只对A股有效。</span>
-<span class="sd">    :param board: 板块代码, in [&#39;MAIN&#39;(主板), &#39;SME&#39;(中小板), &#39;GEM&#39;(创业板), &#39;STAR&#39;(科创板)], 只对A股有效。</span>
+<span class="sd">    :param type_: 品种代码, in [&#39;A&#39;, &#39;B&#39;], None则包括A和B股。只对A股有效。</span>
+<span class="sd">    :param board: 板块代码, in [&#39;MAIN&#39;(主板), &#39;SME&#39;(中小板), &#39;GEM&#39;(创业板), &#39;STAR&#39;(科创板)], None则所有版块。只对A股有效。</span>
 <span class="sd">    :param order_by_symbol: True -&gt; 按股票代码排序, False -&gt; 按上市日期排序。</span>
-<span class="sd">    :param start: 只返回该日期及之后上市的股票。</span>
-<span class="sd">    :param end: 只返回该日期及之前上市的股票。</span>
-<span class="sd">    :param day: 只返回该日上市的股票。</span>
+<span class="sd">    :param start: 只返回该日期及之后上市的股票。None则不做限制。</span>
+<span class="sd">    :param end: 只返回该日期及之前上市的股票。None则不做限制。</span>
+<span class="sd">    :param day: 只返回该日上市的股票。None则不做限制。</span>
 <span class="sd">    :param db_config: 指定行情数据库连接，None则自动分配。</span>
 <span class="sd">    :param tb_name: 指定行情表名，格式为{db_name}.{tb_name}，None则自动分配。</span>
 <span class="sd">    :param hk: 在香港使用需设置为True。</span>

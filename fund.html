@@ -184,12 +184,12 @@
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>area</strong> – in [‘ch’, ‘us’, ‘hk’, ‘jp’]。</li>
 <li><strong>active</strong> – 是否正常交易。A股判断标准是退市日期为空，外盘通过market_status确认。</li>
-<li><strong>type</strong> – 品种代码, in [‘A’, ‘B’], 只对A股有效。</li>
-<li><strong>board</strong> – 板块代码, in [‘MAIN’(主板), ‘SME’(中小板), ‘GEM’(创业板), ‘STAR’(科创板)], 只对A股有效。</li>
+<li><strong>type</strong> – 品种代码, in [‘A’, ‘B’], None则包括A和B股。只对A股有效。</li>
+<li><strong>board</strong> – 板块代码, in [‘MAIN’(主板), ‘SME’(中小板), ‘GEM’(创业板), ‘STAR’(科创板)], None则所有版块。只对A股有效。</li>
 <li><strong>order_by_symbol</strong> – True -&gt; 按股票代码排序, False -&gt; 按上市日期排序。</li>
-<li><strong>start</strong> – 只返回该日期及之后上市的股票。</li>
-<li><strong>end</strong> – 只返回该日期及之前上市的股票。</li>
-<li><strong>day</strong> – 只返回该日上市的股票。</li>
+<li><strong>start</strong> – 只返回该日期及之后上市的股票。None则不做限制。</li>
+<li><strong>end</strong> – 只返回该日期及之前上市的股票。None则不做限制。</li>
+<li><strong>day</strong> – 只返回该日上市的股票。None则不做限制。</li>
 <li><strong>db_config</strong> – 指定行情数据库连接，None则自动分配。</li>
 <li><strong>tb_name</strong> – 指定行情表名，格式为{db_name}.{tb_name}，None则自动分配。</li>
 <li><strong>hk</strong> – 在香港使用需设置为True。</li>
@@ -216,7 +216,7 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>symbol</strong> – 如‘000001 CH Equity’；空(‘’ 或 [] 或 () ) 代表所有股票；支持股票列表或股票元组。</li>
+<li><strong>symbol</strong> – 如‘000001 CH Equity’；只支持单只股票，或股票列表(元组)。</li>
 <li><strong>db_config</strong> – 指定行情数据库连接，None则自动分配。</li>
 <li><strong>tb_name</strong> – 指定行情表名，格式为{db_name}.{tb_name}，None则自动分配。</li>
 <li><strong>area</strong> – in [‘CH’, ‘US’, …]。指定symbol区域，不指定则根据symbol（或symbol list的第一个）判定。为空时，自动设置为’CH’。</li>
