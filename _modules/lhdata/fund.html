@@ -178,6 +178,7 @@
                 <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    获取ipo日期。注意外盘股票有可能上市日期为空。</span>
 
 <span class="sd">    :param symbol: 如&#39;000001 CH Equity&#39;；空(&#39;&#39; 或 [] 或 () ) 代表所有股票；支持股票列表或股票元组。</span>
 <span class="sd">    :param db_config: 指定行情数据库连接，None则自动分配。</span>
