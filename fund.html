@@ -1,0 +1,290 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>基础信息模块 lhdata.fund &mdash; lhdata 19.11.06 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="股票池模块 lhdata.pool" href="pool.html" />
+    <link rel="prev" title="日历模块 lhdata.calendar" href="calendar.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> lhdata
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.11.06
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">lhdata docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install lhdata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prices.html">行情模块 lhdata.prices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">特征模块 lhdata.features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calendar.html">日历模块 lhdata.calendar</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">基础信息模块 lhdata.fund</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">获取股票列表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ipo">获取ipo日期</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">其他接口</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pool.html">股票池模块 lhdata.pool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sectors.html">行业模块 lhdata.sectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="status.html">数据状态</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">lhdata</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>基础信息模块 lhdata.fund</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/fund.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="lhdata-fund">
+<h1>基础信息模块 lhdata.fund<a class="headerlink" href="#lhdata-fund" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>A股由今日投资维护</li>
+<li>外盘由Lighthorse维护</li>
+</ul>
+<div class="section" id="id1">
+<h2>获取股票列表<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="lhdata.fund.get_symbols">
+<code class="descclassname">lhdata.fund.</code><code class="descname">get_symbols</code><span class="sig-paren">(</span><em>area: str = 'ch'</em>, <em>active: bool = True</em>, <em>type_: str = 'A'</em>, <em>board: str = None</em>, <em>order_by_symbol: bool = True</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>day: str = None</em>, <em>db_config: dict = None</em>, <em>tb_name: str = None</em>, <em>hk: bool = False</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/fund.html#get_symbols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.fund.get_symbols" title="Permalink to this definition">¶</a></dt>
+<dd><p>获取某个市场所有的（外盘为订阅的）股票信息。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>area</strong> – in [‘ch’, ‘us’, ‘hk’, ‘jp’]。</li>
+<li><strong>active</strong> – 是否正常交易。A股判断标准是退市日期为空，外盘通过market_status确认。</li>
+<li><strong>type</strong> – 品种代码, in [‘A’, ‘B’], 只对A股有效。</li>
+<li><strong>board</strong> – 板块代码, in [‘MAIN’(主板), ‘SME’(中小板), ‘GEM’(创业板), ‘STAR’(科创板)], 只对A股有效。</li>
+<li><strong>order_by_symbol</strong> – True -&gt; 按股票代码排序, False -&gt; 按上市日期排序。</li>
+<li><strong>start</strong> – 只返回该日期及之后上市的股票。</li>
+<li><strong>end</strong> – 只返回该日期及之前上市的股票。</li>
+<li><strong>day</strong> – 只返回该日上市的股票。</li>
+<li><strong>db_config</strong> – 指定行情数据库连接，None则自动分配。</li>
+<li><strong>tb_name</strong> – 指定行情表名，格式为{db_name}.{tb_name}，None则自动分配。</li>
+<li><strong>hk</strong> – 在香港使用需设置为True。</li>
+<li><strong>kwargs</strong> – 其他dbgetter.get_fields支持传入的参数</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="ipo">
+<h2>获取ipo日期<a class="headerlink" href="#ipo" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="lhdata.fund.get_ipo_day">
+<code class="descclassname">lhdata.fund.</code><code class="descname">get_ipo_day</code><span class="sig-paren">(</span><em>symbol: Union[str, list, tuple], db_config: dict = None, tb_name: str = None, area: str = None, hk: bool = False, **kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/fund.html#get_ipo_day"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.fund.get_ipo_day" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>symbol</strong> – 如‘000001 CH Equity’；空(‘’ 或 [] 或 () ) 代表所有股票；支持股票列表或股票元组。</li>
+<li><strong>db_config</strong> – 指定行情数据库连接，None则自动分配。</li>
+<li><strong>tb_name</strong> – 指定行情表名，格式为{db_name}.{tb_name}，None则自动分配。</li>
+<li><strong>area</strong> – in [‘CH’, ‘US’, …]。指定symbol区域，不指定则根据symbol（或symbol list的第一个）判定。为空时，自动设置为’CH’。</li>
+<li><strong>hk</strong> – 在香港使用需设置为True。</li>
+<li><strong>kwargs</strong> – 其他dbgetter.get_fields支持传入的参数</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="id2">
+<h2>其他接口<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pool.html" class="btn btn-neutral float-right" title="股票池模块 lhdata.pool" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="calendar.html" class="btn btn-neutral float-left" title="日历模块 lhdata.calendar" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Lighthorseam
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

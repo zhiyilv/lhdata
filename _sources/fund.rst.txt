@@ -1,0 +1,22 @@
+基础信息模块 lhdata.fund
+========================
+* A股由今日投资维护
+
+* 外盘由Lighthorse维护
+
+
+获取股票列表
+------------------
+.. autofunction:: lhdata.fund.get_symbols
+
+获取ipo日期
+------------------
+.. autofunction:: lhdata.fund.get_ipo_day
+
+
+
+---------------------------------
+
+
+其他接口
+--------

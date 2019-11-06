@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>lhdata.fund &mdash; lhdata 19.11.06 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> lhdata
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                19.11.06
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">lhdata docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Install lhdata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">QuickStart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../prices.html">行情模块 lhdata.prices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../features.html">特征模块 lhdata.features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../calendar.html">日历模块 lhdata.calendar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fund.html">基础信息模块 lhdata.fund</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pool.html">股票池模块 lhdata.pool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sectors.html">行业模块 lhdata.sectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../status.html">数据状态</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../version.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">lhdata</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>lhdata.fund</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for lhdata.fund</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">@Time   : 2019-09-03 10:02 AM\n</span>
+<span class="sd">@Author : Zhiyi Lu\n</span>
+<span class="sd">@Email  : zhiyi.lu@lighthorseam.com\n</span>
+<span class="sd">@File   : fund.py\n</span>
+<span class="sd">@Desc   : fundamental info</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">.dispatcher</span> <span class="k">import</span> <span class="n">get_db_config</span><span class="p">,</span> <span class="n">get_tb_name</span>
+<span class="kn">from</span> <span class="nn">.dbgetter</span> <span class="k">import</span> <span class="n">get_fields</span>
+<span class="kn">from</span> <span class="nn">.util_data</span> <span class="k">import</span> <span class="n">s2code_list</span><span class="p">,</span> <span class="n">decide_area</span><span class="p">,</span> <span class="n">idx2name</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Union</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<div class="viewcode-block" id="get_ipo_day"><a class="viewcode-back" href="../../fund.html#lhdata.fund.get_ipo_day">[docs]</a><span class="k">def</span> <span class="nf">get_ipo_day</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">],</span>
+                <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    :param symbol: 如&#39;000001 CH Equity&#39;；空(&#39;&#39; 或 [] 或 () ) 代表所有股票；支持股票列表或股票元组。</span>
+<span class="sd">    :param db_config: 指定行情数据库连接，None则自动分配。</span>
+<span class="sd">    :param tb_name: 指定行情表名，格式为{db_name}.{tb_name}，None则自动分配。</span>
+<span class="sd">    :param area: in [&#39;CH&#39;, &#39;US&#39;, ...]。指定symbol区域，不指定则根据symbol（或symbol list的第一个）判定。为空时，自动设置为&#39;CH&#39;。</span>
+<span class="sd">    :param hk: 在香港使用需设置为True。</span>
+<span class="sd">    :param kwargs: 其他dbgetter.get_fields支持传入的参数</span>
+
+<span class="sd">    :return: DataFrame</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">symbol</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;Index&#39;</span><span class="p">):</span>
+        <span class="n">lookup_tb</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;hs300&#39;</span><span class="p">:</span> <span class="s1">&#39;2005-04-08&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;zz500&#39;</span><span class="p">:</span> <span class="s1">&#39;2005-01-01&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;gemb&#39;</span><span class="p">:</span> <span class="s1">&#39;2010-06-01&#39;</span>
+        <span class="p">}</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="n">symbol</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">lookup_tb</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx2name</span><span class="p">(</span><span class="n">symbol</span><span class="p">)))]],</span>
+                          <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;ipo&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="n">area</span> <span class="o">=</span> <span class="n">area</span> <span class="ow">or</span> <span class="n">decide_area</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">area</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;basics&#39;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">area</span> <span class="o">==</span> <span class="s1">&#39;ch&#39;</span><span class="p">:</span>
+        <span class="n">symbol_list</span> <span class="o">=</span> <span class="n">s2code_list</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+        <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;ivt&#39;</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;SEC_CD&#39;</span><span class="p">,</span> <span class="s1">&#39;MKT_DT&#39;</span><span class="p">],</span>
+                        <span class="n">symbol</span><span class="o">=</span><span class="n">symbol_list</span><span class="p">,</span> <span class="n">symbol_col</span><span class="o">=</span><span class="s1">&#39;SEC_CD&#39;</span><span class="p">,</span>
+                        <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;MKT_DT&#39;</span><span class="p">],</span> <span class="n">rename_col</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;MKT_DT&#39;</span><span class="p">:</span> <span class="s1">&#39;ipo&#39;</span><span class="p">},</span>
+                        <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">db_config</span> <span class="o">=</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;memb&#39;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;ipo_date&#39;</span><span class="p">],</span>
+                        <span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ipo_date&#39;</span><span class="p">],</span> <span class="n">rename_col</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;ipo_date&#39;</span><span class="p">:</span> <span class="s1">&#39;ipo&#39;</span><span class="p">},</span>
+                        <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+<span class="k">def</span> <span class="nf">get_delist_day</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">],</span>
+                   <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                   <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                   <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">area</span> <span class="ow">or</span> <span class="n">decide_area</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">area</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="n">symbol_list</span> <span class="o">=</span> <span class="n">s2code_list</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+    <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;ivt&#39;</span><span class="p">)</span>
+    <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;basics&#39;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">)</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;SEC_CD&#39;</span><span class="p">,</span> <span class="s1">&#39;DEL_DT&#39;</span><span class="p">],</span>
+                    <span class="n">symbol</span><span class="o">=</span><span class="n">symbol_list</span><span class="p">,</span> <span class="n">symbol_col</span><span class="o">=</span><span class="s1">&#39;SEC_CD&#39;</span><span class="p">,</span>
+                    <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DEL_DT&#39;</span><span class="p">],</span> <span class="n">rename_col</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;DEL_DT&#39;</span><span class="p">:</span> <span class="s1">&#39;delisted&#39;</span><span class="p">},</span>
+                    <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
+
+
+<div class="viewcode-block" id="get_symbols"><a class="viewcode-back" href="../../fund.html#lhdata.fund.get_symbols">[docs]</a><span class="k">def</span> <span class="nf">get_symbols</span><span class="p">(</span><span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ch&#39;</span><span class="p">,</span> <span class="n">active</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="n">type_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span>  <span class="n">board</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># for China</span>
+                <span class="n">order_by_symbol</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">day</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># ipo constraints</span>
+                <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    获取某个市场所有的（外盘为订阅的）股票信息。</span>
+
+<span class="sd">    :param area: in [&#39;ch&#39;, &#39;us&#39;, &#39;hk&#39;, &#39;jp&#39;]。</span>
+<span class="sd">    :param active: 是否正常交易。A股判断标准是退市日期为空，外盘通过market_status确认。</span>
+<span class="sd">    :param type_: 品种代码, in [&#39;A&#39;, &#39;B&#39;], 只对A股有效。</span>
+<span class="sd">    :param board: 板块代码, in [&#39;MAIN&#39;(主板), &#39;SME&#39;(中小板), &#39;GEM&#39;(创业板), &#39;STAR&#39;(科创板)], 只对A股有效。</span>
+<span class="sd">    :param order_by_symbol: True -&gt; 按股票代码排序, False -&gt; 按上市日期排序。</span>
+<span class="sd">    :param start: 只返回该日期及之后上市的股票。</span>
+<span class="sd">    :param end: 只返回该日期及之前上市的股票。</span>
+<span class="sd">    :param day: 只返回该日上市的股票。</span>
+<span class="sd">    :param db_config: 指定行情数据库连接，None则自动分配。</span>
+<span class="sd">    :param tb_name: 指定行情表名，格式为{db_name}.{tb_name}，None则自动分配。</span>
+<span class="sd">    :param hk: 在香港使用需设置为True。</span>
+<span class="sd">    :param kwargs: 其他dbgetter.get_fields支持传入的参数</span>
+
+<span class="sd">    :return: DataFrame</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">area</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">area</span> <span class="o">==</span> <span class="s1">&#39;ch&#39;</span><span class="p">:</span>
+        <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;ivt&#39;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
+        <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;basics&#39;</span><span class="p">)</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SEC_CD&#39;</span><span class="p">,</span> <span class="s1">&#39;SEC_NM&#39;</span><span class="p">,</span> <span class="s1">&#39;MKT_CL&#39;</span><span class="p">,</span> <span class="s1">&#39;MKT_DT&#39;</span><span class="p">,</span> <span class="s1">&#39;BOARD_CL&#39;</span><span class="p">]</span>
+        <span class="n">parse_dates</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;MKT_DT&#39;</span><span class="p">]</span>
+        <span class="n">rename_col</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;SEC_CD&#39;</span><span class="p">:</span> <span class="s1">&#39;symbol&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;SEC_NM&#39;</span><span class="p">:</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;MKT_CL&#39;</span><span class="p">:</span> <span class="s1">&#39;exchange&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;MKT_DT&#39;</span><span class="p">:</span> <span class="s1">&#39;ipo&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;BOARD_CL&#39;</span><span class="p">:</span> <span class="s1">&#39;board&#39;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">order_by_symbol</span><span class="p">:</span>
+            <span class="n">order_by_str</span> <span class="o">=</span> <span class="s1">&#39;SEC_CD&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">order_by_str</span> <span class="o">=</span> <span class="s1">&#39;MKT_DT&#39;</span>
+
+        <span class="n">more_str</span> <span class="o">=</span> <span class="s1">&#39;AND MKT_DT IS NOT NULL&#39;</span>
+        <span class="k">if</span> <span class="n">type_</span><span class="p">:</span>
+            <span class="n">more_str</span> <span class="o">+=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">AND VAR_CL = &#39;</span><span class="si">{type_}</span><span class="s2">&#39;&quot;</span>
+        <span class="k">if</span> <span class="n">board</span><span class="p">:</span>
+            <span class="n">more_str</span> <span class="o">+=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">AND BOARD_CL = &#39;</span><span class="si">{board}</span><span class="s2">&#39;&quot;</span>
+        <span class="k">if</span> <span class="n">active</span><span class="p">:</span>
+            <span class="n">more_str</span> <span class="o">+=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">AND DEL_DT IS NULL&quot;</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># 需要包含delist date</span>
+            <span class="n">fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;DEL_DT&#39;</span><span class="p">)</span>
+            <span class="n">parse_dates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;DEL_DT&#39;</span><span class="p">)</span>
+            <span class="n">rename_col</span><span class="p">[</span><span class="s1">&#39;DEL_DT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;delisted&#39;</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
+                        <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="n">day</span><span class="p">,</span> <span class="n">dt_col</span><span class="o">=</span><span class="s1">&#39;MKT_DT&#39;</span><span class="p">,</span>
+                        <span class="n">more</span><span class="o">=</span><span class="n">more_str</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="n">order_by_str</span><span class="p">,</span>
+                        <span class="n">parse_dates</span><span class="o">=</span><span class="n">parse_dates</span><span class="p">,</span> <span class="n">rename_col</span><span class="o">=</span><span class="n">rename_col</span><span class="p">,</span>
+                        <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;prices&#39;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
+        <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;basics&#39;</span><span class="p">)</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;exchangeid&#39;</span><span class="p">,</span> <span class="s1">&#39;ipo_date&#39;</span><span class="p">,</span> <span class="s1">&#39;market_status&#39;</span><span class="p">]</span>
+        <span class="n">parse_dates</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ipo_date&#39;</span><span class="p">]</span>
+        <span class="n">rename_col</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;exchangeid&#39;</span><span class="p">:</span> <span class="s1">&#39;exchange&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;ipo_date&#39;</span><span class="p">:</span> <span class="s1">&#39;ipo&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;market_status&#39;</span><span class="p">:</span> <span class="s1">&#39;status&#39;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">order_by_symbol</span><span class="p">:</span>
+            <span class="n">order_by_str</span> <span class="o">=</span> <span class="s1">&#39;symbol&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">order_by_str</span> <span class="o">=</span> <span class="s1">&#39;ipo_date&#39;</span>
+
+        <span class="n">more_str</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;AND area = &#39;</span><span class="si">{area}</span><span class="s2">&#39;</span><span class="se">\n</span><span class="s2">AND sec_type = &#39;EQUITY&#39;&quot;</span>
+        <span class="k">if</span> <span class="n">active</span><span class="p">:</span>
+            <span class="n">more_str</span> <span class="o">+=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">AND market_status = &#39;ACTV&#39;&quot;</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
+                        <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="n">day</span><span class="p">,</span> <span class="n">dt_col</span><span class="o">=</span><span class="s1">&#39;ipo_date&#39;</span><span class="p">,</span>
+                        <span class="n">more</span><span class="o">=</span><span class="n">more_str</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="n">order_by_str</span><span class="p">,</span>
+                        <span class="n">parse_dates</span><span class="o">=</span><span class="n">parse_dates</span><span class="p">,</span> <span class="n">rename_col</span><span class="o">=</span><span class="n">rename_col</span><span class="p">,</span>
+                        <span class="o">**</span><span class="n">kwargs</span>
+                        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Lighthorseam
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
