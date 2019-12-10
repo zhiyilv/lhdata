@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lhdata.sectors &mdash; lhdata 19.11.06 documentation</title>
+  <title>lhdata.sectors &mdash; lhdata 19.12.10 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                19.11.06
+                19.12.10
               </div>
             
           
@@ -286,6 +286,7 @@
 <span class="sd">    :return: DataFrame</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">code</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">area</span> <span class="ow">or</span> <span class="s1">&#39;ch&#39;</span>
     <span class="k">if</span> <span class="n">system</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">system</span> <span class="o">=</span> <span class="s1">&#39;swhy&#39;</span> <span class="k">if</span> <span class="n">area</span> <span class="o">==</span> <span class="s1">&#39;ch&#39;</span> <span class="k">else</span> <span class="s1">&#39;gics&#39;</span>
     <span class="k">else</span><span class="p">:</span>

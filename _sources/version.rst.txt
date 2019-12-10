@@ -2,6 +2,12 @@ Changelog
 =========
 通过 ``lhdata.__version__`` 确认为最新版本
 
+19.12.10
+--------
+``dispatcher.py``
+>>>>>>>>>>>>>>>>>>>>>
+  * 外盘原始行情使用hisquotation_orig_ovs，修复行情错位问题
+
 19.11.06
 --------
 ``pool.py``
