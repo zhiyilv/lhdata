@@ -95,7 +95,7 @@
 <li class="toctree-l1"><a class="reference internal" href="sectors.html">行业模块 lhdata.sectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="status.html">数据状态</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">19.12.10</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">19.12.12</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#pool-py"><code class="docutils literal notranslate"><span class="pre">pool.py</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#util-data-py"><code class="docutils literal notranslate"><span class="pre">util_data.py</span></code></a></li>
 </ul>
@@ -193,12 +193,13 @@
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <p>通过 <code class="docutils literal notranslate"><span class="pre">lhdata.__version__</span></code> 确认为最新版本</p>
 <div class="section" id="id1">
-<h2>19.12.10<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>19.12.12<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="pool-py">
 <h3><code class="docutils literal notranslate"><span class="pre">pool.py</span></code><a class="headerlink" href="#pool-py" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
-<li>支持查询标普100指数（OEX Index）成分</li>
+<li>支持查询标普100指数（OEX Index）成分 <code class="docutils literal notranslate"><span class="pre">get_memb</span></code></li>
+<li>支持查询当前股票池 <code class="docutils literal notranslate"><span class="pre">get_pool</span></code></li>
 <li>修正成分表更新逻辑</li>
 </ul>
 </div></blockquote>
@@ -208,6 +209,7 @@
 <blockquote>
 <div><ul class="simple">
 <li>支持标普100指数（OEX Index）</li>
+<li>支持判断股票池地区 <code class="docutils literal notranslate"><span class="pre">decide_area_pool</span></code></li>
 </ul>
 </div></blockquote>
 </div>
@@ -229,7 +231,7 @@
 <h3><code class="docutils literal notranslate"><span class="pre">pool.py</span></code><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
-<li>修复get_memb不指定end获取信息不全的问题</li>
+<li>修复 <code class="docutils literal notranslate"><span class="pre">get_memb</span></code> 不指定end获取信息不全的问题</li>
 </ul>
 </div></blockquote>
 </div>
@@ -240,7 +242,7 @@
 <h3><code class="docutils literal notranslate"><span class="pre">fund.py</span></code><a class="headerlink" href="#fund-py" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
-<li>支持查询外盘股票的ipo日期</li>
+<li>支持查询外盘股票的ipo日期 <code class="docutils literal notranslate"><span class="pre">get_ipo_day</span></code></li>
 </ul>
 </div></blockquote>
 </div>
@@ -252,7 +254,7 @@
 <blockquote>
 <div><ul class="simple">
 <li>在香港可以通过Bloomberg下载信息</li>
-<li>已实现复权信息</li>
+<li>已实现复权信息 <code class="docutils literal notranslate"><span class="pre">adj_from_bbg</span></code></li>
 </ul>
 </div></blockquote>
 </div>
