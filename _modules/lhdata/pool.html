@@ -164,20 +164,47 @@
 <span class="c1"># @File   : pool.py\n</span>
 <span class="c1"># @Desc   : xxx</span>
 
-<span class="kn">from</span> <span class="nn">.dispatcher</span> <span class="k">import</span> <span class="n">get_db_config</span>
+<span class="kn">from</span> <span class="nn">.dispatcher</span> <span class="k">import</span> <span class="n">get_db_config</span><span class="p">,</span> <span class="n">get_tb_name</span>
 <span class="kn">from</span> <span class="nn">.dbgetter</span> <span class="k">import</span> <span class="n">get_fields</span>
-<span class="kn">from</span> <span class="nn">.util_data</span> <span class="k">import</span> <span class="n">idx2idx_key</span><span class="p">,</span> <span class="n">idx2symbol</span>
+<span class="kn">from</span> <span class="nn">.util_data</span> <span class="k">import</span> <span class="n">idx2idx_key</span><span class="p">,</span> <span class="n">idx2symbol</span><span class="p">,</span> <span class="n">decide_area_pool</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 
-<span class="k">def</span> <span class="nf">get_pool</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="k">pass</span>
+<div class="viewcode-block" id="get_pool"><a class="viewcode-back" href="../../pool.html#lhdata.pool.get_pool">[docs]</a><span class="k">def</span> <span class="nf">get_pool</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+             <span class="o">**</span><span class="n">kwargs</span>
+             <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    获取股票池。</span>
+
+<span class="sd">    :param name: 股票池名字</span>
+<span class="sd">    :param area: in [&#39;ch&#39;, &#39;ovs&#39;]，不输入则自动判断。</span>
+<span class="sd">    :param db_config: 指定 股票池表 数据库连接，None则自动分配。</span>
+<span class="sd">    :param tb_name: 指定 股票池表 的表名，格式为{db_name}.{tb_name}，None则自动分配。</span>
+<span class="sd">    :param hk: 在香港使用需设置为True。</span>
+<span class="sd">    :param kwargs: 其他get_fields支持传入的参数。</span>
+
+<span class="sd">    :return: DataFrame</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">area</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">area</span> <span class="o">=</span> <span class="n">decide_area_pool</span><span class="p">(</span><span class="n">pool</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;pool&#39;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
+    <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;pool&#39;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">)</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">symbol</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">symbol_col</span><span class="o">=</span><span class="s1">&#39;Pool&#39;</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;Ticker&#39;</span><span class="p">,</span>
+                    <span class="n">rename_col</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Ticker&#39;</span><span class="p">:</span> <span class="s1">&#39;symbol&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;Pool&#39;</span><span class="p">:</span> <span class="s1">&#39;pool_name&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;UPDATETIME&#39;</span><span class="p">:</span> <span class="s1">&#39;updatetime&#39;</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">df</span></div>
 
 
 <div class="viewcode-block" id="get_memb"><a class="viewcode-back" href="../../pool.html#lhdata.pool.get_memb">[docs]</a><span class="k">def</span> <span class="nf">get_memb</span><span class="p">(</span><span class="n">index</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">day</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
              <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
              <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-             <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+             <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    获取指数成分股。</span>
 

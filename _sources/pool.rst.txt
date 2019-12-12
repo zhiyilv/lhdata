@@ -10,10 +10,12 @@
 .. autofunction:: lhdata.pool.get_memb
 
 
+获取当前股票池
+------------------
+.. autofunction:: lhdata.pool.get_pool
+
 ---------------------------------
 
 
 其他接口
 --------
-.. automodule:: lhdata.pool
-   :members: get_pool
