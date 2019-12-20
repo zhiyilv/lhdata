@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>行情模块 lhdata.prices &mdash; lhdata 19.12.12 documentation</title>
+  <title>行情模块 lhdata.prices &mdash; lhdata 19.12.20 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                19.12.12
+                19.12.20
               </div>
             
           
@@ -301,7 +301,7 @@ chunksize：每个进程处理多少个查询。默认为1。</li>
 
 <dl class="function">
 <dt id="lhdata.prices.get_adj">
-<code class="descclassname">lhdata.prices.</code><code class="descname">get_adj</code><span class="sig-paren">(</span><em>symbol: Union[str, list, tuple], start: str = None, end: str = None, db_config: dict = None, tb_name: str = None, hk: bool = False, area: str = None, progress: bool = False, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/prices.html#get_adj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.prices.get_adj" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.prices.</code><code class="descname">get_adj</code><span class="sig-paren">(</span><em>symbol: Union[str, list, tuple], start: str = None, end: str = None, db_config: dict = None, tb_name: str = None, hk: bool = False, area: str = None, progress: bool = False, full: bool = True, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/prices.html#get_adj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.prices.get_adj" title="Permalink to this definition">¶</a></dt>
 <dd><p>获取复权数据，包括除息除权日、分红、系数等。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -316,6 +316,7 @@ chunksize：每个进程处理多少个查询。默认为1。</li>
 <li><strong>hk</strong> – 在香港使用需设置为True。</li>
 <li><strong>area</strong> – in [‘CH’, ‘US’, …]。指定symbol区域，不指定则根据symbol（或symbol list的第一个）判定。为空时，自动设置为’CH’。</li>
 <li><strong>progress</strong> – 显示下载进度条。</li>
+<li><strong>full</strong> – 是否下载所有列。</li>
 <li><strong>kwargs</strong> – </li>
 </ul>
 </td>

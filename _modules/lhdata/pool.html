@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lhdata.pool &mdash; lhdata 19.12.12 documentation</title>
+  <title>lhdata.pool &mdash; lhdata 19.12.20 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                19.12.12
+                19.12.20
               </div>
             
           
@@ -166,7 +166,7 @@
 
 <span class="kn">from</span> <span class="nn">.dispatcher</span> <span class="k">import</span> <span class="n">get_db_config</span><span class="p">,</span> <span class="n">get_tb_name</span>
 <span class="kn">from</span> <span class="nn">.dbgetter</span> <span class="k">import</span> <span class="n">get_fields</span>
-<span class="kn">from</span> <span class="nn">.util_data</span> <span class="k">import</span> <span class="n">idx2idx_key</span><span class="p">,</span> <span class="n">idx2symbol</span><span class="p">,</span> <span class="n">decide_area_pool</span>
+<span class="kn">from</span> <span class="nn">.util_data</span> <span class="k">import</span> <span class="n">idx2idx_key</span><span class="p">,</span> <span class="n">idx2symbol</span><span class="p">,</span> <span class="n">decide_pool_area</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 
@@ -188,7 +188,7 @@
 <span class="sd">    :return: DataFrame</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">area</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">area</span> <span class="o">=</span> <span class="n">decide_area_pool</span><span class="p">(</span><span class="n">pool</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">area</span> <span class="o">=</span> <span class="n">decide_pool_area</span><span class="p">(</span><span class="n">pool</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;pool&#39;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
     <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;pool&#39;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">)</span>
@@ -197,7 +197,8 @@
                     <span class="n">symbol</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">symbol_col</span><span class="o">=</span><span class="s1">&#39;Pool&#39;</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;Ticker&#39;</span><span class="p">,</span>
                     <span class="n">rename_col</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Ticker&#39;</span><span class="p">:</span> <span class="s1">&#39;symbol&#39;</span><span class="p">,</span>
                                 <span class="s1">&#39;Pool&#39;</span><span class="p">:</span> <span class="s1">&#39;pool_name&#39;</span><span class="p">,</span>
-                                <span class="s1">&#39;UPDATETIME&#39;</span><span class="p">:</span> <span class="s1">&#39;updatetime&#39;</span><span class="p">})</span>
+                                <span class="s1">&#39;UPDATETIME&#39;</span><span class="p">:</span> <span class="s1">&#39;updatetime&#39;</span><span class="p">},</span>
+                    <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span></div>
 
 
@@ -209,7 +210,7 @@
 <span class="sd">    获取指数成分股。</span>
 
 <span class="sd">    * 沪深300、中证500 由今日投资维护。</span>
-<span class="sd">    * 创业板指、恒指、国企指数、道指、纳斯达克100、标普500、日经225 由Lighthorse维护。</span>
+<span class="sd">    * 创业板指、恒指、国企指数、道指、纳斯达克100、标普500、标普100、日经225 由Lighthorse维护。</span>
 
 <span class="sd">    :param index: 指数名字，如&#39;hs300&#39;. 支持上述6个指数，可以使用中、英、别名。建议使用指数对应的ticker，如hs300对应SHSZ300 Index。</span>
 <span class="sd">    :param day: 指定日期，会忽略start、end的输入。若day、start、end都为空，则设置为查询当日。注意此时当日数据可能还未准备好。</span>
@@ -270,6 +271,21 @@
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;idx_symbol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx2symbol</span><span class="p">(</span><span class="n">idx2symbol</span><span class="p">(</span><span class="n">idx_key</span><span class="o">=</span><span class="n">index_key</span><span class="p">))</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;idx_symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">]]</span>
     <span class="k">return</span> <span class="n">df</span></div>
+
+
+<span class="k">def</span> <span class="nf">get_memb_latest</span><span class="p">(</span><span class="n">index</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">retry</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">td_ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">offset</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">retry</span><span class="p">):</span>
+        <span class="n">day</span> <span class="o">=</span> <span class="p">(</span><span class="n">td_ts</span> <span class="o">-</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">offset</span><span class="p">))</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">get_memb</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="n">day</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">df</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
 
 
 

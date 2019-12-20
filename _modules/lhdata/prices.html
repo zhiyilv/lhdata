@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lhdata.prices &mdash; lhdata 19.12.12 documentation</title>
+  <title>lhdata.prices &mdash; lhdata 19.12.20 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                19.12.12
+                19.12.20
               </div>
             
           
@@ -163,10 +163,11 @@
 <span class="c1"># @Email  : zhiyi.lu@lighthorseam.com\n</span>
 <span class="c1"># @File   : prices.py\n</span>
 <span class="c1"># @Desc   : 行情模块</span>
-<span class="kn">from</span> <span class="nn">.dispatcher</span> <span class="k">import</span> <span class="n">get_db_config</span><span class="p">,</span> <span class="n">get_tb_name</span><span class="p">,</span> <span class="n">DEFAULT_START</span>
+<span class="kn">from</span> <span class="nn">.dispatcher</span> <span class="k">import</span> <span class="n">get_db_config</span><span class="p">,</span> <span class="n">get_tb_name</span><span class="p">,</span> <span class="n">DEFAULT_START</span><span class="p">,</span> <span class="n">valid_types</span><span class="p">,</span> <span class="n">cap_types</span><span class="p">,</span> <span class="n">split_types</span>
 <span class="kn">from</span> <span class="nn">.dbgetter</span> <span class="k">import</span> <span class="n">get_mysql_p</span><span class="p">,</span> <span class="n">get_fields</span><span class="p">,</span> <span class="n">get_prev__ps</span><span class="p">,</span> <span class="n">_date_str</span><span class="p">,</span> <span class="n">_fields_str</span>
 <span class="kn">from</span> <span class="nn">.util_data</span> <span class="k">import</span> <span class="n">decide_area</span><span class="p">,</span> <span class="n">adj_px_by2df</span><span class="p">,</span> <span class="n">adj_px_by2df_p</span><span class="p">,</span> <span class="n">s2code_list</span><span class="p">,</span> <span class="n">align_date_p</span>
 <span class="kn">from</span> <span class="nn">.calendar</span> <span class="k">import</span> <span class="n">get_calendar</span><span class="p">,</span> <span class="n">get_symbol_prev_day</span>
+
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Union</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">chain</span>
@@ -379,9 +380,126 @@
 <span class="c1"># ----------</span>
 <span class="c1">#  复权价格</span>
 <span class="c1"># ----------</span>
+<span class="c1"># def get_adj(symbol: Union[str, list, tuple], start: str = None, end: str = None,</span>
+<span class="c1">#             db_config: dict = None, tb_name: str = None,</span>
+<span class="c1">#             hk: bool = False, area: str = None, progress: bool = False,</span>
+<span class="c1">#             **kwargs):</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     获取复权数据，包括除息除权日、分红、系数等。</span>
+<span class="c1">#</span>
+<span class="c1">#     :param symbol: 如&#39;000001 CH Equity&#39;；空(&#39;&#39; 或 [] 或 () ) 代表所有股票；支持股票列表或股票元组。</span>
+<span class="c1">#     :param start: 起始日期（含），格式如&#39;2019-01-01&#39;；&#39;&#39;代表数据库中最早的日期。</span>
+<span class="c1">#     :param end: 终止日期（含），格式如&#39;2019-09-01&#39;；&#39;&#39;代表数据库中最晚的日期。</span>
+<span class="c1">#     :param db_config: 指定数据库连接，None则自动分配。</span>
+<span class="c1">#     :param tb_name: 指定的表名，格式为{db_name}.{tb_name}，None则自动分配。</span>
+<span class="c1">#     :param hk: 在香港使用需设置为True。</span>
+<span class="c1">#     :param area: in [&#39;CH&#39;, &#39;US&#39;, ...]。指定symbol区域，不指定则根据symbol（或symbol list的第一个）判定。为空时，自动设置为&#39;CH&#39;。</span>
+<span class="c1">#     :param progress: 显示下载进度条。</span>
+<span class="c1">#     :param kwargs:</span>
+<span class="c1">#</span>
+<span class="c1">#     :return: a list/tuple of symbols -&gt; DataFrame list; otherwise, DataFrame</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     try:</span>
+<span class="c1">#         if symbol.endswith(&#39;Index&#39;):</span>
+<span class="c1">#             return pd.DataFrame()</span>
+<span class="c1">#     except AttributeError:</span>
+<span class="c1">#         pass</span>
+<span class="c1">#</span>
+<span class="c1">#     # shortcut</span>
+<span class="c1">#     if not symbol:</span>
+<span class="c1">#         symbol = &#39;&#39;</span>
+<span class="c1">#     if len(symbol) &gt; 50:  # 超过50个采用全部下载再过滤的方式</span>
+<span class="c1">#         df_all = get_adj(symbol=&#39;&#39;, start=start, end=end, db_config=db_config, tb_name=tb_name, hk=hk, area=area,</span>
+<span class="c1">#                          progress=progress, **kwargs)</span>
+<span class="c1">#         df_selected = df_all[df_all.symbol.isin(symbol)]</span>
+<span class="c1">#         df_dict = dict(list(df_selected.groupby(by=&#39;symbol&#39;)))</span>
+<span class="c1">#         return [df_dict.get(s) for s in symbol]</span>
+<span class="c1">#</span>
+<span class="c1">#     area = area or decide_area(symbol)</span>
+<span class="c1">#     area = area.lower()</span>
+<span class="c1">#     tb_name = tb_name or get_tb_name(symbol=symbol, area=area, key=&#39;dvd&#39;)</span>
+<span class="c1">#     desc = &#39;Getting adjustments info&#39;</span>
+<span class="c1">#     if area == &#39;ch&#39;:</span>
+<span class="c1">#         db_config = db_config or get_db_config(key=&#39;ivt&#39;, hk=hk)</span>
+<span class="c1">#         cols = [f&#39;F00{i}0&#39; for i in range(1, 9)]</span>
+<span class="c1">#         fields = [&#39;SEC_CD&#39;, *cols]</span>
+<span class="c1">#         parse_dates = [&#39;F0010&#39;]</span>
+<span class="c1">#         rename_col = {</span>
+<span class="c1">#                 &#39;SEC_CD&#39;: &#39;symbol&#39;,</span>
+<span class="c1">#                 &#39;F0010&#39;:  &#39;ex_date&#39;,</span>
+<span class="c1">#                 &#39;F0020&#39;:  &#39;adj_cap&#39;,</span>
+<span class="c1">#                 &#39;F0030&#39;:  &#39;dvd_cash&#39;,</span>
+<span class="c1">#                 &#39;F0060&#39;:  &#39;adj&#39;,</span>
+<span class="c1">#                 &#39;F0080&#39;:  &#39;adj_cap_r&#39;</span>
+<span class="c1">#         }</span>
+<span class="c1">#         df = get_fields(db_config=db_config, tb_name=tb_name, ivt=True,</span>
+<span class="c1">#                         fields=fields, symbol=s2code_list(symbol), symbol_col=&#39;SEC_CD&#39;,</span>
+<span class="c1">#                         start=start, end=end, dt_col=&#39;F0010&#39;,</span>
+<span class="c1">#                         # order_by=&#39;F0010 ASC&#39;,</span>
+<span class="c1">#                         parse_dates=parse_dates, rename_col=rename_col,</span>
+<span class="c1">#                         progress=progress,</span>
+<span class="c1">#                         desc=desc,</span>
+<span class="c1">#                         **kwargs</span>
+<span class="c1">#                         )</span>
+<span class="c1">#     else:  # overseas</span>
+<span class="c1">#         db_config = db_config or get_db_config(key=&#39;dvd_ovs&#39;, hk=hk)</span>
+<span class="c1">#         fields = [</span>
+<span class="c1">#                 &#39;symbol&#39;, &#39;declared_date&#39;, &#39;ex_date&#39;, &#39;record_date&#39;, &#39;payable_date&#39;,</span>
+<span class="c1">#                 &#39;dividend_type&#39;, &#39;curr&#39;, &#39;dividend_amount_all_fixed&#39;, &#39;adjustmentFactor&#39;</span>
+<span class="c1">#         ]</span>
+<span class="c1">#         parse_dates = [&#39;ex_date&#39;]</span>
+<span class="c1">#         rename_col = {</span>
+<span class="c1">#                 &#39;ex_date&#39;:                   &#39;ex_date&#39;,  # 否则会被自动重命名为datetime</span>
+<span class="c1">#                 &#39;dividend_type&#39;:             &#39;dvd_type&#39;,</span>
+<span class="c1">#                 &#39;dividend_amount_all_fixed&#39;: &#39;amount&#39;,</span>
+<span class="c1">#                 &#39;adjustmentFactor&#39;:          &#39;adj&#39;</span>
+<span class="c1">#         }</span>
+<span class="c1">#         df = get_fields(db_config=db_config, tb_name=tb_name, ivt=False,</span>
+<span class="c1">#                         fields=fields, symbol=symbol, start=start, end=end, dt_col=&#39;ex_date&#39;,</span>
+<span class="c1">#                         # order_by=&#39;ex_date ASC&#39;,</span>
+<span class="c1">#                         parse_dates=parse_dates, rename_col=rename_col, progress=progress,</span>
+<span class="c1">#                         desc=desc,</span>
+<span class="c1">#                         **kwargs)</span>
+<span class="c1">#</span>
+<span class="c1">#         # 处理capital change相关</span>
+<span class="c1">#         df_list = df if isinstance(df, list) else [df]</span>
+<span class="c1">#         cap_change_type = [&quot;Stock Dividend&quot;, &quot;Bonus&quot;, &quot;Gratis&quot;, &quot;Scrip&quot;, &quot;Stock Split&quot;]</span>
+<span class="c1">#         incl_dvd_type = [</span>
+<span class="c1">#                 &quot;Stock Dividend&quot;, &quot;Bonus&quot;, &quot;Gratis&quot;, &quot;Scrip&quot;, &quot;Stock Split&quot;,</span>
+<span class="c1">#                 &quot;Regular Cash&quot;, &quot;Special Cash&quot;, &quot;Interim&quot;, &quot;Final&quot;,</span>
+<span class="c1">#                 &quot;1st Interim&quot;, &quot;2nd Interim&quot;, &quot;3rd Interim&quot;, &quot;4th Interim&quot;,</span>
+<span class="c1">#                 &quot;Return of Capital&quot;, &quot;Capital Gains&quot;, &quot;Long Term Cap Gain&quot;, &quot;Short Term Cap Gain&quot;,</span>
+<span class="c1">#                 &quot;Memorial&quot;, &quot;Income&quot;, &quot;Pro Rata&quot;</span>
+<span class="c1">#         ]</span>
+<span class="c1">#</span>
+<span class="c1">#         df_ae_list = []  # ae: after effects</span>
+<span class="c1">#         for df_raw in df_list:</span>
+<span class="c1">#             cap_change_flag = df_raw[&#39;dvd_type&#39;].isin(cap_change_type)</span>
+<span class="c1">#             df_ae = df_raw.copy()</span>
+<span class="c1">#             df_ae[&#39;adj_cap_r&#39;] = df_raw[&#39;adj&#39;]</span>
+<span class="c1">#             df_ae.loc[~cap_change_flag, &#39;adj_cap_r&#39;] = 1</span>
+<span class="c1">#             df_ae.loc[cap_change_flag, &#39;adj&#39;] = 1 / df_ae.loc[cap_change_flag, &#39;adj&#39;]</span>
+<span class="c1">#</span>
+<span class="c1">#             if kwargs.get(&#39;all&#39;, False):</span>
+<span class="c1">#                 pass</span>
+<span class="c1">#             else:</span>
+<span class="c1">#                 df_ae = df_ae[df_ae.dvd_type.isin(incl_dvd_type)].reset_index(drop=True)</span>
+<span class="c1">#</span>
+<span class="c1">#             df_ae_list.append(df_ae)</span>
+<span class="c1">#</span>
+<span class="c1">#         if len(df_ae_list) == 1:</span>
+<span class="c1">#             df = df_ae_list[0]</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             df = df_ae_list</span>
+<span class="c1">#</span>
+<span class="c1">#     return df</span>
+
+
+<span class="c1"># temp on hk machine</span>
 <div class="viewcode-block" id="get_adj"><a class="viewcode-back" href="../../prices.html#lhdata.prices.get_adj">[docs]</a><span class="k">def</span> <span class="nf">get_adj</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">],</span> <span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">full</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    获取复权数据，包括除息除权日、分红、系数等。</span>
@@ -394,6 +512,7 @@
 <span class="sd">    :param hk: 在香港使用需设置为True。</span>
 <span class="sd">    :param area: in [&#39;CH&#39;, &#39;US&#39;, ...]。指定symbol区域，不指定则根据symbol（或symbol list的第一个）判定。为空时，自动设置为&#39;CH&#39;。</span>
 <span class="sd">    :param progress: 显示下载进度条。</span>
+<span class="sd">    :param full: 是否下载所有列。</span>
 <span class="sd">    :param kwargs:</span>
 
 <span class="sd">    :return: a list/tuple of symbols -&gt; DataFrame list; otherwise, DataFrame</span>
@@ -442,47 +561,35 @@
                         <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>  <span class="c1"># overseas</span>
         <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;dvd_ovs&#39;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;declared_date&#39;</span><span class="p">,</span> <span class="s1">&#39;ex_date&#39;</span><span class="p">,</span> <span class="s1">&#39;record_date&#39;</span><span class="p">,</span> <span class="s1">&#39;payable_date&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;dividend_type&#39;</span><span class="p">,</span> <span class="s1">&#39;curr&#39;</span><span class="p">,</span> <span class="s1">&#39;dividend_amount_all_fixed&#39;</span><span class="p">,</span> <span class="s1">&#39;adjustmentFactor&#39;</span>
-        <span class="p">]</span>
+        <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;dvd&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">full</span><span class="p">:</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;ex_date&#39;</span><span class="p">,</span> <span class="s1">&#39;dvd_type&#39;</span><span class="p">,</span> <span class="s1">&#39;amount_all_fixed&#39;</span><span class="p">,</span> <span class="s1">&#39;adj&#39;</span><span class="p">]</span>
         <span class="n">parse_dates</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ex_date&#39;</span><span class="p">]</span>
         <span class="n">rename_col</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s1">&#39;ex_date&#39;</span><span class="p">:</span>                   <span class="s1">&#39;ex_date&#39;</span><span class="p">,</span>  <span class="c1"># 否则会被自动重命名为datetime</span>
-                <span class="s1">&#39;dividend_type&#39;</span><span class="p">:</span>             <span class="s1">&#39;dvd_type&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;dividend_amount_all_fixed&#39;</span><span class="p">:</span> <span class="s1">&#39;amount&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;adjustmentFactor&#39;</span><span class="p">:</span>          <span class="s1">&#39;adj&#39;</span>
+                <span class="s1">&#39;dividend_amount_all_fixed&#39;</span><span class="p">:</span> <span class="s1">&#39;amount&#39;</span>
         <span class="p">}</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                         <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span> <span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">dt_col</span><span class="o">=</span><span class="s1">&#39;ex_date&#39;</span><span class="p">,</span>
                         <span class="c1"># order_by=&#39;ex_date ASC&#39;,</span>
+                        <span class="n">more</span><span class="o">=</span><span class="s1">&#39;AND is_vld=1&#39;</span><span class="p">,</span>  <span class="c1"># 复权表要求</span>
                         <span class="n">parse_dates</span><span class="o">=</span><span class="n">parse_dates</span><span class="p">,</span> <span class="n">rename_col</span><span class="o">=</span><span class="n">rename_col</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">,</span>
                         <span class="n">desc</span><span class="o">=</span><span class="n">desc</span><span class="p">,</span>
                         <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="c1"># 处理capital change相关</span>
         <span class="n">df_list</span> <span class="o">=</span> <span class="n">df</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">df</span><span class="p">]</span>
-        <span class="n">cap_change_type</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Stock Dividend&quot;</span><span class="p">,</span> <span class="s2">&quot;Bonus&quot;</span><span class="p">,</span> <span class="s2">&quot;Gratis&quot;</span><span class="p">,</span> <span class="s2">&quot;Scrip&quot;</span><span class="p">,</span> <span class="s2">&quot;Stock Split&quot;</span><span class="p">]</span>
-        <span class="n">incl_dvd_type</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="s2">&quot;Stock Dividend&quot;</span><span class="p">,</span> <span class="s2">&quot;Bonus&quot;</span><span class="p">,</span> <span class="s2">&quot;Gratis&quot;</span><span class="p">,</span> <span class="s2">&quot;Scrip&quot;</span><span class="p">,</span> <span class="s2">&quot;Stock Split&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Regular Cash&quot;</span><span class="p">,</span> <span class="s2">&quot;Special Cash&quot;</span><span class="p">,</span> <span class="s2">&quot;Interim&quot;</span><span class="p">,</span> <span class="s2">&quot;Final&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;1st Interim&quot;</span><span class="p">,</span> <span class="s2">&quot;2nd Interim&quot;</span><span class="p">,</span> <span class="s2">&quot;3rd Interim&quot;</span><span class="p">,</span> <span class="s2">&quot;4th Interim&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Return of Capital&quot;</span><span class="p">,</span> <span class="s2">&quot;Capital Gains&quot;</span><span class="p">,</span> <span class="s2">&quot;Long Term Cap Gain&quot;</span><span class="p">,</span> <span class="s2">&quot;Short Term Cap Gain&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Memorial&quot;</span><span class="p">,</span> <span class="s2">&quot;Income&quot;</span><span class="p">,</span> <span class="s2">&quot;Pro Rata&quot;</span>
-        <span class="p">]</span>
 
-        <span class="n">df_ae_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># ae: after effects</span>
+        <span class="n">df_ae_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># ae: after effects, add a column: adj_cap_r</span>
         <span class="k">for</span> <span class="n">df_raw</span> <span class="ow">in</span> <span class="n">df_list</span><span class="p">:</span>
-            <span class="n">cap_change_flag</span> <span class="o">=</span> <span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;dvd_type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">cap_change_type</span><span class="p">)</span>
+            <span class="n">cap_change_flag</span> <span class="o">=</span> <span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;dvd_type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">cap_types</span> <span class="o">+</span> <span class="n">split_types</span><span class="p">)</span>
+            <span class="n">cap_change_flag</span> <span class="o">=</span> <span class="n">cap_change_flag</span> <span class="o">|</span> <span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;note&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;split&#39;</span><span class="p">)</span>
             <span class="n">df_ae</span> <span class="o">=</span> <span class="n">df_raw</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">df_ae</span><span class="p">[</span><span class="s1">&#39;adj_cap_r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;adj&#39;</span><span class="p">]</span>
-            <span class="n">df_ae</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">cap_change_flag</span><span class="p">,</span> <span class="s1">&#39;adj_cap_r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="n">df_ae</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cap_change_flag</span><span class="p">,</span> <span class="s1">&#39;adj&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">df_ae</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cap_change_flag</span><span class="p">,</span> <span class="s1">&#39;adj&#39;</span><span class="p">]</span>
-
-            <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
-                <span class="k">pass</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">df_ae</span> <span class="o">=</span> <span class="n">df_ae</span><span class="p">[</span><span class="n">df_ae</span><span class="o">.</span><span class="n">dvd_type</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">incl_dvd_type</span><span class="p">)]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">df_ae</span><span class="p">[</span><span class="s1">&#39;adj_cap_r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">df_ae</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cap_change_flag</span><span class="p">,</span> <span class="s1">&#39;adj_cap_r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">df_ae</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cap_change_flag</span><span class="p">,</span> <span class="s1">&#39;adj&#39;</span><span class="p">]</span>
+            <span class="n">df_ae</span> <span class="o">=</span> <span class="n">df_ae</span><span class="p">[</span><span class="n">df_ae</span><span class="o">.</span><span class="n">dvd_type</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">valid_types</span><span class="p">)]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
             <span class="n">df_ae_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_ae</span><span class="p">)</span>
 

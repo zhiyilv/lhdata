@@ -2,6 +2,28 @@ Changelog
 =========
 通过 ``lhdata.__version__`` 确认为最新版本
 
+19.12.20
+--------
+``prices.py``
+>>>>>>>>>>>>>>>>>>>>>
+  * ``get_adj`` 外盘使用新的复权表tb_dvd_ovs
+
+``features.py``
+>>>>>>>>>>>>>>>>>>>>>
+  * ``get_risk`` 使用正式库的risk表, A股已完成
+
+``pool.py``
+>>>>>>>>>>>>>>>>>>>>>
+  * 查询最近的指数成分 ``get_memb_latest``
+
+``bbghk.py``
+>>>>>>>>>>>>>>>>>>>>>
+  * 统一外盘使用183，A股使用131
+  * ``adj_from_bbg``: 1. 自动添加最近一个现金类分红的货币; 2. 支持港股非HKD货币的汇率换算; 3. 手动添加信息的逻辑更新
+  * 下载指数成分 ``memb_from_bbg_day``
+  * 下载股票新的ticker ``new_ticker_from_bbg``
+  * 下载股价 ``px_from_bbg``
+
 19.12.12
 --------
 ``pool.py``
