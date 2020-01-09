@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>行情模块 lhdata.prices &mdash; lhdata 19.12.20 documentation</title>
+  <title>行情模块 lhdata.prices &mdash; lhdata 20.01.09 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                19.12.20
+                20.01.09
               </div>
             
           
@@ -90,6 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">行情模块 lhdata.prices</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">获取行情</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nbar">获取n根bar</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id2">获取日涨跌幅</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-lhdata.prices">其他接口</a></li>
 </ul>
@@ -221,6 +222,32 @@ chunksize：每个进程处理多少个查询。默认为1。</li>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">DataFrame 或 DataFrame list 或 DataFrame dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="nbar">
+<h2>获取n根bar<a class="headerlink" href="#nbar" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="lhdata.prices.get_px_lastn">
+<code class="descclassname">lhdata.prices.</code><code class="descname">get_px_lastn</code><span class="sig-paren">(</span><em>symbol: str</em>, <em>n: int</em>, <em>end: str = None</em>, <em>fields: Union[str</em>, <em>list</em>, <em>tuple] = '*'</em>, <em>px_db_config: dict = None</em>, <em>px_db_name: str = None</em>, <em>px_tb_name: str = None</em>, <em>adj_type: str = 'back'</em>, <em>adj_all: bool = True</em>, <em>adj_db_config: dict = None</em>, <em>adj_tb_name: str = None</em>, <em>suspend: str = ''</em>, <em>hk: bool = False</em>, <em>area: str = None</em>, <em>fmt: str = 'df'</em>, <em>index_col: Union[str</em>, <em>list</em>, <em>tuple] = None</em>, <em>progress: bool = False</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/prices.html#get_px_lastn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.prices.get_px_lastn" title="Permalink to this definition">¶</a></dt>
+<dd><p>获取指定日期及之前的n根bar。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>symbol</strong> – 如‘000001 CH Equity’；仅支持单个股票。</li>
+<li><strong>n</strong> – 总共获取n根bar。</li>
+<li><strong>end</strong> – 终止日期（含），格式如‘2019-09-01’；空(‘’ 或 None) 则自动设置为查询当日。</li>
+<li><strong>fields</strong> – 以及其他参数与 <code class="docutils literal notranslate"><span class="pre">get_px</span></code> 相同。</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">DataFrame</p>
 </td>
 </tr>
 </tbody>

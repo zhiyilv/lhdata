@@ -10,11 +10,16 @@
 .. autofunction:: lhdata.pool.get_memb
 
 
-获取当前股票池
+获取某指数最新的成分股
+----------------------------
+.. autofunction:: lhdata.pool.get_memb_latest
+
+
+获取股票池
 ------------------
 .. autofunction:: lhdata.pool.get_pool
 
----------------------------------
+-------------------------------------------
 
 
 其他接口

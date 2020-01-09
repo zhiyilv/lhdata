@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>日历模块 lhdata.calendar &mdash; lhdata 19.12.20 documentation</title>
+  <title>日历模块 lhdata.calendar &mdash; lhdata 20.01.09 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                19.12.20
+                20.01.09
               </div>
             
           
@@ -94,6 +94,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#id1">获取某市场的交易日历</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id2">获取某市场某日的前一个交易日</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">获取某股票某日的前一个交易日</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#n">获取某股票某日（含）的前n个交易日</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-lhdata.calendar">其他接口</a></li>
 </ul>
 </li>
@@ -247,9 +248,9 @@
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>symbol</strong> – 格式如’AAPL US Equity’。支持股票列表或股票元组。</li>
 <li><strong>day</strong> – 格式如‘2019-01-01’。</li>
-<li><strong>db_config</strong> – 指定 交易日历 数据库连接，None则自动分配。</li>
-<li><strong>db_name</strong> – 指定 交易日历 数据库名，None则自动分配。</li>
-<li><strong>tb_name</strong> – 指定 交易日历 表名，None则自动分配。</li>
+<li><strong>db_config</strong> – 指定 原始行情 数据库连接，None则自动分配。</li>
+<li><strong>db_name</strong> – 指定 原始行情 数据库名，None则自动分配。</li>
+<li><strong>tb_name</strong> – 指定 原始行情 表名，None则自动分配。</li>
 <li><strong>hk</strong> – 在香港使用需设置为True。</li>
 <li><strong>area</strong> – in [‘CH’, ‘US’, ‘HK’, ‘JP’]. 默认为’CH’. 支持大小写混用。</li>
 <li><strong>kwargs</strong> – 其他lhdata.dbgetter.get_prev_支持传入的参数。</li>
@@ -257,6 +258,38 @@
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a list/tuple of symbols -&gt; date str list; otherwise, date str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="n">
+<h2>获取某股票某日（含）的前n个交易日<a class="headerlink" href="#n" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="lhdata.calendar.get_symbol_lastn_day">
+<code class="descclassname">lhdata.calendar.</code><code class="descname">get_symbol_lastn_day</code><span class="sig-paren">(</span><em>symbol</em>, <em>n: int</em>, <em>day: str = None</em>, <em>db_config: dict = None</em>, <em>db_name: str = None</em>, <em>tb_name: str = None</em>, <em>hk: bool = False</em>, <em>area: str = None</em>, <em>progress: bool = False</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.series.Series<a class="reference internal" href="_modules/lhdata/calendar.html#get_symbol_lastn_day"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.calendar.get_symbol_lastn_day" title="Permalink to this definition">¶</a></dt>
+<dd><p>获取某股票某日（含）的前n个交易日.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>symbol</strong> – 格式如’AAPL US Equity’。仅支持单个股票。</li>
+<li><strong>n</strong> – 总共获取n根bar。</li>
+<li><strong>day</strong> – 终止日期（含），格式如‘2019-09-01’；空(‘’ 或 None) 则自动设置为查询当日。</li>
+<li><strong>db_config</strong> – 指定 原始行情 数据库连接，None则自动分配。</li>
+<li><strong>db_name</strong> – 指定 原始行情 数据库名，None则自动分配。</li>
+<li><strong>tb_name</strong> – 指定 原始行情 表名，None则自动分配。</li>
+<li><strong>hk</strong> – 在香港使用需设置为True。</li>
+<li><strong>area</strong> – in [‘CH’, ‘US’, ‘HK’, ‘JP’]. 默认为’CH’. 支持大小写混用。</li>
+<li><strong>progress</strong> – </li>
+<li><strong>kwargs</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Series</p>
 </td>
 </tr>
 </tbody>

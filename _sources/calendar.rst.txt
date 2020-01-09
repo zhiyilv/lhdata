@@ -9,16 +9,23 @@
 --------------------
 .. autofunction:: lhdata.calendar.get_calendar
 
+
 获取某市场某日的前一个交易日
 ----------------------------
 .. autofunction:: lhdata.calendar.get_prev_day
 
+
 获取某股票某日的前一个交易日
 ----------------------------
 .. autofunction:: lhdata.calendar.get_symbol_prev_day
+
+
+获取某股票某日（含）的前n个交易日
+-------------------------------------
+.. autofunction:: lhdata.calendar.get_symbol_lastn_day
  
  
----------------------------------
+------------------------------------------------
  
  
 其他接口

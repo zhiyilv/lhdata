@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lhdata.prices &mdash; lhdata 19.12.20 documentation</title>
+  <title>lhdata.prices &mdash; lhdata 20.01.09 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                19.12.20
+                20.01.09
               </div>
             
           
@@ -166,7 +166,7 @@
 <span class="kn">from</span> <span class="nn">.dispatcher</span> <span class="k">import</span> <span class="n">get_db_config</span><span class="p">,</span> <span class="n">get_tb_name</span><span class="p">,</span> <span class="n">DEFAULT_START</span><span class="p">,</span> <span class="n">valid_types</span><span class="p">,</span> <span class="n">cap_types</span><span class="p">,</span> <span class="n">split_types</span>
 <span class="kn">from</span> <span class="nn">.dbgetter</span> <span class="k">import</span> <span class="n">get_mysql_p</span><span class="p">,</span> <span class="n">get_fields</span><span class="p">,</span> <span class="n">get_prev__ps</span><span class="p">,</span> <span class="n">_date_str</span><span class="p">,</span> <span class="n">_fields_str</span>
 <span class="kn">from</span> <span class="nn">.util_data</span> <span class="k">import</span> <span class="n">decide_area</span><span class="p">,</span> <span class="n">adj_px_by2df</span><span class="p">,</span> <span class="n">adj_px_by2df_p</span><span class="p">,</span> <span class="n">s2code_list</span><span class="p">,</span> <span class="n">align_date_p</span>
-<span class="kn">from</span> <span class="nn">.calendar</span> <span class="k">import</span> <span class="n">get_calendar</span><span class="p">,</span> <span class="n">get_symbol_prev_day</span>
+<span class="kn">from</span> <span class="nn">.calendar</span> <span class="k">import</span> <span class="n">get_calendar</span><span class="p">,</span> <span class="n">get_symbol_prev_day</span><span class="p">,</span> <span class="n">get_symbol_lastn_day</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Union</span>
@@ -952,13 +952,56 @@
     <span class="k">return</span> <span class="n">df_close</span></div>
 
 
+<div class="viewcode-block" id="get_px_lastn"><a class="viewcode-back" href="../../prices.html#lhdata.prices.get_px_lastn">[docs]</a><span class="k">def</span> <span class="nf">get_px_lastn</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">fields</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span>
+                 <span class="n">px_db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">px_db_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">px_tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">adj_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;back&#39;</span><span class="p">,</span> <span class="n">adj_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                 <span class="n">adj_db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">adj_tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">suspend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;df&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    获取指定日期及之前的n根bar。</span>
 
+<span class="sd">    :param symbol: 如&#39;000001 CH Equity&#39;；仅支持单个股票。</span>
+<span class="sd">    :param n: 总共获取n根bar。</span>
+<span class="sd">    :param end: 终止日期（含），格式如&#39;2019-09-01&#39;；空(&#39;&#39; 或 None) 则自动设置为查询当日。</span>
+<span class="sd">    :param fields: 以及其他参数与 ``get_px`` 相同。</span>
 
+<span class="sd">    :return: DataFrame</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">symbol</span> <span class="o">=</span> <span class="n">symbol</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;当查询固定bar个数时，只支持查询 单支股票 的行情，而symbol=&#39;</span><span class="si">{symbol}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
 
+    <span class="c1"># 确定数据库信息</span>
+    <span class="n">px_db_config</span> <span class="o">=</span> <span class="n">px_db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;prices&#39;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">area</span> <span class="ow">or</span> <span class="n">decide_area</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+    <span class="n">px_tb_name</span> <span class="o">=</span> <span class="n">px_tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">db_name</span><span class="o">=</span><span class="n">px_db_name</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;px&#39;</span><span class="p">)</span>
 
-
-
+    <span class="c1"># 确定下载起始点</span>
+    <span class="k">if</span> <span class="n">end</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">end_ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">end_ts</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+    <span class="n">day_series</span> <span class="o">=</span> <span class="n">get_symbol_lastn_day</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
+                                      <span class="n">db_config</span><span class="o">=</span><span class="n">px_db_config</span><span class="p">,</span> <span class="n">db_name</span><span class="o">=</span><span class="n">px_db_name</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">px_tb_name</span><span class="p">,</span>
+                                      <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">,</span>
+                                      <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="c1"># 下载行情</span>
+    <span class="k">if</span> <span class="n">day_series</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># start = df_dates_all.iat[-1, 0].isoformat()</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">day_series</span><span class="o">.</span><span class="n">iat</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">get_px</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
+                      <span class="n">px_db_config</span><span class="o">=</span><span class="n">px_db_config</span><span class="p">,</span> <span class="n">px_db_name</span><span class="o">=</span><span class="n">px_db_name</span><span class="p">,</span> <span class="n">px_tb_name</span><span class="o">=</span><span class="n">px_tb_name</span><span class="p">,</span>
+                      <span class="n">adj_type</span><span class="o">=</span><span class="n">adj_type</span><span class="p">,</span> <span class="n">adj_all</span><span class="o">=</span><span class="n">adj_all</span><span class="p">,</span>
+                      <span class="n">adj_db_config</span><span class="o">=</span><span class="n">adj_db_config</span><span class="p">,</span> <span class="n">adj_tb_name</span><span class="o">=</span><span class="n">adj_tb_name</span><span class="p">,</span> <span class="n">suspend</span><span class="o">=</span><span class="n">suspend</span><span class="p">,</span>
+                      <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="n">fmt</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="n">index_col</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">,</span>
+                      <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 </pre></div>
 

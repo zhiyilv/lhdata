@@ -6,9 +6,16 @@ WF特征 Wave Features
 ---------------------
 .. autofunction:: lhdata.features.get_wf
 
+
 Alpha特征 Alpha features
 ------------------------
 .. autofunction:: lhdata.features.get_alpha
+
+
+Risk特征 Risk features
+------------------------
+.. autofunction:: lhdata.features.get_risk
+
 
 ---------------------------------
 

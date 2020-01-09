@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lhdata.pool &mdash; lhdata 19.12.20 documentation</title>
+  <title>lhdata.pool &mdash; lhdata 20.01.09 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                19.12.20
+                20.01.09
               </div>
             
           
@@ -171,6 +171,7 @@
 
 
 <div class="viewcode-block" id="get_pool"><a class="viewcode-back" href="../../pool.html#lhdata.pool.get_pool">[docs]</a><span class="k">def</span> <span class="nf">get_pool</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">day</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
              <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
              <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
              <span class="o">**</span><span class="n">kwargs</span>
@@ -180,6 +181,9 @@
 
 <span class="sd">    :param name: 股票池名字</span>
 <span class="sd">    :param area: in [&#39;ch&#39;, &#39;ovs&#39;]，不输入则自动判断。</span>
+<span class="sd">    :param day: 指定日期，会忽略start、end的输入。若day、start、end都为空，则查询最近可用的。</span>
+<span class="sd">    :param start: 起始日期（含），格式如&#39;2019-01-01&#39;；空(&#39;&#39; 或 None) 则自动设置为1992-01-01。</span>
+<span class="sd">    :param end: 终止日期（含），格式如&#39;2019-09-01&#39;；空(&#39;&#39; 或 None) 则自动设置为查询当日。</span>
 <span class="sd">    :param db_config: 指定 股票池表 数据库连接，None则自动分配。</span>
 <span class="sd">    :param tb_name: 指定 股票池表 的表名，格式为{db_name}.{tb_name}，None则自动分配。</span>
 <span class="sd">    :param hk: 在香港使用需设置为True。</span>
@@ -191,14 +195,23 @@
         <span class="n">area</span> <span class="o">=</span> <span class="n">decide_pool_area</span><span class="p">(</span><span class="n">pool</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;pool&#39;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
-    <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;pool&#39;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">)</span>
-
-    <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                    <span class="n">symbol</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">symbol_col</span><span class="o">=</span><span class="s1">&#39;Pool&#39;</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;Ticker&#39;</span><span class="p">,</span>
-                    <span class="n">rename_col</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Ticker&#39;</span><span class="p">:</span> <span class="s1">&#39;symbol&#39;</span><span class="p">,</span>
-                                <span class="s1">&#39;Pool&#39;</span><span class="p">:</span> <span class="s1">&#39;pool_name&#39;</span><span class="p">,</span>
-                                <span class="s1">&#39;UPDATETIME&#39;</span><span class="p">:</span> <span class="s1">&#39;updatetime&#39;</span><span class="p">},</span>
-                    <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">i</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="n">day</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">]):</span>
+        <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;pool&#39;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">symbol</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">symbol_col</span><span class="o">=</span><span class="s1">&#39;Pool&#39;</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;Ticker&#39;</span><span class="p">,</span>
+                        <span class="n">rename_col</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Ticker&#39;</span><span class="p">:</span> <span class="s1">&#39;symbol&#39;</span><span class="p">,</span>
+                                    <span class="s1">&#39;Pool&#39;</span><span class="p">:</span> <span class="s1">&#39;pool_name&#39;</span><span class="p">,</span>
+                                    <span class="s1">&#39;UPDATETIME&#39;</span><span class="p">:</span> <span class="s1">&#39;updatetime&#39;</span><span class="p">},</span>
+                        <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;pool_hist&#39;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">symbol</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">symbol_col</span><span class="o">=</span><span class="s1">&#39;TYPE&#39;</span><span class="p">,</span>
+                        <span class="n">day</span><span class="o">=</span><span class="n">day</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">dt_col</span><span class="o">=</span><span class="s1">&#39;DATE&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DATE&#39;</span><span class="p">],</span>
+                        <span class="n">rename_col</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;TYPE&#39;</span><span class="p">:</span> <span class="s1">&#39;pool_name&#39;</span><span class="p">,</span>
+                                    <span class="s1">&#39;SYMBOL&#39;</span><span class="p">:</span> <span class="s1">&#39;symbol&#39;</span><span class="p">,</span>
+                                    <span class="s1">&#39;DATE&#39;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">},</span>
+                        <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span></div>
 
 
@@ -273,7 +286,7 @@
     <span class="k">return</span> <span class="n">df</span></div>
 
 
-<span class="k">def</span> <span class="nf">get_memb_latest</span><span class="p">(</span><span class="n">index</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">retry</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+<div class="viewcode-block" id="get_memb_latest"><a class="viewcode-back" href="../../pool.html#lhdata.pool.get_memb_latest">[docs]</a><span class="k">def</span> <span class="nf">get_memb_latest</span><span class="p">(</span><span class="n">index</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">retry</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
                     <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="n">td_ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">offset</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">retry</span><span class="p">):</span>
@@ -284,7 +297,7 @@
                 <span class="k">return</span> <span class="n">df</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">pass</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span></div>
 
 
 

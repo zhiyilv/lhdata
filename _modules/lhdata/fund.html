@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lhdata.fund &mdash; lhdata 19.12.20 documentation</title>
+  <title>lhdata.fund &mdash; lhdata 20.01.09 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                19.12.20
+                20.01.09
               </div>
             
           
@@ -189,15 +189,18 @@
 
 <span class="sd">    :return: DataFrame</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">symbol</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;Index&#39;</span><span class="p">):</span>
-        <span class="n">lookup_tb</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s1">&#39;hs300&#39;</span><span class="p">:</span> <span class="s1">&#39;2005-04-08&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;zz500&#39;</span><span class="p">:</span> <span class="s1">&#39;2005-01-01&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;gemb&#39;</span><span class="p">:</span> <span class="s1">&#39;2010-06-01&#39;</span>
-        <span class="p">}</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="n">symbol</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">lookup_tb</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx2name</span><span class="p">(</span><span class="n">symbol</span><span class="p">)))]],</span>
-                          <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;ipo&#39;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">df</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">symbol</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;Index&#39;</span><span class="p">):</span>
+            <span class="n">lookup_tb</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;hs300&#39;</span><span class="p">:</span> <span class="s1">&#39;2005-04-08&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;zz500&#39;</span><span class="p">:</span> <span class="s1">&#39;2005-01-01&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;gemb&#39;</span><span class="p">:</span> <span class="s1">&#39;2010-06-01&#39;</span>
+            <span class="p">}</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="n">symbol</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">lookup_tb</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx2name</span><span class="p">(</span><span class="n">symbol</span><span class="p">)))]],</span>
+                              <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;ipo&#39;</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">df</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
 
     <span class="n">area</span> <span class="o">=</span> <span class="n">area</span> <span class="ow">or</span> <span class="n">decide_area</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
     <span class="n">area</span> <span class="o">=</span> <span class="n">area</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
