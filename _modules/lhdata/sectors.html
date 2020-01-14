@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lhdata.sectors &mdash; lhdata 20.01.09 documentation</title>
+  <title>lhdata.sectors &mdash; lhdata 20.01.14 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                20.01.09
+                20.01.14
               </div>
             
           
@@ -88,6 +88,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">QuickStart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../prices.html">行情模块 lhdata.prices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../features.html">特征模块 lhdata.features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../techs.html">技术指标模块 lhdata.techs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../calendar.html">日历模块 lhdata.calendar</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fund.html">基础信息模块 lhdata.fund</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../pool.html">股票池模块 lhdata.pool</a></li>
@@ -164,7 +165,7 @@
 <span class="c1"># @File   : sectors.py\n</span>
 <span class="c1"># @Desc   : 查询行业相关的信息</span>
 
-<span class="kn">from</span> <span class="nn">.dispatcher</span> <span class="k">import</span> <span class="n">get_db_config</span><span class="p">,</span> <span class="n">get_tb_name</span>
+<span class="kn">from</span> <span class="nn">.dispatcher</span> <span class="k">import</span> <span class="n">get_db_config</span><span class="p">,</span> <span class="n">get_tb_name</span><span class="p">,</span> <span class="n">HK</span>
 <span class="kn">from</span> <span class="nn">.dbgetter</span> <span class="k">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">get_fields</span>
 <span class="kn">from</span> <span class="nn">.parallel</span> <span class="k">import</span> <span class="n">pack_dict</span><span class="p">,</span> <span class="n">shadow_split</span>
 <span class="kn">from</span> <span class="nn">.static</span> <span class="k">import</span> <span class="n">static_dir</span>

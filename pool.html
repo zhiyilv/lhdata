@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>股票池模块 lhdata.pool &mdash; lhdata 20.01.09 documentation</title>
+  <title>股票池模块 lhdata.pool &mdash; lhdata 20.01.14 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                20.01.09
+                20.01.14
               </div>
             
           
@@ -90,6 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prices.html">行情模块 lhdata.prices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="features.html">特征模块 lhdata.features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="techs.html">技术指标模块 lhdata.techs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calendar.html">日历模块 lhdata.calendar</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fund.html">基础信息模块 lhdata.fund</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">股票池模块 lhdata.pool</a><ul>
@@ -176,7 +177,7 @@
 <h2>获取某指数成分股<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.pool.get_memb">
-<code class="descclassname">lhdata.pool.</code><code class="descname">get_memb</code><span class="sig-paren">(</span><em>index: str</em>, <em>day: str = None</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>db_config: dict = None</em>, <em>tb_name: str = None</em>, <em>hk: bool = False</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/pool.html#get_memb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.pool.get_memb" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.pool.</code><code class="descname">get_memb</code><span class="sig-paren">(</span><em>index: str</em>, <em>day: str = None</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>db_config: dict = None</em>, <em>tb_name: str = None</em>, <em>hk: bool = True</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/pool.html#get_memb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.pool.get_memb" title="Permalink to this definition">¶</a></dt>
 <dd><p>获取指数成分股。</p>
 <ul class="simple">
 <li>沪深300、中证500 由今日投资维护。</li>
@@ -210,7 +211,7 @@
 <h2>获取某指数最新的成分股<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.pool.get_memb_latest">
-<code class="descclassname">lhdata.pool.</code><code class="descname">get_memb_latest</code><span class="sig-paren">(</span><em>index: str</em>, <em>hk: bool = False</em>, <em>retry: int = 10</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/pool.html#get_memb_latest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.pool.get_memb_latest" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.pool.</code><code class="descname">get_memb_latest</code><span class="sig-paren">(</span><em>index: str</em>, <em>hk: bool = True</em>, <em>retry: int = 10</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/pool.html#get_memb_latest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.pool.get_memb_latest" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -218,7 +219,7 @@
 <h2>获取股票池<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.pool.get_pool">
-<code class="descclassname">lhdata.pool.</code><code class="descname">get_pool</code><span class="sig-paren">(</span><em>name: str</em>, <em>area: str = None</em>, <em>day: str = None</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>db_config: dict = None</em>, <em>tb_name: str = None</em>, <em>hk: bool = False</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/pool.html#get_pool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.pool.get_pool" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.pool.</code><code class="descname">get_pool</code><span class="sig-paren">(</span><em>name: str</em>, <em>area: str = None</em>, <em>day: str = None</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>db_config: dict = None</em>, <em>tb_name: str = None</em>, <em>hk: bool = True</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/pool.html#get_pool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.pool.get_pool" title="Permalink to this definition">¶</a></dt>
 <dd><p>获取股票池。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />

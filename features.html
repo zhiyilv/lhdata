@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>特征模块 lhdata.features &mdash; lhdata 20.01.09 documentation</title>
+  <title>特征模块 lhdata.features &mdash; lhdata 20.01.14 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="日历模块 lhdata.calendar" href="calendar.html" />
+    <link rel="next" title="技术指标模块 lhdata.techs" href="techs.html" />
     <link rel="prev" title="行情模块 lhdata.prices" href="prices.html" /> 
 </head>
 
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                20.01.09
+                20.01.14
               </div>
             
           
@@ -96,6 +96,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-lhdata.features">其他</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="techs.html">技术指标模块 lhdata.techs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calendar.html">日历模块 lhdata.calendar</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fund.html">基础信息模块 lhdata.fund</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pool.html">股票池模块 lhdata.pool</a></li>
@@ -175,8 +176,9 @@
 <h2>WF特征 Wave Features<a class="headerlink" href="#wf-wave-features" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.features.get_wf">
-<code class="descclassname">lhdata.features.</code><code class="descname">get_wf</code><span class="sig-paren">(</span><em>symbol: Union[str</em>, <em>list</em>, <em>tuple] = ''</em>, <em>day: str = None</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>fields: Union[str</em>, <em>list</em>, <em>tuple] = '*'</em>, <em>incl_week: bool = False</em>, <em>incl_val: bool = False</em>, <em>live: bool = False</em>, <em>db_config: dict = None</em>, <em>tb_name: str = None</em>, <em>area: str = None</em>, <em>hk: bool = False</em>, <em>fmt: str = 'df'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/features.html#get_wf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.features.get_wf" title="Permalink to this definition">¶</a></dt>
-<dd><p>获取Wave Features。</p>
+<code class="descclassname">lhdata.features.</code><code class="descname">get_wf</code><span class="sig-paren">(</span><em>symbol: Union[str</em>, <em>list</em>, <em>tuple] = ''</em>, <em>day: str = None</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>fields: Union[str</em>, <em>list</em>, <em>tuple] = '*'</em>, <em>incl_week: bool = False</em>, <em>incl_val: bool = False</em>, <em>live: bool = False</em>, <em>db_config: dict = None</em>, <em>tb_name: str = None</em>, <em>area: str = None</em>, <em>hk: bool = True</em>, <em>fmt: str = 'df'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/features.html#get_wf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.features.get_wf" title="Permalink to this definition">¶</a></dt>
+<dd><p>获取Wave Features。
+推荐使用 <code class="docutils literal notranslate"><span class="pre">lhdata.tech.get_data()</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -211,8 +213,9 @@
 <h2>Alpha特征 Alpha features<a class="headerlink" href="#alpha-alpha-features" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.features.get_alpha">
-<code class="descclassname">lhdata.features.</code><code class="descname">get_alpha</code><span class="sig-paren">(</span><em>symbol: Union[str</em>, <em>list</em>, <em>tuple] = ''</em>, <em>index_ref: str = None</em>, <em>day: str = None</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>fields: Union[str</em>, <em>list</em>, <em>tuple] = '*'</em>, <em>order_by: str = 'datetime'</em>, <em>db_config: dict = None</em>, <em>tb_name: str = None</em>, <em>area: str = None</em>, <em>hk: bool = False</em>, <em>fmt: str = 'df'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/features.html#get_alpha"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.features.get_alpha" title="Permalink to this definition">¶</a></dt>
-<dd><p>获取Alpha Features。</p>
+<code class="descclassname">lhdata.features.</code><code class="descname">get_alpha</code><span class="sig-paren">(</span><em>symbol: Union[str</em>, <em>list</em>, <em>tuple] = ''</em>, <em>index_ref: str = None</em>, <em>day: str = None</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>fields: Union[str</em>, <em>list</em>, <em>tuple] = '*'</em>, <em>order_by: str = 'datetime'</em>, <em>db_config: dict = None</em>, <em>tb_name: str = None</em>, <em>area: str = None</em>, <em>hk: bool = True</em>, <em>fmt: str = 'df'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/features.html#get_alpha"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.features.get_alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>获取Alpha Features。
+推荐使用 <code class="docutils literal notranslate"><span class="pre">lhdata.tech.get_data()</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -247,8 +250,33 @@ None则自动选择默认，A股默认’hs300’, 美股默认’spx’, 港股
 <h2>Risk特征 Risk features<a class="headerlink" href="#risk-risk-features" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.features.get_risk">
-<code class="descclassname">lhdata.features.</code><code class="descname">get_risk</code><span class="sig-paren">(</span><em>symbol: Union[str, list, tuple], area: str = None, day: str = None, start: str = None, end: str = None, fields: Union[str, list, tuple] = '*', fmt: str = 'df', db_config: dict = None, tb_name: str = None, hk: bool = False, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/features.html#get_risk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.features.get_risk" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descclassname">lhdata.features.</code><code class="descname">get_risk</code><span class="sig-paren">(</span><em>symbol: Union[str, list, tuple], area: str = None, day: str = None, start: str = None, end: str = None, fields: Union[str, list, tuple] = '*', fmt: str = 'df', db_config: dict = None, tb_name: str = None, hk: bool = True, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/features.html#get_risk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.features.get_risk" title="Permalink to this definition">¶</a></dt>
+<dd><p>推荐使用 <code class="docutils literal notranslate"><span class="pre">lhdata.tech.get_data()</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>symbol</strong> – </li>
+<li><strong>area</strong> – </li>
+<li><strong>day</strong> – </li>
+<li><strong>start</strong> – </li>
+<li><strong>end</strong> – </li>
+<li><strong>fields</strong> – </li>
+<li><strong>fmt</strong> – </li>
+<li><strong>db_config</strong> – </li>
+<li><strong>tb_name</strong> – </li>
+<li><strong>hk</strong> – </li>
+<li><strong>kwargs</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </div>
 <hr class="docutils" />
@@ -265,7 +293,7 @@ None则自动选择默认，A股默认’hs300’, 美股默认’spx’, 港股
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="calendar.html" class="btn btn-neutral float-right" title="日历模块 lhdata.calendar" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="techs.html" class="btn btn-neutral float-right" title="技术指标模块 lhdata.techs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="prices.html" class="btn btn-neutral float-left" title="行情模块 lhdata.prices" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

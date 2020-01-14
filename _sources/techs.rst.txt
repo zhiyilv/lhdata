@@ -1,0 +1,21 @@
+技术指标模块 lhdata.techs
+=========================
+* 支持talib技术指标
+
+获取数据
+--------
+.. autofunction:: lhdata.techs.get_data
+
+计算技术指标
+------------
+.. autofunction:: lhdata.techs.get_tech
+
+
+
+---------------------------------
+
+
+其他接口
+--------
+.. automodule:: lhdata.techs
+   :members: parse_tech_string

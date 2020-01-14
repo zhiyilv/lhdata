@@ -1,0 +1,303 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>技术指标模块 lhdata.techs &mdash; lhdata 20.01.14 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="日历模块 lhdata.calendar" href="calendar.html" />
+    <link rel="prev" title="特征模块 lhdata.features" href="features.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> lhdata
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20.01.14
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">lhdata docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install lhdata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prices.html">行情模块 lhdata.prices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">特征模块 lhdata.features</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">技术指标模块 lhdata.techs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">获取数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">计算技术指标</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lhdata.techs">其他接口</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="calendar.html">日历模块 lhdata.calendar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fund.html">基础信息模块 lhdata.fund</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pool.html">股票池模块 lhdata.pool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sectors.html">行业模块 lhdata.sectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="status.html">数据状态</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">lhdata</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>技术指标模块 lhdata.techs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/techs.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="lhdata-techs">
+<h1>技术指标模块 lhdata.techs<a class="headerlink" href="#lhdata-techs" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>支持talib技术指标</li>
+</ul>
+<div class="section" id="id1">
+<h2>获取数据<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="lhdata.techs.get_data">
+<code class="descclassname">lhdata.techs.</code><code class="descname">get_data</code><span class="sig-paren">(</span><em>symbol: Union[str, list], area: str = None, day: str = None, start: str = None, end: str = None, feature: Union[str, list] = None, tech: Union[str, list] = None, price: Union[str, list] = ('open', 'high', 'low', 'close', 'volume'), hk: bool = True, fmt: str = 'df', **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/techs.html#get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.techs.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>从数据库中获取数据，支持技术指标（需要安装talib）。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>symbol</strong> – 如‘000001 CH Equity’；支持股票列表或股票元组，不支持为空。</li>
+<li><strong>area</strong> – in [‘CH’, ‘US’, …]。指定symbol区域，不指定则根据symbol（或symbol list的第一个）判定。为空时，自动设置为’CH’。</li>
+<li><strong>start</strong> – 起始日期（含），格式如‘2019-01-01’；空(‘’ 或 None) 则自动设置为1992-01-01。</li>
+<li><strong>end</strong> – 终止日期（含），格式如‘2019-09-01’；空(‘’ 或 None) 则自动设置为查询当日。</li>
+<li><strong>day</strong> – 指定日期，等效于设置了start=end=day, 会忽略start、end的输入。</li>
+<li><strong>feature</strong> – 如’WF0010’； 支持特征列表；’WF’代表所有Wave Feature。可以通过 <code class="docutils literal notranslate"><span class="pre">lhdata.dispatcher.feature_col_dict</span></code> 查询支持的feature系列。</li>
+<li><strong>tech</strong> – 如’atr_14’，代表计算14天ATR，参数通过下划线依次指定；支持多个技术指标，通过逗号隔开，或者使用列表。</li>
+<li><strong>price</strong> – 价格包含的列，默认不包含turnover。</li>
+<li><strong>hk</strong> – 在香港使用需设置为True。</li>
+<li><strong>fmt</strong> – 返回数据类型，支持DataFrame、DataFrame list、DataFrame dict. 默认为’df’。</li>
+<li><strong>kwargs</strong> – 其他 <code class="docutils literal notranslate"><span class="pre">lhdata.prices.get_px</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">lhdata.features.get_xxx</span></code> 支持的参数。</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">DataFrame 或 DataFrame list 或 DataFrame dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="id2">
+<h2>计算技术指标<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="lhdata.techs.get_tech">
+<code class="descclassname">lhdata.techs.</code><code class="descname">get_tech</code><span class="sig-paren">(</span><em>df: pandas.core.frame.DataFrame</em>, <em>tech_string: str = None</em>, <em>func: talib.abstract.Function = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/techs.html#get_tech"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.techs.get_tech" title="Permalink to this definition">¶</a></dt>
+<dd><p>计算技术指标。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>df</strong> – 股票数据，需要包含计算技术指标所需的列。</li>
+<li><strong>tech_string</strong> – 如’atr_14’，代表计算14天ATR，参数通过下划线依次指定；与func至少有一个需要不为None。</li>
+<li><strong>func</strong> – talib的函数，None则通过tech_string自动解析；优先级&gt;tech_string。</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-lhdata.techs">
+<span id="id3"></span><h2>其他接口<a class="headerlink" href="#module-lhdata.techs" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="lhdata.techs.parse_tech_string">
+<code class="descclassname">lhdata.techs.</code><code class="descname">parse_tech_string</code><span class="sig-paren">(</span><em>tech_string: str</em><span class="sig-paren">)</span> &#x2192; talib.abstract.Function<a class="reference internal" href="_modules/lhdata/techs.html#parse_tech_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.techs.parse_tech_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>解析技术指标，返回talib函数。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tech_string</strong> – 如’atr_14’，代表计算14天ATR；参数通过下划线依次指定。如’macd_12_26_9’代表fastperiod=12, slowperiod=26, signalperiod=9。</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">function</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="calendar.html" class="btn btn-neutral float-right" title="日历模块 lhdata.calendar" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="features.html" class="btn btn-neutral float-left" title="特征模块 lhdata.features" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Lighthorseam
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

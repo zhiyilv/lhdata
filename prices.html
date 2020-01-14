@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>行情模块 lhdata.prices &mdash; lhdata 20.01.09 documentation</title>
+  <title>行情模块 lhdata.prices &mdash; lhdata 20.01.14 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                20.01.09
+                20.01.14
               </div>
             
           
@@ -96,6 +96,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="features.html">特征模块 lhdata.features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="techs.html">技术指标模块 lhdata.techs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calendar.html">日历模块 lhdata.calendar</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fund.html">基础信息模块 lhdata.fund</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pool.html">股票池模块 lhdata.pool</a></li>
@@ -177,8 +178,9 @@
 <h2>获取行情<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.prices.get_px">
-<code class="descclassname">lhdata.prices.</code><code class="descname">get_px</code><span class="sig-paren">(</span><em>symbol: Union[str, list, tuple], day: str = None, start: str = None, end: str = None, fields: Union[str, list, tuple] = '*', px_db_config: dict = None, px_db_name: str = None, px_tb_name: str = None, adj_type: str = 'back', adj_all: bool = True, adj_db_config: dict = None, adj_tb_name: str = None, suspend: str = '', trim: bool = False, hk: bool = False, area: str = None, fmt: str = 'df', index_col: Union[str, list, tuple] = None, progress: bool = False, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/prices.html#get_px"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.prices.get_px" title="Permalink to this definition">¶</a></dt>
-<dd><p>获取行情，默认为前复权。</p>
+<code class="descclassname">lhdata.prices.</code><code class="descname">get_px</code><span class="sig-paren">(</span><em>symbol: Union[str, list, tuple], day: str = None, start: str = None, end: str = None, fields: Union[str, list, tuple] = '*', px_db_config: dict = None, px_db_name: str = None, px_tb_name: str = None, adj_type: str = 'back', adj_all: bool = True, adj_db_config: dict = None, adj_tb_name: str = None, suspend: str = '', trim: bool = False, hk: bool = True, area: str = None, fmt: str = 'df', index_col: Union[str, list, tuple] = None, progress: bool = False, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/prices.html#get_px"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.prices.get_px" title="Permalink to this definition">¶</a></dt>
+<dd><p>获取行情，默认为前复权。
+推荐使用 <code class="docutils literal notranslate"><span class="pre">lhdata.tech.get_data()</span></code></p>
 <p>支持：</p>
 <ul class="simple">
 <li>指定股票，或股票列表，或设置为空查询所有股票。</li>
@@ -233,7 +235,7 @@ chunksize：每个进程处理多少个查询。默认为1。</li>
 <h2>获取n根bar<a class="headerlink" href="#nbar" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.prices.get_px_lastn">
-<code class="descclassname">lhdata.prices.</code><code class="descname">get_px_lastn</code><span class="sig-paren">(</span><em>symbol: str</em>, <em>n: int</em>, <em>end: str = None</em>, <em>fields: Union[str</em>, <em>list</em>, <em>tuple] = '*'</em>, <em>px_db_config: dict = None</em>, <em>px_db_name: str = None</em>, <em>px_tb_name: str = None</em>, <em>adj_type: str = 'back'</em>, <em>adj_all: bool = True</em>, <em>adj_db_config: dict = None</em>, <em>adj_tb_name: str = None</em>, <em>suspend: str = ''</em>, <em>hk: bool = False</em>, <em>area: str = None</em>, <em>fmt: str = 'df'</em>, <em>index_col: Union[str</em>, <em>list</em>, <em>tuple] = None</em>, <em>progress: bool = False</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/prices.html#get_px_lastn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.prices.get_px_lastn" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.prices.</code><code class="descname">get_px_lastn</code><span class="sig-paren">(</span><em>symbol: str</em>, <em>n: int</em>, <em>end: str = None</em>, <em>fields: Union[str</em>, <em>list</em>, <em>tuple] = '*'</em>, <em>px_db_config: dict = None</em>, <em>px_db_name: str = None</em>, <em>px_tb_name: str = None</em>, <em>adj_type: str = 'back'</em>, <em>adj_all: bool = True</em>, <em>adj_db_config: dict = None</em>, <em>adj_tb_name: str = None</em>, <em>suspend: str = ''</em>, <em>hk: bool = True</em>, <em>area: str = None</em>, <em>fmt: str = 'df'</em>, <em>index_col: Union[str</em>, <em>list</em>, <em>tuple] = None</em>, <em>progress: bool = False</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/prices.html#get_px_lastn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.prices.get_px_lastn" title="Permalink to this definition">¶</a></dt>
 <dd><p>获取指定日期及之前的n根bar。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -259,7 +261,7 @@ chunksize：每个进程处理多少个查询。默认为1。</li>
 <h2>获取日涨跌幅<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.prices.get_dailyR">
-<code class="descclassname">lhdata.prices.</code><code class="descname">get_dailyR</code><span class="sig-paren">(</span><em>symbol: str</em>, <em>day: str = None</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>db_config: dict = None</em>, <em>db_name: str = None</em>, <em>tb_name: str = None</em>, <em>incl_abs: bool = True</em>, <em>hk: bool = False</em>, <em>area: str = None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/prices.html#get_dailyR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.prices.get_dailyR" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.prices.</code><code class="descname">get_dailyR</code><span class="sig-paren">(</span><em>symbol: str</em>, <em>day: str = None</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>db_config: dict = None</em>, <em>db_name: str = None</em>, <em>tb_name: str = None</em>, <em>incl_abs: bool = True</em>, <em>hk: bool = True</em>, <em>area: str = None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/prices.html#get_dailyR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.prices.get_dailyR" title="Permalink to this definition">¶</a></dt>
 <dd><p>查询某支股票的日涨跌幅。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -293,7 +295,7 @@ chunksize：每个进程处理多少个查询。默认为1。</li>
 <span id="id3"></span><h2>其他接口<a class="headerlink" href="#module-lhdata.prices" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.prices.get_px_orig">
-<code class="descclassname">lhdata.prices.</code><code class="descname">get_px_orig</code><span class="sig-paren">(</span><em>symbol: Union[str, list, tuple], day: str = None, start: str = None, end: str = None, fields: Union[str, list, tuple] = '*', incl_prev: bool = False, db_config: dict = None, db_name: str = None, tb_name: str = None, hk: bool = False, area: str = None, progress: bool = False, nbr_thread: int = 0, chunksize: int = 1, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/prices.html#get_px_orig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.prices.get_px_orig" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.prices.</code><code class="descname">get_px_orig</code><span class="sig-paren">(</span><em>symbol: Union[str, list, tuple], day: str = None, start: str = None, end: str = None, fields: Union[str, list, tuple] = '*', incl_prev: bool = False, db_config: dict = None, db_name: str = None, tb_name: str = None, hk: bool = True, area: str = None, progress: bool = False, nbr_thread: int = 0, chunksize: int = 1, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/prices.html#get_px_orig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.prices.get_px_orig" title="Permalink to this definition">¶</a></dt>
 <dd><p>获取原始行情。建议使用get_px接口。</p>
 <p>可指定db读取行情，该db行情表需与161行情表一致，表名相同，且每五年分一个表。</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -328,7 +330,7 @@ chunksize：每个进程处理多少个查询。默认为1。</li>
 
 <dl class="function">
 <dt id="lhdata.prices.get_adj">
-<code class="descclassname">lhdata.prices.</code><code class="descname">get_adj</code><span class="sig-paren">(</span><em>symbol: Union[str, list, tuple], start: str = None, end: str = None, db_config: dict = None, tb_name: str = None, hk: bool = False, area: str = None, progress: bool = False, full: bool = True, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/prices.html#get_adj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.prices.get_adj" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.prices.</code><code class="descname">get_adj</code><span class="sig-paren">(</span><em>symbol: Union[str, list, tuple], start: str = None, end: str = None, db_config: dict = None, tb_name: str = None, hk: bool = True, area: str = None, progress: bool = False, full: bool = True, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/prices.html#get_adj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.prices.get_adj" title="Permalink to this definition">¶</a></dt>
 <dd><p>获取复权数据，包括除息除权日、分红、系数等。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -357,7 +359,7 @@ chunksize：每个进程处理多少个查询。默认为1。</li>
 
 <dl class="function">
 <dt id="lhdata.prices.get_px_adj">
-<code class="descclassname">lhdata.prices.</code><code class="descname">get_px_adj</code><span class="sig-paren">(</span><em>symbol: Union[str, list, tuple], day: str = '', start: str = '', end: str = '', fields: Union[str, list, tuple] = '*', incl_prev: bool = False, px_db_config: dict = None, px_db_name: str = None, px_tb_name: str = None, adj_all: bool = True, adj_type: str = 'back', adj_db_config: dict = None, adj_tb_name: str = None, hk: bool = False, area: str = None, progress: bool = False, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/prices.html#get_px_adj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.prices.get_px_adj" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.prices.</code><code class="descname">get_px_adj</code><span class="sig-paren">(</span><em>symbol: Union[str, list, tuple], day: str = '', start: str = '', end: str = '', fields: Union[str, list, tuple] = '*', incl_prev: bool = False, px_db_config: dict = None, px_db_name: str = None, px_tb_name: str = None, adj_all: bool = True, adj_type: str = 'back', adj_db_config: dict = None, adj_tb_name: str = None, hk: bool = True, area: str = None, progress: bool = False, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/prices.html#get_px_adj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.prices.get_px_adj" title="Permalink to this definition">¶</a></dt>
 <dd><p>获取复权行情。建议使用get_px接口。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -393,7 +395,7 @@ chunksize：每个进程处理多少个查询。默认为1。</li>
 
 <dl class="function">
 <dt id="lhdata.prices.get_prev">
-<code class="descclassname">lhdata.prices.</code><code class="descname">get_prev</code><span class="sig-paren">(</span><em>symbol: Union[str, list, tuple], day: str, fields: Union[str, list] = '*', db_config: dict = None, db_name: str = None, tb_name: str = None, hk: bool = False, area: str = None, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/prices.html#get_prev"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.prices.get_prev" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.prices.</code><code class="descname">get_prev</code><span class="sig-paren">(</span><em>symbol: Union[str, list, tuple], day: str, fields: Union[str, list] = '*', db_config: dict = None, db_name: str = None, tb_name: str = None, hk: bool = True, area: str = None, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/prices.html#get_prev"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.prices.get_prev" title="Permalink to this definition">¶</a></dt>
 <dd><p>查询某股票某一个日期之前最近的一个交易日的 <strong>原始行情</strong> 。</p>
 <p>如要查询某股票某一个日期之前最近的一个交易日，建议使用 <code class="docutils literal notranslate"><span class="pre">lhdata.calendar.get_symbol_prev_day</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">

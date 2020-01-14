@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>日历模块 lhdata.calendar &mdash; lhdata 20.01.09 documentation</title>
+  <title>日历模块 lhdata.calendar &mdash; lhdata 20.01.14 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="基础信息模块 lhdata.fund" href="fund.html" />
-    <link rel="prev" title="特征模块 lhdata.features" href="features.html" /> 
+    <link rel="prev" title="技术指标模块 lhdata.techs" href="techs.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                20.01.09
+                20.01.14
               </div>
             
           
@@ -90,6 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prices.html">行情模块 lhdata.prices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="features.html">特征模块 lhdata.features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="techs.html">技术指标模块 lhdata.techs</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">日历模块 lhdata.calendar</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">获取某市场的交易日历</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id2">获取某市场某日的前一个交易日</a></li>
@@ -177,7 +178,7 @@
 <h2>获取某市场的交易日历<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.calendar.get_calendar">
-<code class="descclassname">lhdata.calendar.</code><code class="descname">get_calendar</code><span class="sig-paren">(</span><em>area: str = 'CH'</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>db_config: dict = None</em>, <em>db_name: str = None</em>, <em>tb_name: str = None</em>, <em>holiday_only: bool = False</em>, <em>fmt: str = 'index'</em>, <em>hk: bool = False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/calendar.html#get_calendar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.calendar.get_calendar" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.calendar.</code><code class="descname">get_calendar</code><span class="sig-paren">(</span><em>area: str = 'CH'</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>db_config: dict = None</em>, <em>db_name: str = None</em>, <em>tb_name: str = None</em>, <em>holiday_only: bool = False</em>, <em>fmt: str = 'index'</em>, <em>hk: bool = True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/calendar.html#get_calendar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.calendar.get_calendar" title="Permalink to this definition">¶</a></dt>
 <dd><p>指定市场，获得该市场的交易日历。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -209,7 +210,7 @@
 <h2>获取某市场某日的前一个交易日<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.calendar.get_prev_day">
-<code class="descclassname">lhdata.calendar.</code><code class="descname">get_prev_day</code><span class="sig-paren">(</span><em>day: str</em>, <em>area: str = 'ch'</em>, <em>space: int = 30</em>, <em>db_config: dict = None</em>, <em>db_name: str = None</em>, <em>tb_name: str = None</em>, <em>hk: bool = False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/calendar.html#get_prev_day"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.calendar.get_prev_day" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.calendar.</code><code class="descname">get_prev_day</code><span class="sig-paren">(</span><em>day: str</em>, <em>area: str = 'ch'</em>, <em>space: int = 30</em>, <em>db_config: dict = None</em>, <em>db_name: str = None</em>, <em>tb_name: str = None</em>, <em>hk: bool = True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/calendar.html#get_prev_day"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.calendar.get_prev_day" title="Permalink to this definition">¶</a></dt>
 <dd><p>指定市场，获得某日之前的一个交易日。通过查询交易日历实现。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -239,7 +240,7 @@
 <h2>获取某股票某日的前一个交易日<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.calendar.get_symbol_prev_day">
-<code class="descclassname">lhdata.calendar.</code><code class="descname">get_symbol_prev_day</code><span class="sig-paren">(</span><em>symbol: Union[str, list, tuple], day: str, db_config: dict = None, db_name: str = None, tb_name: str = None, hk: bool = False, area: str = None, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/calendar.html#get_symbol_prev_day"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.calendar.get_symbol_prev_day" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.calendar.</code><code class="descname">get_symbol_prev_day</code><span class="sig-paren">(</span><em>symbol: Union[str, list, tuple], day: str, db_config: dict = None, db_name: str = None, tb_name: str = None, hk: bool = True, area: str = None, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lhdata/calendar.html#get_symbol_prev_day"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.calendar.get_symbol_prev_day" title="Permalink to this definition">¶</a></dt>
 <dd><p>指定股票和日期，获得前一个正常交易日。通过查询行情表实现。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -269,7 +270,7 @@
 <h2>获取某股票某日（含）的前n个交易日<a class="headerlink" href="#n" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.calendar.get_symbol_lastn_day">
-<code class="descclassname">lhdata.calendar.</code><code class="descname">get_symbol_lastn_day</code><span class="sig-paren">(</span><em>symbol</em>, <em>n: int</em>, <em>day: str = None</em>, <em>db_config: dict = None</em>, <em>db_name: str = None</em>, <em>tb_name: str = None</em>, <em>hk: bool = False</em>, <em>area: str = None</em>, <em>progress: bool = False</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.series.Series<a class="reference internal" href="_modules/lhdata/calendar.html#get_symbol_lastn_day"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.calendar.get_symbol_lastn_day" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.calendar.</code><code class="descname">get_symbol_lastn_day</code><span class="sig-paren">(</span><em>symbol</em>, <em>n: int</em>, <em>day: str = None</em>, <em>db_config: dict = None</em>, <em>db_name: str = None</em>, <em>tb_name: str = None</em>, <em>hk: bool = True</em>, <em>area: str = None</em>, <em>progress: bool = False</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.series.Series<a class="reference internal" href="_modules/lhdata/calendar.html#get_symbol_lastn_day"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.calendar.get_symbol_lastn_day" title="Permalink to this definition">¶</a></dt>
 <dd><p>获取某股票某日（含）的前n个交易日.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -302,7 +303,7 @@
 <span id="id4"></span><h2>其他接口<a class="headerlink" href="#module-lhdata.calendar" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.calendar.get_holidays">
-<code class="descclassname">lhdata.calendar.</code><code class="descname">get_holidays</code><span class="sig-paren">(</span><em>area: str = 'CH'</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>db_config: dict = None</em>, <em>db_name: str = None</em>, <em>tb_name: str = None</em>, <em>holiday_only: bool = False</em>, <em>hk: bool = False</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/calendar.html#get_holidays"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.calendar.get_holidays" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.calendar.</code><code class="descname">get_holidays</code><span class="sig-paren">(</span><em>area: str = 'CH'</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>db_config: dict = None</em>, <em>db_name: str = None</em>, <em>tb_name: str = None</em>, <em>holiday_only: bool = False</em>, <em>hk: bool = True</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/calendar.html#get_holidays"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.calendar.get_holidays" title="Permalink to this definition">¶</a></dt>
 <dd><p>获取某市场的除周六日外的非交易日。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -342,7 +343,7 @@
         <a href="fund.html" class="btn btn-neutral float-right" title="基础信息模块 lhdata.fund" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="features.html" class="btn btn-neutral float-left" title="特征模块 lhdata.features" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="techs.html" class="btn btn-neutral float-left" title="技术指标模块 lhdata.techs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
