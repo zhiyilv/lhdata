@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lhdata.techs &mdash; lhdata 20.01.14 documentation</title>
+  <title>lhdata.techs &mdash; lhdata 20.07.14 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                20.01.14
+                20.07.14
               </div>
             
           
@@ -88,6 +88,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">QuickStart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../prices.html">行情模块 lhdata.prices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../features.html">特征模块 lhdata.features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../features2.html">特征模块2 lhdata.features2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../techs.html">技术指标模块 lhdata.techs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../calendar.html">日历模块 lhdata.calendar</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fund.html">基础信息模块 lhdata.fund</a></li>
@@ -174,31 +175,53 @@
 
 
 <span class="nd">@pack_dict</span>
-<span class="k">def</span> <span class="nf">_get_data_single</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">day</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">feature</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tech</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">price</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="s1">&#39;high&#39;</span><span class="p">,</span> <span class="s1">&#39;low&#39;</span><span class="p">,</span> <span class="s1">&#39;close&#39;</span><span class="p">,</span> <span class="s1">&#39;volume&#39;</span><span class="p">),</span>
-                     <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span> <span class="n">nbr_thread</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
-    <span class="n">df_data</span> <span class="o">=</span> <span class="n">get_data_simple</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="n">day</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
-                              <span class="n">feature</span><span class="o">=</span><span class="n">feature</span><span class="p">,</span> <span class="n">price</span><span class="o">=</span><span class="n">price</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">,</span> <span class="n">nbr_thread</span><span class="o">=</span><span class="n">nbr_thread</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_get_data_single</span><span class="p">(</span>
+    <span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">day</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">feature</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tech</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">price</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">,</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span> <span class="s2">&quot;low&quot;</span><span class="p">,</span> <span class="s2">&quot;close&quot;</span><span class="p">,</span> <span class="s2">&quot;volume&quot;</span><span class="p">),</span>
+    <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span>
+    <span class="n">nbr_thread</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">df_data</span> <span class="o">=</span> <span class="n">get_data_simple</span><span class="p">(</span>
+        <span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span>
+        <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span>
+        <span class="n">day</span><span class="o">=</span><span class="n">day</span><span class="p">,</span>
+        <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span>
+        <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
+        <span class="n">feature</span><span class="o">=</span><span class="n">feature</span><span class="p">,</span>
+        <span class="n">price</span><span class="o">=</span><span class="n">price</span><span class="p">,</span>
+        <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">,</span>
+        <span class="n">nbr_thread</span><span class="o">=</span><span class="n">nbr_thread</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="k">if</span> <span class="n">tech</span><span class="p">:</span>
-        <span class="n">tech_string_list</span> <span class="o">=</span> <span class="n">tech</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tech</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">tech</span>
+        <span class="n">tech_string_list</span> <span class="o">=</span> <span class="n">tech</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tech</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">tech</span>
         <span class="k">for</span> <span class="n">tech_string</span> <span class="ow">in</span> <span class="n">tech_string_list</span><span class="p">:</span>
             <span class="n">df_data</span> <span class="o">=</span> <span class="n">get_tech</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_data</span><span class="p">,</span> <span class="n">tech_string</span><span class="o">=</span><span class="n">tech_string</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">df_data</span>
 
 
-<span class="n">_get_data_single_ps</span> <span class="o">=</span> <span class="n">shadow_split</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">_get_data_single</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;symbol&#39;</span><span class="p">)</span>
+<span class="n">_get_data_single_ps</span> <span class="o">=</span> <span class="n">shadow_split</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">_get_data_single</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;symbol&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="get_data"><a class="viewcode-back" href="../../techs.html#lhdata.techs.get_data">[docs]</a><span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span> <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-             <span class="n">day</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-             <span class="n">feature</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tech</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-             <span class="n">price</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="s1">&#39;high&#39;</span><span class="p">,</span> <span class="s1">&#39;low&#39;</span><span class="p">,</span> <span class="s1">&#39;close&#39;</span><span class="p">,</span> <span class="s1">&#39;volume&#39;</span><span class="p">),</span>
-             <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span> <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;df&#39;</span><span class="p">,</span>
-             <span class="o">**</span><span class="n">kwargs</span>
-             <span class="p">):</span>
+<div class="viewcode-block" id="get_data"><a class="viewcode-back" href="../../techs.html#lhdata.techs.get_data">[docs]</a><span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span>
+    <span class="n">symbol</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span>
+    <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">day</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">feature</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tech</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">price</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">,</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span> <span class="s2">&quot;low&quot;</span><span class="p">,</span> <span class="s2">&quot;close&quot;</span><span class="p">,</span> <span class="s2">&quot;volume&quot;</span><span class="p">),</span>
+    <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span>
+    <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;df&quot;</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    从数据库中获取数据，支持技术指标（需要安装talib）。</span>
 
@@ -216,18 +239,26 @@
 
 <span class="sd">    :return: DataFrame 或 DataFrame list 或 DataFrame dict</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;nbr_thread&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;chunksize_max&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;nbr_thread&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;chunksize_max&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">symbol_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">symbol</span>
-    <span class="n">df_data_list</span> <span class="o">=</span> <span class="n">_get_data_single_ps</span><span class="p">(</span><span class="n">item_list</span><span class="o">=</span><span class="n">symbol_list</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="n">day</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
-                                       <span class="n">feature</span><span class="o">=</span><span class="n">feature</span><span class="p">,</span> <span class="n">tech</span><span class="o">=</span><span class="n">tech</span><span class="p">,</span> <span class="n">price</span><span class="o">=</span><span class="n">price</span><span class="p">,</span>
-                                       <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">,</span>
-                                       <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s1">&#39;df&#39;</span><span class="p">:</span>
+    <span class="n">df_data_list</span> <span class="o">=</span> <span class="n">_get_data_single_ps</span><span class="p">(</span>
+        <span class="n">item_list</span><span class="o">=</span><span class="n">symbol_list</span><span class="p">,</span>
+        <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span>
+        <span class="n">day</span><span class="o">=</span><span class="n">day</span><span class="p">,</span>
+        <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span>
+        <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
+        <span class="n">feature</span><span class="o">=</span><span class="n">feature</span><span class="p">,</span>
+        <span class="n">tech</span><span class="o">=</span><span class="n">tech</span><span class="p">,</span>
+        <span class="n">price</span><span class="o">=</span><span class="n">price</span><span class="p">,</span>
+        <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s2">&quot;df&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">df_data_list</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s1">&#39;list&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s2">&quot;list&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">df_data_list</span>
-    <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s1">&#39;dict&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s2">&quot;dict&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="n">df</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">symbol_list</span><span class="p">,</span> <span class="n">df_data_list</span><span class="p">)}</span></div>
 
 
@@ -239,7 +270,7 @@
 
 <span class="sd">    :return: function</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">segs</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tech_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)]</span>
+    <span class="n">segs</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tech_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)]</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">segs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
         <span class="n">func</span> <span class="o">=</span> <span class="n">abstract</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
@@ -264,25 +295,25 @@
         <span class="n">func</span> <span class="o">=</span> <span class="n">parse_tech_string</span><span class="p">(</span><span class="n">tech_string</span><span class="o">=</span><span class="n">tech_string</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">df</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
 
     <span class="n">input_names</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">get_input_names</span><span class="p">()</span>
-    <span class="n">px_cols</span> <span class="o">=</span> <span class="n">input_names</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;prices&#39;</span><span class="p">,</span> <span class="p">[])</span>
-    <span class="n">px_col</span> <span class="o">=</span> <span class="n">input_names</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;price&#39;</span><span class="p">)</span>
+    <span class="n">px_cols</span> <span class="o">=</span> <span class="n">input_names</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;prices&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">px_col</span> <span class="o">=</span> <span class="n">input_names</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;price&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">px_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">px_cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">px_col</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">px_cols</span><span class="p">}</span>
     <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;</span><span class="si">{px_cols}</span><span class="s1"> is required for </span><span class="si">{name}</span><span class="s1">.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="si">{px_cols}</span><span class="s2"> is required for </span><span class="si">{name}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
     <span class="n">status</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">set_input_arrays</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">status</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Cannot input data for </span><span class="si">{name}</span><span class="s1">.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Cannot input data for </span><span class="si">{name}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">tech_values</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">outputs</span>
-    <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;real&#39;</span> <span class="k">else</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">func</span><span class="o">.</span><span class="n">output_names</span><span class="p">]</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">&quot;real&quot;</span> <span class="k">else</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">func</span><span class="o">.</span><span class="n">output_names</span><span class="p">]</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">df</span><span class="p">[</span><span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">tech_values</span>
     <span class="k">else</span><span class="p">:</span>

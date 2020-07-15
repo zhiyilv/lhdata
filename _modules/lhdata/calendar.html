@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lhdata.calendar &mdash; lhdata 20.01.14 documentation</title>
+  <title>lhdata.calendar &mdash; lhdata 20.07.14 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                20.01.14
+                20.07.14
               </div>
             
           
@@ -88,6 +88,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">QuickStart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../prices.html">行情模块 lhdata.prices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../features.html">特征模块 lhdata.features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../features2.html">特征模块2 lhdata.features2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../techs.html">技术指标模块 lhdata.techs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../calendar.html">日历模块 lhdata.calendar</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fund.html">基础信息模块 lhdata.fund</a></li>
@@ -175,10 +176,18 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Union</span>
 
 
-<div class="viewcode-block" id="get_calendar"><a class="viewcode-back" href="../../calendar.html#lhdata.calendar.get_calendar">[docs]</a><span class="k">def</span> <span class="nf">get_calendar</span><span class="p">(</span><span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CH&quot;</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">db_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">holiday_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;index&#39;</span><span class="p">,</span>
-                 <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="get_calendar"><a class="viewcode-back" href="../../calendar.html#lhdata.calendar.get_calendar">[docs]</a><span class="k">def</span> <span class="nf">get_calendar</span><span class="p">(</span>
+    <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CH&quot;</span><span class="p">,</span>
+    <span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">db_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">holiday_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;index&quot;</span><span class="p">,</span>
+    <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    指定市场，获得该市场的交易日历。</span>
 
@@ -198,20 +207,28 @@
     <span class="n">area</span> <span class="o">=</span> <span class="n">area</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="c1"># if area == &#39;ch&#39;:</span>
     <span class="k">if</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">df_holidays</span> <span class="o">=</span> <span class="n">get_holidays</span><span class="p">(</span><span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
-                                   <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">db_name</span><span class="o">=</span><span class="n">db_name</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span>
-                                   <span class="n">holiday_only</span><span class="o">=</span><span class="n">holiday_only</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">df_holidays</span> <span class="o">=</span> <span class="n">get_holidays</span><span class="p">(</span>
+            <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span>
+            <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span>
+            <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
+            <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
+            <span class="n">db_name</span><span class="o">=</span><span class="n">db_name</span><span class="p">,</span>
+            <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span>
+            <span class="n">holiday_only</span><span class="o">=</span><span class="n">holiday_only</span><span class="p">,</span>
+            <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="c1"># 过滤休市日</span>
         <span class="n">start</span> <span class="o">=</span> <span class="n">start</span> <span class="ow">or</span> <span class="n">DEFAULT_START</span>
         <span class="n">end</span> <span class="o">=</span> <span class="n">end</span> <span class="ow">or</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-        <span class="n">business_days</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+        <span class="n">business_days</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;B&quot;</span><span class="p">)</span>
         <span class="n">trading_days</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">business_days</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">df_holidays</span><span class="o">.</span><span class="n">closed</span><span class="p">)))</span>
 
         <span class="c1"># 格式</span>
-        <span class="k">if</span> <span class="s1">&#39;index&#39;</span> <span class="ow">in</span> <span class="n">fmt</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">(</span><span class="n">trading_days</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;datetime&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s1">&#39;str&#39;</span> <span class="ow">in</span> <span class="n">fmt</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;index&quot;</span> <span class="ow">in</span> <span class="n">fmt</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">(</span><span class="n">trading_days</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;datetime&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;str&quot;</span> <span class="ow">in</span> <span class="n">fmt</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">trading_days</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">trading_days</span></div>
@@ -228,10 +245,17 @@
     <span class="c1">#         return spx.index.tolist()</span>
 
 
-<div class="viewcode-block" id="get_holidays"><a class="viewcode-back" href="../../calendar.html#lhdata.calendar.get_holidays">[docs]</a><span class="k">def</span> <span class="nf">get_holidays</span><span class="p">(</span><span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;CH&#39;</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">db_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">holiday_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-                 <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<div class="viewcode-block" id="get_holidays"><a class="viewcode-back" href="../../calendar.html#lhdata.calendar.get_holidays">[docs]</a><span class="k">def</span> <span class="nf">get_holidays</span><span class="p">(</span>
+    <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CH&quot;</span><span class="p">,</span>
+    <span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">db_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">holiday_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    获取某市场的除周六日外的非交易日。</span>
 
@@ -248,31 +272,46 @@
 <span class="sd">    :return: DataFrame</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># 确定休市日表地址</span>
-    <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;calendar&#39;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
+    <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;calendar&quot;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">db_name</span><span class="p">:</span>
         <span class="n">area</span> <span class="o">=</span> <span class="n">area</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">area</span> <span class="o">==</span> <span class="s1">&#39;ch&#39;</span><span class="p">:</span>
-            <span class="n">db_name</span> <span class="o">=</span> <span class="s1">&#39;quotation_sz&#39;</span>
+        <span class="k">if</span> <span class="n">area</span> <span class="o">==</span> <span class="s2">&quot;ch&quot;</span><span class="p">:</span>
+            <span class="n">db_name</span> <span class="o">=</span> <span class="s2">&quot;quotation_sz&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">db_name</span> <span class="o">=</span> <span class="s1">&#39;quotation_hk&#39;</span>
-    <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{db_name}</span><span class="s1">.tb_holiday_</span><span class="si">{area}</span><span class="s1">&#39;</span>
+            <span class="n">db_name</span> <span class="o">=</span> <span class="s2">&quot;quotation_hk&quot;</span>
+    <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{db_name}</span><span class="s2">.tb_holiday_</span><span class="si">{area}</span><span class="s2">&quot;</span>
 
     <span class="n">start</span> <span class="o">=</span> <span class="n">start</span> <span class="ow">or</span> <span class="n">DEFAULT_START</span>
     <span class="n">end</span> <span class="o">=</span> <span class="n">end</span> <span class="ow">or</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
     <span class="c1"># 休市日表</span>
-    <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;date1&#39;</span><span class="p">,</span> <span class="s1">&#39;nonsettle_type&#39;</span><span class="p">]</span>
-    <span class="n">df_holidays</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
-                             <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">dt_col</span><span class="o">=</span><span class="s1">&#39;date1&#39;</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;date1 ASC&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;date1&#39;</span><span class="p">],</span>
-                             <span class="n">rename_col</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;date1&#39;</span><span class="p">:</span> <span class="s1">&#39;closed&#39;</span><span class="p">,</span> <span class="s1">&#39;nonsettle_type&#39;</span><span class="p">:</span> <span class="s1">&#39;type_&#39;</span><span class="p">},</span>
-                             <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;date1&quot;</span><span class="p">,</span> <span class="s2">&quot;nonsettle_type&quot;</span><span class="p">]</span>
+    <span class="n">df_holidays</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span>
+        <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
+        <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span>
+        <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
+        <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span>
+        <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
+        <span class="n">dt_col</span><span class="o">=</span><span class="s2">&quot;date1&quot;</span><span class="p">,</span>
+        <span class="n">order_by</span><span class="o">=</span><span class="s2">&quot;date1 ASC&quot;</span><span class="p">,</span>
+        <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;date1&quot;</span><span class="p">],</span>
+        <span class="n">rename_col</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;date1&quot;</span><span class="p">:</span> <span class="s2">&quot;closed&quot;</span><span class="p">,</span> <span class="s2">&quot;nonsettle_type&quot;</span><span class="p">:</span> <span class="s2">&quot;type_&quot;</span><span class="p">},</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="k">if</span> <span class="n">holiday_only</span><span class="p">:</span>
-        <span class="n">df_holidays</span> <span class="o">=</span> <span class="n">df_holidays</span><span class="p">[</span><span class="n">df_holidays</span><span class="o">.</span><span class="n">type_</span> <span class="o">==</span> <span class="s1">&#39;holiday&#39;</span><span class="p">]</span>
+        <span class="n">df_holidays</span> <span class="o">=</span> <span class="n">df_holidays</span><span class="p">[</span><span class="n">df_holidays</span><span class="o">.</span><span class="n">type_</span> <span class="o">==</span> <span class="s2">&quot;holiday&quot;</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">df_holidays</span></div>
 
 
-<div class="viewcode-block" id="get_prev_day"><a class="viewcode-back" href="../../calendar.html#lhdata.calendar.get_prev_day">[docs]</a><span class="k">def</span> <span class="nf">get_prev_day</span><span class="p">(</span><span class="n">day</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ch&#39;</span><span class="p">,</span> <span class="n">space</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
-                 <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">db_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="get_prev_day"><a class="viewcode-back" href="../../calendar.html#lhdata.calendar.get_prev_day">[docs]</a><span class="k">def</span> <span class="nf">get_prev_day</span><span class="p">(</span>
+    <span class="n">day</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ch&quot;</span><span class="p">,</span>
+    <span class="n">space</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">db_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    指定市场，获得某日之前的一个交易日。通过查询交易日历实现。</span>
 
@@ -288,9 +327,17 @@
 <span class="sd">    :return: date str or None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">start</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">day</span><span class="p">)</span> <span class="o">-</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">space</span><span class="p">))</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-    <span class="n">calendar</span> <span class="o">=</span> <span class="n">get_calendar</span><span class="p">(</span><span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">day</span><span class="p">,</span>
-                            <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">db_name</span><span class="o">=</span><span class="n">db_name</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span>
-                            <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">calendar</span> <span class="o">=</span> <span class="n">get_calendar</span><span class="p">(</span>
+        <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span>
+        <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span>
+        <span class="n">end</span><span class="o">=</span><span class="n">day</span><span class="p">,</span>
+        <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
+        <span class="n">db_name</span><span class="o">=</span><span class="n">db_name</span><span class="p">,</span>
+        <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span>
+        <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span>
+        <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">calendar</span> <span class="o">=</span> <span class="n">calendar</span><span class="p">[</span><span class="n">calendar</span> <span class="o">&lt;</span> <span class="n">day</span><span class="p">]</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">calendar</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
@@ -298,10 +345,16 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="get_symbol_prev_day"><a class="viewcode-back" href="../../calendar.html#lhdata.calendar.get_symbol_prev_day">[docs]</a><span class="k">def</span> <span class="nf">get_symbol_prev_day</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">],</span> <span class="n">day</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                        <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">db_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                        <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span> <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                        <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="get_symbol_prev_day"><a class="viewcode-back" href="../../calendar.html#lhdata.calendar.get_symbol_prev_day">[docs]</a><span class="k">def</span> <span class="nf">get_symbol_prev_day</span><span class="p">(</span>
+    <span class="n">symbol</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">],</span>
+    <span class="n">day</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">db_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span>
+    <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    指定股票和日期，获得前一个正常交易日。通过查询行情表实现。</span>
 
@@ -317,14 +370,23 @@
 <span class="sd">    :return: a list/tuple of symbols -&gt; date str list; otherwise, date str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">symbol</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;只支持查询 单支股票，或 股票列表 的前一个正常交易日，而symbol=</span><span class="si">{symbol}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;只支持查询 单支股票，或 股票列表 的前一个正常交易日，而symbol=</span><span class="si">{symbol}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="n">symbol_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="nb">list</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
-    <span class="n">df_list</span> <span class="o">=</span> <span class="n">get_prev__ps</span><span class="p">(</span><span class="n">item_list</span><span class="o">=</span><span class="n">symbol_list</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="n">day</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;date1&#39;</span><span class="p">],</span>
-                           <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">db_name</span><span class="o">=</span><span class="n">db_name</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span>
-                           <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="n">day_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">iat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span> <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
-                <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">df_list</span><span class="p">]</span>
+    <span class="n">df_list</span> <span class="o">=</span> <span class="n">get_prev__ps</span><span class="p">(</span>
+        <span class="n">item_list</span><span class="o">=</span><span class="n">symbol_list</span><span class="p">,</span>
+        <span class="n">day</span><span class="o">=</span><span class="n">day</span><span class="p">,</span>
+        <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;date1&quot;</span><span class="p">],</span>
+        <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
+        <span class="n">db_name</span><span class="o">=</span><span class="n">db_name</span><span class="p">,</span>
+        <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span>
+        <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">,</span>
+        <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">day_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">iat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span> <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">df_list</span>
+    <span class="p">]</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">day_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -332,11 +394,18 @@
         <span class="k">return</span> <span class="n">day_list</span></div>
 
 
-<div class="viewcode-block" id="get_symbol_lastn_day"><a class="viewcode-back" href="../../calendar.html#lhdata.calendar.get_symbol_lastn_day">[docs]</a><span class="k">def</span> <span class="nf">get_symbol_lastn_day</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">day</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">db_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span> <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-                         <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+<div class="viewcode-block" id="get_symbol_lastn_day"><a class="viewcode-back" href="../../calendar.html#lhdata.calendar.get_symbol_lastn_day">[docs]</a><span class="k">def</span> <span class="nf">get_symbol_lastn_day</span><span class="p">(</span>
+    <span class="n">symbol</span><span class="p">,</span>
+    <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">day</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">db_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span>
+    <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    获取某股票某日（含）的前n个交易日.</span>
 
@@ -354,9 +423,11 @@
 <span class="sd">    :return: Series</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># 确定数据库信息</span>
-    <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;prices&#39;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
+    <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;prices&quot;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
     <span class="n">area</span> <span class="o">=</span> <span class="n">area</span> <span class="ow">or</span> <span class="n">decide_area</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
-    <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">db_name</span><span class="o">=</span><span class="n">db_name</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;px&#39;</span><span class="p">)</span>
+    <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span>
+        <span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">db_name</span><span class="o">=</span><span class="n">db_name</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;px&quot;</span>
+    <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">day</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">day_ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
@@ -366,23 +437,31 @@
 
     <span class="c1"># decide download start</span>
     <span class="n">year_start</span> <span class="o">=</span> <span class="n">day_ts</span><span class="o">.</span><span class="n">year</span> <span class="o">//</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">5</span>
-    <span class="n">df_dates_all</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">])</span>
+    <span class="n">df_dates_all</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;datetime&quot;</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">year_start</span><span class="p">,</span> <span class="mi">1989</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">):</span>
         <span class="n">year_px_tb_name</span> <span class="o">=</span> <span class="n">tb_name</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">)</span>
-        <span class="n">df_dates</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">year_px_tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s1">&#39;date1&#39;</span><span class="p">,</span>
-                              <span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">day</span><span class="p">,</span> <span class="n">dt_col</span><span class="o">=</span><span class="s1">&#39;date1&#39;</span><span class="p">,</span>
-                              <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;date1 DESC&#39;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">df_dates</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="n">df_dates</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span>
+            <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
+            <span class="n">tb_name</span><span class="o">=</span><span class="n">year_px_tb_name</span><span class="p">,</span>
+            <span class="n">ivt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;date1&quot;</span><span class="p">,</span>
+            <span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span>
+            <span class="n">end</span><span class="o">=</span><span class="n">day</span><span class="p">,</span>
+            <span class="n">dt_col</span><span class="o">=</span><span class="s2">&quot;date1&quot;</span><span class="p">,</span>
+            <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;date1&quot;</span><span class="p">],</span>
+            <span class="n">order_by</span><span class="o">=</span><span class="s2">&quot;date1 DESC&quot;</span><span class="p">,</span>
+            <span class="n">limit</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>
+            <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">df_dates_all</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_dates_all</span><span class="p">,</span> <span class="n">df_dates</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">-=</span> <span class="n">df_dates</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">break</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">df_dates_all</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_dates_all</span><span class="p">,</span> <span class="n">df_dates</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">n</span> <span class="o">-=</span> <span class="n">df_dates</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">break</span>
     <span class="k">if</span> <span class="n">df_dates_all</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">df_dates_all</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="n">df_dates_all</span><span class="p">[</span><span class="s2">&quot;datetime&quot;</span><span class="p">]</span></div>
 </pre></div>
 
            </div>

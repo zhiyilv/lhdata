@@ -11,6 +11,9 @@ Alpha特征 Alpha features
 ------------------------
 .. autofunction:: lhdata.features.get_alpha
 
+AlphaV2特征 Alpha featuresV2
+-----------------------------
+.. autofunction:: lhdata.features.get_alphav2
 
 Risk特征 Risk features
 ------------------------

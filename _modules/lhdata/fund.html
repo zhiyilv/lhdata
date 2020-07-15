@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lhdata.fund &mdash; lhdata 20.01.14 documentation</title>
+  <title>lhdata.fund &mdash; lhdata 20.07.14 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                20.01.14
+                20.07.14
               </div>
             
           
@@ -88,6 +88,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">QuickStart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../prices.html">行情模块 lhdata.prices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../features.html">特征模块 lhdata.features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../features2.html">特征模块2 lhdata.features2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../techs.html">技术指标模块 lhdata.techs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../calendar.html">日历模块 lhdata.calendar</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fund.html">基础信息模块 lhdata.fund</a></li>
@@ -166,7 +167,7 @@
 <span class="sd">@File   : fund.py\n</span>
 <span class="sd">@Desc   : fundamental info</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">.dispatcher</span> <span class="k">import</span> <span class="n">get_db_config</span><span class="p">,</span> <span class="n">get_tb_name</span><span class="p">,</span> <span class="n">HK</span>
+<span class="kn">from</span> <span class="nn">.dispatcher</span> <span class="k">import</span> <span class="n">get_db_config</span><span class="p">,</span> <span class="n">get_tb_name</span><span class="p">,</span> <span class="n">HK</span><span class="p">,</span> <span class="n">CH_INDEX_ALL</span>
 <span class="kn">from</span> <span class="nn">.dbgetter</span> <span class="k">import</span> <span class="n">get_fields</span>
 <span class="kn">from</span> <span class="nn">.util_data</span> <span class="k">import</span> <span class="n">s2code_list</span><span class="p">,</span> <span class="n">decide_area</span><span class="p">,</span> <span class="n">idx2name</span>
 
@@ -174,10 +175,14 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 
-<div class="viewcode-block" id="get_ipo_day"><a class="viewcode-back" href="../../fund.html#lhdata.fund.get_ipo_day">[docs]</a><span class="k">def</span> <span class="nf">get_ipo_day</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">],</span>
-                <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span>
-                <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<div class="viewcode-block" id="get_ipo_day"><a class="viewcode-back" href="../../fund.html#lhdata.fund.get_ipo_day">[docs]</a><span class="k">def</span> <span class="nf">get_ipo_day</span><span class="p">(</span>
+    <span class="n">symbol</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">],</span>
+    <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    获取ipo日期。注意外盘股票有可能上市日期为空。</span>
 
@@ -191,14 +196,16 @@
 <span class="sd">    :return: DataFrame</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">symbol</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;Index&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">symbol</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;Index&quot;</span><span class="p">):</span>
             <span class="n">lookup_tb</span> <span class="o">=</span> <span class="p">{</span>
-                    <span class="s1">&#39;hs300&#39;</span><span class="p">:</span> <span class="s1">&#39;2005-04-08&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;zz500&#39;</span><span class="p">:</span> <span class="s1">&#39;2005-01-01&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;gemb&#39;</span><span class="p">:</span> <span class="s1">&#39;2010-06-01&#39;</span>
+                <span class="s2">&quot;hs300&quot;</span><span class="p">:</span> <span class="s2">&quot;2005-04-08&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;zz500&quot;</span><span class="p">:</span> <span class="s2">&quot;2005-01-01&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;gemb&quot;</span><span class="p">:</span> <span class="s2">&quot;2010-06-01&quot;</span><span class="p">,</span>
             <span class="p">}</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="n">symbol</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">lookup_tb</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx2name</span><span class="p">(</span><span class="n">symbol</span><span class="p">)))]],</span>
-                              <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;ipo&#39;</span><span class="p">])</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="n">symbol</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">lookup_tb</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx2name</span><span class="p">(</span><span class="n">symbol</span><span class="p">)))]],</span>
+                <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;ipo&quot;</span><span class="p">],</span>
+            <span class="p">)</span>
             <span class="k">return</span> <span class="n">df</span>
     <span class="k">except</span><span class="p">:</span>
         <span class="k">pass</span>
@@ -206,50 +213,81 @@
     <span class="n">area</span> <span class="o">=</span> <span class="n">area</span> <span class="ow">or</span> <span class="n">decide_area</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
     <span class="n">area</span> <span class="o">=</span> <span class="n">area</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
-    <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;basics&#39;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">area</span> <span class="o">==</span> <span class="s1">&#39;ch&#39;</span><span class="p">:</span>
+    <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;basics&quot;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">area</span> <span class="o">==</span> <span class="s2">&quot;ch&quot;</span><span class="p">:</span>
         <span class="n">symbol_list</span> <span class="o">=</span> <span class="n">s2code_list</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
-        <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;ivt&#39;</span><span class="p">)</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                        <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;SEC_CD&#39;</span><span class="p">,</span> <span class="s1">&#39;MKT_DT&#39;</span><span class="p">],</span>
-                        <span class="n">symbol</span><span class="o">=</span><span class="n">symbol_list</span><span class="p">,</span> <span class="n">symbol_col</span><span class="o">=</span><span class="s1">&#39;SEC_CD&#39;</span><span class="p">,</span>
-                        <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;MKT_DT&#39;</span><span class="p">],</span> <span class="n">rename_col</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;MKT_DT&#39;</span><span class="p">:</span> <span class="s1">&#39;ipo&#39;</span><span class="p">},</span>
-                        <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;ivt&quot;</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span>
+            <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
+            <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span>
+            <span class="n">ivt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;SEC_CD&quot;</span><span class="p">,</span> <span class="s2">&quot;MKT_DT&quot;</span><span class="p">],</span>
+            <span class="n">symbol</span><span class="o">=</span><span class="n">symbol_list</span><span class="p">,</span>
+            <span class="n">symbol_col</span><span class="o">=</span><span class="s2">&quot;SEC_CD&quot;</span><span class="p">,</span>
+            <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;MKT_DT&quot;</span><span class="p">],</span>
+            <span class="n">rename_col</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;MKT_DT&quot;</span><span class="p">:</span> <span class="s2">&quot;ipo&quot;</span><span class="p">},</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">db_config</span> <span class="o">=</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;memb&#39;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                        <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;ipo_date&#39;</span><span class="p">],</span>
-                        <span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ipo_date&#39;</span><span class="p">],</span> <span class="n">rename_col</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;ipo_date&#39;</span><span class="p">:</span> <span class="s1">&#39;ipo&#39;</span><span class="p">},</span>
-                        <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">db_config</span> <span class="o">=</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;memb&quot;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span>
+            <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
+            <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span>
+            <span class="n">ivt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;ipo_date&quot;</span><span class="p">],</span>
+            <span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span>
+            <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ipo_date&quot;</span><span class="p">],</span>
+            <span class="n">rename_col</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ipo_date&quot;</span><span class="p">:</span> <span class="s2">&quot;ipo&quot;</span><span class="p">},</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">df</span></div>
 
 
-<span class="k">def</span> <span class="nf">get_delist_day</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">],</span>
-                   <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                   <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                   <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">get_delist_day</span><span class="p">(</span>
+    <span class="n">symbol</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">],</span>
+    <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="n">area</span> <span class="o">=</span> <span class="n">area</span> <span class="ow">or</span> <span class="n">decide_area</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
     <span class="n">area</span> <span class="o">=</span> <span class="n">area</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
     <span class="n">symbol_list</span> <span class="o">=</span> <span class="n">s2code_list</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
-    <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;ivt&#39;</span><span class="p">)</span>
-    <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;basics&#39;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">)</span>
+    <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;ivt&quot;</span><span class="p">)</span>
+    <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;basics&quot;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">)</span>
 
-    <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                    <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;SEC_CD&#39;</span><span class="p">,</span> <span class="s1">&#39;DEL_DT&#39;</span><span class="p">],</span>
-                    <span class="n">symbol</span><span class="o">=</span><span class="n">symbol_list</span><span class="p">,</span> <span class="n">symbol_col</span><span class="o">=</span><span class="s1">&#39;SEC_CD&#39;</span><span class="p">,</span>
-                    <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DEL_DT&#39;</span><span class="p">],</span> <span class="n">rename_col</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;DEL_DT&#39;</span><span class="p">:</span> <span class="s1">&#39;delisted&#39;</span><span class="p">},</span>
-                    <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span>
+        <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
+        <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span>
+        <span class="n">ivt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;SEC_CD&quot;</span><span class="p">,</span> <span class="s2">&quot;DEL_DT&quot;</span><span class="p">],</span>
+        <span class="n">symbol</span><span class="o">=</span><span class="n">symbol_list</span><span class="p">,</span>
+        <span class="n">symbol_col</span><span class="o">=</span><span class="s2">&quot;SEC_CD&quot;</span><span class="p">,</span>
+        <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;DEL_DT&quot;</span><span class="p">],</span>
+        <span class="n">rename_col</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;DEL_DT&quot;</span><span class="p">:</span> <span class="s2">&quot;delisted&quot;</span><span class="p">},</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span>
 
 
-<div class="viewcode-block" id="get_symbols"><a class="viewcode-back" href="../../fund.html#lhdata.fund.get_symbols">[docs]</a><span class="k">def</span> <span class="nf">get_symbols</span><span class="p">(</span><span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ch&#39;</span><span class="p">,</span> <span class="n">active</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-                <span class="n">type_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span>  <span class="n">board</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># for China</span>
-                <span class="n">order_by_symbol</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-                <span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">day</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># ipo constraints</span>
-                <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<div class="viewcode-block" id="get_symbols"><a class="viewcode-back" href="../../fund.html#lhdata.fund.get_symbols">[docs]</a><span class="k">def</span> <span class="nf">get_symbols</span><span class="p">(</span>
+    <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ch&quot;</span><span class="p">,</span>
+    <span class="n">active</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">pend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">type_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span>
+    <span class="n">board</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># for China</span>
+    <span class="n">incl_index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">order_by_symbol</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">start</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">end</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">day</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># ipo constraints</span>
+    <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    获取某个市场所有的（外盘为订阅的）股票信息。</span>
 
@@ -257,6 +295,7 @@
 <span class="sd">    :param active: 是否正常交易。A股判断标准是退市日期为空，外盘通过market_status确认。</span>
 <span class="sd">    :param type_: 品种代码, in [&#39;A&#39;, &#39;B&#39;], None则包括A和B股。只对A股有效。</span>
 <span class="sd">    :param board: 板块代码, in [&#39;MAIN&#39;(主板), &#39;SME&#39;(中小板), &#39;GEM&#39;(创业板), &#39;STAR&#39;(科创板)], None则所有版块。只对A股有效。</span>
+<span class="sd">    :param incl_index: 是否包含该市场的指数。</span>
 <span class="sd">    :param order_by_symbol: True -&gt; 按股票代码排序, False -&gt; 按上市日期排序。</span>
 <span class="sd">    :param start: 只返回该日期及之后上市的股票。None则不做限制。</span>
 <span class="sd">    :param end: 只返回该日期及之前上市的股票。None则不做限制。</span>
@@ -269,25 +308,25 @@
 <span class="sd">    :return: DataFrame</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">area</span> <span class="o">=</span> <span class="n">area</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">area</span> <span class="o">==</span> <span class="s1">&#39;ch&#39;</span><span class="p">:</span>
-        <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;ivt&#39;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
-        <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;basics&#39;</span><span class="p">)</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SEC_CD&#39;</span><span class="p">,</span> <span class="s1">&#39;SEC_NM&#39;</span><span class="p">,</span> <span class="s1">&#39;MKT_CL&#39;</span><span class="p">,</span> <span class="s1">&#39;MKT_DT&#39;</span><span class="p">,</span> <span class="s1">&#39;BOARD_CL&#39;</span><span class="p">]</span>
-        <span class="n">parse_dates</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;MKT_DT&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">area</span> <span class="o">==</span> <span class="s2">&quot;ch&quot;</span><span class="p">:</span>
+        <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;ivt&quot;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
+        <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;basics&quot;</span><span class="p">)</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SEC_CD&quot;</span><span class="p">,</span> <span class="s2">&quot;SEC_NM&quot;</span><span class="p">,</span> <span class="s2">&quot;MKT_CL&quot;</span><span class="p">,</span> <span class="s2">&quot;MKT_DT&quot;</span><span class="p">,</span> <span class="s2">&quot;BOARD_CL&quot;</span><span class="p">]</span>
+        <span class="n">parse_dates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;MKT_DT&quot;</span><span class="p">]</span>
         <span class="n">rename_col</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s1">&#39;SEC_CD&#39;</span><span class="p">:</span> <span class="s1">&#39;symbol&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;SEC_NM&#39;</span><span class="p">:</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;MKT_CL&#39;</span><span class="p">:</span> <span class="s1">&#39;exchange&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;MKT_DT&#39;</span><span class="p">:</span> <span class="s1">&#39;ipo&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;BOARD_CL&#39;</span><span class="p">:</span> <span class="s1">&#39;board&#39;</span>
+            <span class="s2">&quot;SEC_CD&quot;</span><span class="p">:</span> <span class="s2">&quot;symbol&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;SEC_NM&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;MKT_CL&quot;</span><span class="p">:</span> <span class="s2">&quot;exchange&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;MKT_DT&quot;</span><span class="p">:</span> <span class="s2">&quot;ipo&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;BOARD_CL&quot;</span><span class="p">:</span> <span class="s2">&quot;board&quot;</span><span class="p">,</span>
         <span class="p">}</span>
 
         <span class="k">if</span> <span class="n">order_by_symbol</span><span class="p">:</span>
-            <span class="n">order_by_str</span> <span class="o">=</span> <span class="s1">&#39;SEC_CD&#39;</span>
+            <span class="n">order_by_str</span> <span class="o">=</span> <span class="s2">&quot;SEC_CD&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">order_by_str</span> <span class="o">=</span> <span class="s1">&#39;MKT_DT&#39;</span>
+            <span class="n">order_by_str</span> <span class="o">=</span> <span class="s2">&quot;MKT_DT&quot;</span>
 
-        <span class="n">more_str</span> <span class="o">=</span> <span class="s1">&#39;AND MKT_DT IS NOT NULL&#39;</span>
+        <span class="n">more_str</span> <span class="o">=</span> <span class="s2">&quot;AND MKT_DT IS NOT NULL&quot;</span>
         <span class="k">if</span> <span class="n">type_</span><span class="p">:</span>
             <span class="n">more_str</span> <span class="o">+=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">AND VAR_CL = &#39;</span><span class="si">{type_}</span><span class="s2">&#39;&quot;</span>
         <span class="k">if</span> <span class="n">board</span><span class="p">:</span>
@@ -295,66 +334,102 @@
         <span class="k">if</span> <span class="n">active</span><span class="p">:</span>
             <span class="n">more_str</span> <span class="o">+=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">AND DEL_DT IS NULL&quot;</span>
         <span class="k">else</span><span class="p">:</span>  <span class="c1"># 需要包含delist date</span>
-            <span class="n">fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;DEL_DT&#39;</span><span class="p">)</span>
-            <span class="n">parse_dates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;DEL_DT&#39;</span><span class="p">)</span>
-            <span class="n">rename_col</span><span class="p">[</span><span class="s1">&#39;DEL_DT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;delisted&#39;</span>
+            <span class="n">fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;DEL_DT&quot;</span><span class="p">)</span>
+            <span class="n">parse_dates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;DEL_DT&quot;</span><span class="p">)</span>
+            <span class="n">rename_col</span><span class="p">[</span><span class="s2">&quot;DEL_DT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;delisted&quot;</span>
 
-        <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                        <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
-                        <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="n">day</span><span class="p">,</span> <span class="n">dt_col</span><span class="o">=</span><span class="s1">&#39;MKT_DT&#39;</span><span class="p">,</span>
-                        <span class="n">more</span><span class="o">=</span><span class="n">more_str</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="n">order_by_str</span><span class="p">,</span>
-                        <span class="n">parse_dates</span><span class="o">=</span><span class="n">parse_dates</span><span class="p">,</span> <span class="n">rename_col</span><span class="o">=</span><span class="n">rename_col</span><span class="p">,</span>
-                        <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">df</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span>
+            <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
+            <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span>
+            <span class="n">ivt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
+            <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span>
+            <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
+            <span class="n">day</span><span class="o">=</span><span class="n">day</span><span class="p">,</span>
+            <span class="n">dt_col</span><span class="o">=</span><span class="s2">&quot;MKT_DT&quot;</span><span class="p">,</span>
+            <span class="n">more</span><span class="o">=</span><span class="n">more_str</span><span class="p">,</span>
+            <span class="n">order_by</span><span class="o">=</span><span class="n">order_by_str</span><span class="p">,</span>
+            <span class="n">parse_dates</span><span class="o">=</span><span class="n">parse_dates</span><span class="p">,</span>
+            <span class="n">rename_col</span><span class="o">=</span><span class="n">rename_col</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;prices&#39;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
-        <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;basics&#39;</span><span class="p">)</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;exchangeid&#39;</span><span class="p">,</span> <span class="s1">&#39;ipo_date&#39;</span><span class="p">,</span> <span class="s1">&#39;market_status&#39;</span><span class="p">]</span>
-        <span class="n">parse_dates</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ipo_date&#39;</span><span class="p">]</span>
+        <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;prices&quot;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
+        <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;basics&quot;</span><span class="p">)</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;exchangeid&quot;</span><span class="p">,</span> <span class="s2">&quot;ipo_date&quot;</span><span class="p">,</span> <span class="s2">&quot;market_status&quot;</span><span class="p">]</span>
+        <span class="n">parse_dates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ipo_date&quot;</span><span class="p">]</span>
         <span class="n">rename_col</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s1">&#39;exchangeid&#39;</span><span class="p">:</span> <span class="s1">&#39;exchange&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;ipo_date&#39;</span><span class="p">:</span> <span class="s1">&#39;ipo&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;market_status&#39;</span><span class="p">:</span> <span class="s1">&#39;status&#39;</span>
+            <span class="s2">&quot;exchangeid&quot;</span><span class="p">:</span> <span class="s2">&quot;exchange&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ipo_date&quot;</span><span class="p">:</span> <span class="s2">&quot;ipo&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;market_status&quot;</span><span class="p">:</span> <span class="s2">&quot;status&quot;</span><span class="p">,</span>
         <span class="p">}</span>
 
         <span class="k">if</span> <span class="n">order_by_symbol</span><span class="p">:</span>
-            <span class="n">order_by_str</span> <span class="o">=</span> <span class="s1">&#39;symbol&#39;</span>
+            <span class="n">order_by_str</span> <span class="o">=</span> <span class="s2">&quot;symbol&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">order_by_str</span> <span class="o">=</span> <span class="s1">&#39;ipo_date&#39;</span>
+            <span class="n">order_by_str</span> <span class="o">=</span> <span class="s2">&quot;ipo_date&quot;</span>
 
         <span class="n">more_str</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;AND area = &#39;</span><span class="si">{area}</span><span class="s2">&#39;</span><span class="se">\n</span><span class="s2">AND sec_type = &#39;EQUITY&#39;&quot;</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="n">active</span><span class="p">:</span>
-            <span class="n">more_str</span> <span class="o">+=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">AND market_status = &#39;ACTV&#39;&quot;</span>
+            <span class="n">status</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;ACTV&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pend</span><span class="p">:</span>
+            <span class="n">status</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;PEND&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">status</span><span class="p">:</span>
+            <span class="n">status_str</span> <span class="o">=</span> <span class="s2">&quot;&#39;, &#39;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+            <span class="n">more_str</span> <span class="o">+=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">AND market_status in (&#39;</span><span class="si">{status_str}</span><span class="s2">&#39;)&quot;</span>
 
-        <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                        <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
-                        <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="n">day</span><span class="p">,</span> <span class="n">dt_col</span><span class="o">=</span><span class="s1">&#39;ipo_date&#39;</span><span class="p">,</span>
-                        <span class="n">more</span><span class="o">=</span><span class="n">more_str</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="n">order_by_str</span><span class="p">,</span>
-                        <span class="n">parse_dates</span><span class="o">=</span><span class="n">parse_dates</span><span class="p">,</span> <span class="n">rename_col</span><span class="o">=</span><span class="n">rename_col</span><span class="p">,</span>
-                        <span class="o">**</span><span class="n">kwargs</span>
-                        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">df</span></div>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span>
+            <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
+            <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span>
+            <span class="n">ivt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
+            <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span>
+            <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
+            <span class="n">day</span><span class="o">=</span><span class="n">day</span><span class="p">,</span>
+            <span class="n">dt_col</span><span class="o">=</span><span class="s2">&quot;ipo_date&quot;</span><span class="p">,</span>
+            <span class="n">more</span><span class="o">=</span><span class="n">more_str</span><span class="p">,</span>
+            <span class="n">order_by</span><span class="o">=</span><span class="n">order_by_str</span><span class="p">,</span>
+            <span class="n">parse_dates</span><span class="o">=</span><span class="n">parse_dates</span><span class="p">,</span>
+            <span class="n">rename_col</span><span class="o">=</span><span class="n">rename_col</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="c1"># 指数</span>
+    <span class="k">if</span> <span class="n">incl_index</span><span class="p">:</span>
+        <span class="n">df_ind</span> <span class="o">=</span> <span class="n">get_index</span><span class="p">(</span>
+            <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">df_ind</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df</span></div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<span class="k">def</span> <span class="nf">get_index</span><span class="p">(</span>
+    <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ch&quot;</span><span class="p">,</span>
+    <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">hk</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">HK</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="k">if</span> <span class="n">area</span> <span class="o">==</span> <span class="s2">&quot;ch&quot;</span><span class="p">:</span>  <span class="c1"># 查询dispatcher.py</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;symbol&quot;</span><span class="p">],</span> <span class="n">data</span><span class="o">=</span><span class="n">CH_INDEX_ALL</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># 查询数据库</span>
+        <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;prices&quot;</span><span class="p">,</span> <span class="n">hk</span><span class="o">=</span><span class="n">hk</span><span class="p">)</span>
+        <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;basics&quot;</span><span class="p">)</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;exchangeid&quot;</span><span class="p">]</span>
+        <span class="n">more_str</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;AND area = &#39;</span><span class="si">{area}</span><span class="s2">&#39;</span><span class="se">\n</span><span class="s2">AND sec_type = &#39;IND&#39;&quot;</span>
+        <span class="n">rename_col</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;exchangeid&quot;</span><span class="p">:</span> <span class="s2">&quot;exchange&quot;</span><span class="p">}</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span>
+            <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
+            <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span>
+            <span class="n">ivt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
+            <span class="n">more</span><span class="o">=</span><span class="n">more_str</span><span class="p">,</span>
+            <span class="n">rename_col</span><span class="o">=</span><span class="n">rename_col</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
 </pre></div>
 
            </div>

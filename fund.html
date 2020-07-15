@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>基础信息模块 lhdata.fund &mdash; lhdata 20.01.14 documentation</title>
+  <title>基础信息模块 lhdata.fund &mdash; lhdata 20.07.14 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                20.01.14
+                20.07.14
               </div>
             
           
@@ -90,6 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prices.html">行情模块 lhdata.prices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="features.html">特征模块 lhdata.features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features2.html">特征模块2 lhdata.features2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="techs.html">技术指标模块 lhdata.techs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calendar.html">日历模块 lhdata.calendar</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">基础信息模块 lhdata.fund</a><ul>
@@ -176,7 +177,7 @@
 <h2>获取股票列表<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lhdata.fund.get_symbols">
-<code class="descclassname">lhdata.fund.</code><code class="descname">get_symbols</code><span class="sig-paren">(</span><em>area: str = 'ch'</em>, <em>active: bool = True</em>, <em>type_: str = 'A'</em>, <em>board: str = None</em>, <em>order_by_symbol: bool = True</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>day: str = None</em>, <em>db_config: dict = None</em>, <em>tb_name: str = None</em>, <em>hk: bool = True</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/fund.html#get_symbols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.fund.get_symbols" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lhdata.fund.</code><code class="descname">get_symbols</code><span class="sig-paren">(</span><em>area: str = 'ch'</em>, <em>active: bool = True</em>, <em>pend: bool = False</em>, <em>type_: str = 'A'</em>, <em>board: str = None</em>, <em>incl_index: bool = False</em>, <em>order_by_symbol: bool = True</em>, <em>start: str = None</em>, <em>end: str = None</em>, <em>day: str = None</em>, <em>db_config: dict = None</em>, <em>tb_name: str = None</em>, <em>hk: bool = True</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/lhdata/fund.html#get_symbols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lhdata.fund.get_symbols" title="Permalink to this definition">¶</a></dt>
 <dd><p>获取某个市场所有的（外盘为订阅的）股票信息。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -187,6 +188,7 @@
 <li><strong>active</strong> – 是否正常交易。A股判断标准是退市日期为空，外盘通过market_status确认。</li>
 <li><strong>type</strong> – 品种代码, in [‘A’, ‘B’], None则包括A和B股。只对A股有效。</li>
 <li><strong>board</strong> – 板块代码, in [‘MAIN’(主板), ‘SME’(中小板), ‘GEM’(创业板), ‘STAR’(科创板)], None则所有版块。只对A股有效。</li>
+<li><strong>incl_index</strong> – 是否包含该市场的指数。</li>
 <li><strong>order_by_symbol</strong> – True -&gt; 按股票代码排序, False -&gt; 按上市日期排序。</li>
 <li><strong>start</strong> – 只返回该日期及之后上市的股票。None则不做限制。</li>
 <li><strong>end</strong> – 只返回该日期及之前上市的股票。None则不做限制。</li>

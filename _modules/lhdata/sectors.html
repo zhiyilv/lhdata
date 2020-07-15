@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lhdata.sectors &mdash; lhdata 20.01.14 documentation</title>
+  <title>lhdata.sectors &mdash; lhdata 20.07.14 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                20.01.14
+                20.07.14
               </div>
             
           
@@ -88,6 +88,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">QuickStart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../prices.html">行情模块 lhdata.prices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../features.html">特征模块 lhdata.features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../features2.html">特征模块2 lhdata.features2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../techs.html">技术指标模块 lhdata.techs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../calendar.html">日历模块 lhdata.calendar</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fund.html">基础信息模块 lhdata.fund</a></li>
@@ -178,23 +179,28 @@
 
 <span class="c1"># db_config_sectors = get_db_config(&#39;sectors&#39;)</span>
 <span class="n">sector_sys_map</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;gics&#39;</span><span class="p">:</span>       <span class="s1">&#39;INDUS1_CL&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;exchange&#39;</span><span class="p">:</span>   <span class="s1">&#39;INDUS2_CL&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;investoday&#39;</span><span class="p">:</span> <span class="s1">&#39;INDUS3_CL&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;swhy&#39;</span><span class="p">:</span>       <span class="s1">&#39;INDUS4_CL&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;citic&#39;</span><span class="p">:</span>      <span class="s1">&#39;INDUS5_CL&#39;</span>
+    <span class="s2">&quot;gics&quot;</span><span class="p">:</span> <span class="s2">&quot;INDUS1_CL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;exchange&quot;</span><span class="p">:</span> <span class="s2">&quot;INDUS2_CL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;investoday&quot;</span><span class="p">:</span> <span class="s2">&quot;INDUS3_CL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;swhy&quot;</span><span class="p">:</span> <span class="s2">&quot;INDUS4_CL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;citic&quot;</span><span class="p">:</span> <span class="s2">&quot;INDUS5_CL&quot;</span><span class="p">,</span>
 <span class="p">}</span>
-<span class="n">tb_symbol_indus</span> <span class="o">=</span> <span class="s1">&#39;[dbo].[ISSR_D_FACT]&#39;</span>  <span class="c1"># 股票和行业代码对应表</span>
-<span class="n">tb_indus_info</span> <span class="o">=</span> <span class="s1">&#39;[dbo].[ISSR_R_INDUS]&#39;</span>  <span class="c1"># 各体系行业分类信息表</span>
-<span class="n">tb_symbol_info</span> <span class="o">=</span> <span class="s1">&#39;[dbo].[SEC_D_FACT]&#39;</span>  <span class="c1"># 股票基本信息表</span>
+<span class="n">tb_symbol_indus</span> <span class="o">=</span> <span class="s2">&quot;[dbo].[ISSR_D_FACT]&quot;</span>  <span class="c1"># 股票和行业代码对应表</span>
+<span class="n">tb_indus_info</span> <span class="o">=</span> <span class="s2">&quot;[dbo].[ISSR_R_INDUS]&quot;</span>  <span class="c1"># 各体系行业分类信息表</span>
+<span class="n">tb_symbol_info</span> <span class="o">=</span> <span class="s2">&quot;[dbo].[SEC_D_FACT]&quot;</span>  <span class="c1"># 股票基本信息表</span>
 
 
 <span class="c1"># --------------</span>
 <span class="c1"># SINGLE PROCESS</span>
 <span class="c1"># --------------</span>
 <span class="nd">@pack_dict</span>
-<span class="k">def</span> <span class="nf">_get_sector</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">system</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                <span class="n">df_static</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">_get_sector</span><span class="p">(</span>
+    <span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">system</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">df_static</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    给定股票，查询所属行业。</span>
 
@@ -209,21 +215,24 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">system</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">area</span> <span class="o">=</span> <span class="n">decide_area</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">area</span> <span class="o">==</span> <span class="s1">&#39;ch&#39;</span><span class="p">:</span>
-            <span class="n">system</span> <span class="o">=</span> <span class="s1">&#39;swhy&#39;</span>
+        <span class="k">if</span> <span class="n">area</span> <span class="o">==</span> <span class="s2">&quot;ch&quot;</span><span class="p">:</span>
+            <span class="n">system</span> <span class="o">=</span> <span class="s2">&quot;swhy&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">system</span> <span class="o">=</span> <span class="s1">&#39;gics&#39;</span>
+            <span class="n">system</span> <span class="o">=</span> <span class="s2">&quot;gics&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">system</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">system</span> <span class="o">==</span> <span class="s1">&#39;swhy&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;swhy&quot;</span><span class="p">:</span>
         <span class="n">idu_cl</span> <span class="o">=</span> <span class="n">sector_sys_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
         <span class="n">symbol</span> <span class="o">=</span> <span class="n">symbol</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;ivt&#39;</span><span class="p">)</span>
+        <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;ivt&quot;</span><span class="p">)</span>
         <span class="n">con</span> <span class="o">=</span> <span class="n">pymssql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="o">**</span><span class="n">db_config</span><span class="p">)</span>
 
-        <span class="n">code_str</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;concat(left(</span><span class="si">{tb_symbol_indus}</span><span class="s2">.</span><span class="si">{idu_cl}</span><span class="s2">, {level * 2}), &#39;{&#39;0&#39; * (6 - level * 2)}&#39;)&quot;</span> \
-            <span class="k">if</span> <span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="k">else</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{tb_symbol_indus}</span><span class="s1">.</span><span class="si">{idu_cl}</span><span class="s1">&#39;</span>
+        <span class="n">code_str</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">f</span><span class="s2">&quot;concat(left(</span><span class="si">{tb_symbol_indus}</span><span class="s2">.</span><span class="si">{idu_cl}</span><span class="s2">, {level * 2}), &#39;{&#39;0&#39; * (6 - level * 2)}&#39;)&quot;</span>
+            <span class="k">if</span> <span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+            <span class="k">else</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{tb_symbol_indus}</span><span class="s2">.</span><span class="si">{idu_cl}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
 
         <span class="n">sql_string</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;SELECT </span><span class="si">{tb_symbol_info}</span><span class="s2">.SEC_CD as &#39;symbol&#39;, </span>
 <span class="s2">                                </span><span class="si">{tb_symbol_info}</span><span class="s2">.SEC_SNM as &#39;name&#39;, </span>
@@ -242,29 +251,31 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">sql_string</span><span class="o">=</span><span class="n">sql_string</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">con</span><span class="p">)</span>
-            <span class="n">df</span><span class="o">.</span><span class="n">symbol</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{x}</span><span class="s1"> CH Equity&#39;</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">symbol</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{x}</span><span class="s2"> CH Equity&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Error getting </span><span class="si">{system}</span><span class="s1"> sector for </span><span class="si">{symbol}</span><span class="s1"> :</span><span class="se">\n</span><span class="si">{e}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Error getting </span><span class="si">{system}</span><span class="s2"> sector for </span><span class="si">{symbol}</span><span class="s2"> :</span><span class="se">\n</span><span class="si">{e}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">level</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>  <span class="c1"># all levels</span>
             <span class="n">code</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">iat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">sector_table</span> <span class="o">=</span> <span class="n">get_sector_table</span><span class="p">(</span><span class="n">system</span><span class="o">=</span><span class="n">system</span><span class="p">,</span> <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">sector_table</span> <span class="o">=</span> <span class="n">get_sector_table</span><span class="p">(</span>
+                <span class="n">system</span><span class="o">=</span><span class="n">system</span><span class="p">,</span> <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
             <span class="n">df2</span> <span class="o">=</span> <span class="n">sector_table</span><span class="p">[</span><span class="n">sector_table</span><span class="o">.</span><span class="n">code</span> <span class="o">==</span> <span class="n">code</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">]],</span> <span class="n">df2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">[[</span><span class="s2">&quot;symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">]],</span> <span class="n">df2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">df</span>
 
-    <span class="k">elif</span> <span class="n">system</span> <span class="o">==</span> <span class="s1">&#39;gics&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;gics&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">df_static</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">df_static</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">static_dir</span><span class="p">,</span> <span class="s1">&#39;all_gics.csv&#39;</span><span class="p">))</span>
+            <span class="n">df_static</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">static_dir</span><span class="p">,</span> <span class="s2">&quot;all_gics.csv&quot;</span><span class="p">))</span>
             <span class="n">df_static</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">df_static</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
         <span class="n">df_symbol</span> <span class="o">=</span> <span class="n">df_static</span><span class="p">[</span><span class="n">df_static</span><span class="o">.</span><span class="n">symbol</span> <span class="o">==</span> <span class="n">symbol</span><span class="p">]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">df_symbol</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
             <span class="n">df_symbol</span> <span class="o">=</span> <span class="n">df_symbol</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">level</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
                 <span class="k">for</span> <span class="n">lv</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
-                    <span class="n">df_symbol</span><span class="p">[</span><span class="n">f</span><span class="s1">&#39;lv</span><span class="si">{lv}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_symbol</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[:</span><span class="n">lv</span> <span class="o">*</span> <span class="mi">2</span><span class="p">])</span>
+                    <span class="n">df_symbol</span><span class="p">[</span><span class="n">f</span><span class="s2">&quot;lv</span><span class="si">{lv}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_symbol</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[:</span> <span class="n">lv</span> <span class="o">*</span> <span class="mi">2</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">df_symbol</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">df_symbol</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[:</span><span class="n">level</span> <span class="o">*</span> <span class="mi">2</span><span class="p">])</span>
+                <span class="n">df_symbol</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">df_symbol</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[:</span> <span class="n">level</span> <span class="o">*</span> <span class="mi">2</span><span class="p">])</span>
 
         <span class="k">return</span> <span class="n">df_symbol</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -273,8 +284,13 @@
 
 
 <span class="nd">@pack_dict</span>
-<span class="k">def</span> <span class="nf">_get_sector_symbol</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">system</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                       <span class="n">df_static</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">_get_sector_symbol</span><span class="p">(</span>
+    <span class="n">code</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+    <span class="n">system</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">df_static</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    给定一个体系的行业代码，返回该行业涵盖的股票。</span>
 
@@ -287,21 +303,21 @@
 <span class="sd">    :return: DataFrame</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">code</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
-    <span class="n">area</span> <span class="o">=</span> <span class="n">area</span> <span class="ow">or</span> <span class="s1">&#39;ch&#39;</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">area</span> <span class="ow">or</span> <span class="s2">&quot;ch&quot;</span>
     <span class="k">if</span> <span class="n">system</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">system</span> <span class="o">=</span> <span class="s1">&#39;swhy&#39;</span> <span class="k">if</span> <span class="n">area</span> <span class="o">==</span> <span class="s1">&#39;ch&#39;</span> <span class="k">else</span> <span class="s1">&#39;gics&#39;</span>
+        <span class="n">system</span> <span class="o">=</span> <span class="s2">&quot;swhy&quot;</span> <span class="k">if</span> <span class="n">area</span> <span class="o">==</span> <span class="s2">&quot;ch&quot;</span> <span class="k">else</span> <span class="s2">&quot;gics&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">system</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="n">system</span> <span class="o">=</span> <span class="n">system</span> <span class="ow">or</span> <span class="s1">&#39;swhy&#39;</span>
+    <span class="n">system</span> <span class="o">=</span> <span class="n">system</span> <span class="ow">or</span> <span class="s2">&quot;swhy&quot;</span>
 
-    <span class="k">if</span> <span class="n">system</span> <span class="o">==</span> <span class="s1">&#39;swhy&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;swhy&quot;</span><span class="p">:</span>
         <span class="n">idu_cl</span> <span class="o">=</span> <span class="n">sector_sys_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
-        <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="s1">&#39;ivt&#39;</span><span class="p">)</span>
+        <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="s2">&quot;ivt&quot;</span><span class="p">)</span>
         <span class="n">con</span> <span class="o">=</span> <span class="n">pymssql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="o">**</span><span class="n">db_config</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">code</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;0000&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">code</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;0000&quot;</span><span class="p">):</span>
             <span class="n">code_str</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{tb_symbol_indus}</span><span class="s2">.INDUS4_CL LIKE &#39;</span><span class="si">{code[:2]}</span><span class="s2">____&#39;&quot;</span>
-        <span class="k">elif</span> <span class="n">code</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;00&#39;</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">code</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;00&quot;</span><span class="p">):</span>
             <span class="n">code_str</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{tb_symbol_indus}</span><span class="s2">.INDUS4_CL LIKE &#39;</span><span class="si">{code[:4]}</span><span class="s2">__&#39;&quot;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">code_str</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{tb_symbol_indus}</span><span class="s2">.INDUS4_CL = </span><span class="si">{code}</span><span class="s2">&quot;</span>
@@ -323,14 +339,14 @@
 <span class="s2">                            AND </span><span class="si">{code_str}</span><span class="s2">&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">sql_string</span><span class="o">=</span><span class="n">sql_string</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">con</span><span class="p">)</span>
-            <span class="n">df</span><span class="o">.</span><span class="n">symbol</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{x}</span><span class="s1"> CH Equity&#39;</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">symbol</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{x}</span><span class="s2"> CH Equity&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Error getting info for sector </span><span class="si">{code}</span><span class="s1">:</span><span class="se">\n</span><span class="si">{e}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Error getting info for sector </span><span class="si">{code}</span><span class="s2">:</span><span class="se">\n</span><span class="si">{e}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">df</span>
-    <span class="k">elif</span> <span class="n">system</span> <span class="o">==</span> <span class="s1">&#39;gics&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;gics&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">df_static</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">df_static</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">static_dir</span><span class="p">,</span> <span class="s1">&#39;all_gics.csv&#39;</span><span class="p">))</span>
+            <span class="n">df_static</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">static_dir</span><span class="p">,</span> <span class="s2">&quot;all_gics.csv&quot;</span><span class="p">))</span>
             <span class="n">df_static</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">df_static</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
         <span class="n">df_sector</span> <span class="o">=</span> <span class="n">df_static</span><span class="p">[</span><span class="n">df_static</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">code</span><span class="p">)]</span>
         <span class="k">if</span> <span class="n">area</span><span class="p">:</span>
@@ -343,17 +359,24 @@
 <span class="c1"># ----------------</span>
 <span class="c1"># PARALLEL VERSION</span>
 <span class="c1"># ----------------</span>
-<span class="n">_get_sector_p</span> <span class="o">=</span> <span class="n">shadow_split</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">_get_sector</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;symbol&#39;</span><span class="p">)</span>
-<span class="n">_get_sector_symbol_p</span> <span class="o">=</span> <span class="n">shadow_split</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">_get_sector_symbol</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;code&#39;</span><span class="p">)</span>
+<span class="n">_get_sector_p</span> <span class="o">=</span> <span class="n">shadow_split</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">_get_sector</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;symbol&quot;</span><span class="p">)</span>
+<span class="n">_get_sector_symbol_p</span> <span class="o">=</span> <span class="n">shadow_split</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">_get_sector_symbol</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;code&quot;</span><span class="p">)</span>
 
 
 <span class="c1"># ---------------</span>
 <span class="c1"># usable version</span>
 <span class="c1"># ---------------</span>
 
-<div class="viewcode-block" id="get_sector"><a class="viewcode-back" href="../../sectors.html#lhdata.sectors.get_sector">[docs]</a><span class="k">def</span> <span class="nf">get_sector</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span> <span class="n">system</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-               <span class="n">df_static</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-               <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+
+<div class="viewcode-block" id="get_sector"><a class="viewcode-back" href="../../sectors.html#lhdata.sectors.get_sector">[docs]</a><span class="k">def</span> <span class="nf">get_sector</span><span class="p">(</span>
+    <span class="n">symbol</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span>
+    <span class="n">system</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">df_static</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    给定股票，查询所属行业。</span>
 
@@ -371,18 +394,34 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;只支持查询 单支股票 或 股票列表 的所属行业，而symbol=&#39;</span><span class="si">{symbol}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">_get_sector</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">system</span><span class="o">=</span><span class="n">system</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span> <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">df_static</span><span class="o">=</span><span class="n">df_static</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_get_sector</span><span class="p">(</span>
+            <span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span>
+            <span class="n">system</span><span class="o">=</span><span class="n">system</span><span class="p">,</span>
+            <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span>
+            <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
+            <span class="n">df_static</span><span class="o">=</span><span class="n">df_static</span><span class="p">,</span>
+        <span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">_get_sector_p</span><span class="p">(</span><span class="n">item_list</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">system</span><span class="o">=</span><span class="n">system</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span> <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">df_static</span><span class="o">=</span><span class="n">df_static</span><span class="p">,</span>
-                         <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">_get_sector_p</span><span class="p">(</span>
+        <span class="n">item_list</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span>
+        <span class="n">system</span><span class="o">=</span><span class="n">system</span><span class="p">,</span>
+        <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span>
+        <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
+        <span class="n">df_static</span><span class="o">=</span><span class="n">df_static</span><span class="p">,</span>
+        <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="get_sector_table"><a class="viewcode-back" href="../../sectors.html#lhdata.sectors.get_sector_table">[docs]</a><span class="k">def</span> <span class="nf">get_sector_table</span><span class="p">(</span><span class="n">system</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">max_lv</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">transform</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-                     <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ch&#39;</span><span class="p">,</span>
-                     <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">static</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<div class="viewcode-block" id="get_sector_table"><a class="viewcode-back" href="../../sectors.html#lhdata.sectors.get_sector_table">[docs]</a><span class="k">def</span> <span class="nf">get_sector_table</span><span class="p">(</span>
+    <span class="n">system</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">max_lv</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">transform</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ch&quot;</span><span class="p">,</span>
+    <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tb_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">static</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    指定体系的行业分类代码表。由今日投资维护。</span>
 
@@ -397,14 +436,14 @@
 <span class="sd">    :return: DataFrame</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">system</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">system</span> <span class="o">=</span> <span class="s1">&#39;swhy&#39;</span> <span class="k">if</span> <span class="n">area</span> <span class="o">==</span> <span class="s1">&#39;ch&#39;</span> <span class="k">else</span> <span class="s1">&#39;gics&#39;</span>
+        <span class="n">system</span> <span class="o">=</span> <span class="s2">&quot;swhy&quot;</span> <span class="k">if</span> <span class="n">area</span> <span class="o">==</span> <span class="s2">&quot;ch&quot;</span> <span class="k">else</span> <span class="s2">&quot;gics&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">system</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
     <span class="n">df</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">static</span><span class="p">:</span>
-        <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="s1">&#39;ivt&#39;</span><span class="p">)</span>
-        <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;sector&#39;</span><span class="p">)</span>
+        <span class="n">db_config</span> <span class="o">=</span> <span class="n">db_config</span> <span class="ow">or</span> <span class="n">get_db_config</span><span class="p">(</span><span class="s2">&quot;ivt&quot;</span><span class="p">)</span>
+        <span class="n">tb_name</span> <span class="o">=</span> <span class="n">tb_name</span> <span class="ow">or</span> <span class="n">get_tb_name</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;sector&quot;</span><span class="p">)</span>
 
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;IDU_LEVEL&quot;</span><span class="p">,</span> <span class="s2">&quot;INDUS_CL&quot;</span><span class="p">,</span> <span class="s2">&quot;F0010&quot;</span><span class="p">,</span> <span class="s2">&quot;F0030&quot;</span><span class="p">,</span> <span class="s2">&quot;RMRK&quot;</span><span class="p">,</span> <span class="s2">&quot;UPDT_TM&quot;</span><span class="p">]</span>
 
@@ -412,24 +451,32 @@
         <span class="n">more_str</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;AND IDU_CL = &#39;</span><span class="si">{idu_cl}</span><span class="s2">&#39;&quot;</span>
 
         <span class="n">rename_col</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s1">&#39;IDU_LEVEL&#39;</span><span class="p">:</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;UPDT_TM&#39;</span><span class="p">:</span>   <span class="s1">&#39;updatetime&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;INDUS_CL&#39;</span><span class="p">:</span>  <span class="s1">&#39;code&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;F0010&#39;</span><span class="p">:</span>     <span class="s1">&#39;sector&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;F0030&#39;</span><span class="p">:</span>     <span class="s1">&#39;sector_eng&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;RMRK&#39;</span><span class="p">:</span>      <span class="s1">&#39;system&#39;</span><span class="p">}</span>
+            <span class="s2">&quot;IDU_LEVEL&quot;</span><span class="p">:</span> <span class="s2">&quot;level&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;UPDT_TM&quot;</span><span class="p">:</span> <span class="s2">&quot;updatetime&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;INDUS_CL&quot;</span><span class="p">:</span> <span class="s2">&quot;code&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;F0010&quot;</span><span class="p">:</span> <span class="s2">&quot;sector&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;F0030&quot;</span><span class="p">:</span> <span class="s2">&quot;sector_eng&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;RMRK&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span><span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span> <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span> <span class="n">ivt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                            <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span> <span class="n">more</span><span class="o">=</span><span class="n">more_str</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;INDUS_CL&#39;</span><span class="p">,</span>
-                            <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;UPDT_TM&#39;</span><span class="p">],</span> <span class="n">rename_col</span><span class="o">=</span><span class="n">rename_col</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">get_fields</span><span class="p">(</span>
+                <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
+                <span class="n">tb_name</span><span class="o">=</span><span class="n">tb_name</span><span class="p">,</span>
+                <span class="n">ivt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
+                <span class="n">more</span><span class="o">=</span><span class="n">more_str</span><span class="p">,</span>
+                <span class="n">order_by</span><span class="o">=</span><span class="s2">&quot;INDUS_CL&quot;</span><span class="p">,</span>
+                <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;UPDT_TM&quot;</span><span class="p">],</span>
+                <span class="n">rename_col</span><span class="o">=</span><span class="n">rename_col</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Error getting sector table of </span><span class="si">{system}</span><span class="s1"> from database </span><span class="si">{tb_name}</span><span class="s1">.&#39;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Try loading from stored version...&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Error getting sector table of </span><span class="si">{system}</span><span class="s2"> from database </span><span class="si">{tb_name}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Try loading from stored version...&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">fp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">static_dir</span><span class="p">,</span> <span class="n">f</span><span class="s1">&#39;tb_</span><span class="si">{system}</span><span class="s1">.csv&#39;</span><span class="p">)</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;updatetime&#39;</span><span class="p">])</span>
+        <span class="n">fp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">static_dir</span><span class="p">,</span> <span class="n">f</span><span class="s2">&quot;tb_</span><span class="si">{system}</span><span class="s2">.csv&quot;</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;updatetime&quot;</span><span class="p">])</span>
         <span class="n">df</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">max_lv</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -441,10 +488,10 @@
 
 
 <span class="k">def</span> <span class="nf">__code2high_lv</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lv</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">system</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">system</span> <span class="o">==</span> <span class="s1">&#39;swhy&#39;</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">code</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;0000&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;swhy&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">code</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;0000&quot;</span><span class="p">):</span>
             <span class="n">cur_lv</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">elif</span> <span class="n">code</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;00&#39;</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">code</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;00&quot;</span><span class="p">):</span>
             <span class="n">cur_lv</span> <span class="o">=</span> <span class="mi">2</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">cur_lv</span> <span class="o">=</span> <span class="mi">3</span>
@@ -453,18 +500,20 @@
             <span class="k">return</span> <span class="n">code</span>
 
         <span class="k">if</span> <span class="n">lv</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{code[:2]}</span><span class="s1">0000&#39;</span>
+            <span class="k">return</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{code[:2]}</span><span class="s2">0000&quot;</span>
         <span class="k">if</span> <span class="n">lv</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{code[:4]}</span><span class="s1">00&#39;</span>
+            <span class="k">return</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{code[:4]}</span><span class="s2">00&quot;</span>
 
-    <span class="k">if</span> <span class="n">system</span> <span class="o">==</span> <span class="s1">&#39;gics&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;gics&quot;</span><span class="p">:</span>
         <span class="n">cur_lv</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">code</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
         <span class="k">if</span> <span class="n">cur_lv</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">cur_lv</span> <span class="o">&lt;=</span> <span class="n">lv</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">code</span>
-        <span class="k">return</span> <span class="n">code</span><span class="p">[:</span><span class="n">lv</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">code</span><span class="p">[:</span> <span class="n">lv</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span>
 
 
-<span class="k">def</span> <span class="nf">_transform_sector_table</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">system</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lv</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">_transform_sector_table</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">system</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lv</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    整理下载好的行业分类表</span>
 
@@ -475,17 +524,29 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">lv</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">lv</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">level</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-    <span class="n">df_lv</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">lv</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="s1">&#39;sector&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;sector&#39;</span><span class="p">:</span> <span class="n">f</span><span class="s1">&#39;lv</span><span class="si">{lv}</span><span class="s1">&#39;</span><span class="p">})</span>
+    <span class="n">df_lv</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;level&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">lv</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;code&quot;</span><span class="p">,</span> <span class="s2">&quot;sector&quot;</span><span class="p">,</span> <span class="s2">&quot;system&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;sector&quot;</span><span class="p">:</span> <span class="n">f</span><span class="s2">&quot;lv</span><span class="si">{lv}</span><span class="s2">&quot;</span><span class="p">}</span>
+    <span class="p">)</span>
     <span class="k">for</span> <span class="n">lv</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lv</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">df_lv_temp</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">lv</span><span class="p">]</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;code&#39;</span><span class="p">)</span>
-        <span class="n">df_lv</span><span class="p">[</span><span class="n">f</span><span class="s1">&#39;lv</span><span class="si">{lv}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_lv</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">df_lv_temp</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">__code2high_lv</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">lv</span><span class="p">,</span> <span class="n">system</span><span class="p">),</span> <span class="s1">&#39;sector&#39;</span><span class="p">])</span>
-    <span class="n">df_lv</span> <span class="o">=</span> <span class="n">df_lv</span><span class="p">[[</span><span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="o">*</span><span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df_lv</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;lv&#39;</span><span class="p">)],</span> <span class="s1">&#39;system&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">df_lv_temp</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;level&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">lv</span><span class="p">]</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">)</span>
+        <span class="n">df_lv</span><span class="p">[</span><span class="n">f</span><span class="s2">&quot;lv</span><span class="si">{lv}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_lv</span><span class="p">[</span><span class="s2">&quot;code&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">df_lv_temp</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">__code2high_lv</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">lv</span><span class="p">,</span> <span class="n">system</span><span class="p">),</span> <span class="s2">&quot;sector&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+    <span class="n">df_lv</span> <span class="o">=</span> <span class="n">df_lv</span><span class="p">[</span>
+        <span class="p">[</span><span class="s2">&quot;code&quot;</span><span class="p">,</span> <span class="o">*</span><span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df_lv</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;lv&quot;</span><span class="p">)],</span> <span class="s2">&quot;system&quot;</span><span class="p">]</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df_lv</span>
 
 
-<div class="viewcode-block" id="get_sector_symbol"><a class="viewcode-back" href="../../sectors.html#lhdata.sectors.get_sector_symbol">[docs]</a><span class="k">def</span> <span class="nf">get_sector_symbol</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span> <span class="n">system</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                      <span class="n">df_static</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                      <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<div class="viewcode-block" id="get_sector_symbol"><a class="viewcode-back" href="../../sectors.html#lhdata.sectors.get_sector_symbol">[docs]</a><span class="k">def</span> <span class="nf">get_sector_symbol</span><span class="p">(</span>
+    <span class="n">code</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span>
+    <span class="n">system</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">db_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">df_static</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">area</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    给定一个体系的行业代码，返回该行业涵盖的股票。</span>
 
@@ -500,12 +561,23 @@
 <span class="sd">    :return: DataFrame，或 DataFrame list</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">_get_sector_symbol</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">system</span><span class="o">=</span><span class="n">system</span><span class="p">,</span> <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
-                                  <span class="n">df_static</span><span class="o">=</span><span class="n">df_static</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_get_sector_symbol</span><span class="p">(</span>
+            <span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">,</span>
+            <span class="n">system</span><span class="o">=</span><span class="n">system</span><span class="p">,</span>
+            <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
+            <span class="n">df_static</span><span class="o">=</span><span class="n">df_static</span><span class="p">,</span>
+            <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span>
+        <span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">_get_sector_symbol_p</span><span class="p">(</span><span class="n">item_list</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">system</span><span class="o">=</span><span class="n">system</span><span class="p">,</span> <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
-                                <span class="n">df_static</span><span class="o">=</span><span class="n">df_static</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span>
-                                <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">_get_sector_symbol_p</span><span class="p">(</span>
+        <span class="n">item_list</span><span class="o">=</span><span class="n">code</span><span class="p">,</span>
+        <span class="n">system</span><span class="o">=</span><span class="n">system</span><span class="p">,</span>
+        <span class="n">db_config</span><span class="o">=</span><span class="n">db_config</span><span class="p">,</span>
+        <span class="n">df_static</span><span class="o">=</span><span class="n">df_static</span><span class="p">,</span>
+        <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span>
+        <span class="n">progress</span><span class="o">=</span><span class="n">progress</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span></div>
 </pre></div>
 
            </div>
