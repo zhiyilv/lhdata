@@ -7,11 +7,11 @@
 
 </head>
 <body>
-    <div id="11443967cd7048a9b070df05ad9104d2" class="chart-container" style="width:1800px; height:900px;"></div>
+    <div id="8a0e5f684c7f43a4a643bd9cf60d6162" class="chart-container" style="width:1800px; height:900px;"></div>
     <script>
-        var chart_11443967cd7048a9b070df05ad9104d2 = echarts.init(
-            document.getElementById('11443967cd7048a9b070df05ad9104d2'), 'white', {renderer: 'canvas'});
-        var option_11443967cd7048a9b070df05ad9104d2 = {
+        var chart_8a0e5f684c7f43a4a643bd9cf60d6162 = echarts.init(
+            document.getElementById('8a0e5f684c7f43a4a643bd9cf60d6162'), 'white', {renderer: 'canvas'});
+        var option_8a0e5f684c7f43a4a643bd9cf60d6162 = {
     "animation": true,
     "animationThreshold": 2000,
     "animationDuration": 1000,
@@ -17104,7 +17104,7 @@
         {
             "type": "bar",
             "name": "area1",
-            "yAxisIndex": 2,
+            "yAxisIndex": 3,
             "legendHoverLink": true,
             "data": [
                 null,
@@ -21387,7 +21387,7 @@
         {
             "type": "bar",
             "name": "area2",
-            "yAxisIndex": 2,
+            "yAxisIndex": 3,
             "legendHoverLink": true,
             "data": [
                 null,
@@ -77191,7 +77191,7 @@
             "type": "line",
             "name": "cum_area1",
             "connectNulls": false,
-            "yAxisIndex": 2,
+            "yAxisIndex": 3,
             "symbolSize": 4,
             "showSymbol": false,
             "smooth": false,
@@ -98620,7 +98620,7 @@
         },
         {
             "name": "price",
-            "show": true,
+            "show": false,
             "scale": true,
             "nameLocation": "end",
             "nameGap": 15,
@@ -98641,7 +98641,31 @@
             }
         },
         {
-            "name": "area",
+            "name": "cum_area2",
+            "show": true,
+            "scale": false,
+            "nameLocation": "end",
+            "nameGap": 15,
+            "interval": 5,
+            "gridIndex": 0,
+            "inverse": false,
+            "offset": 0,
+            "splitNumber": 5,
+            "min": 0,
+            "max": 100,
+            "minInterval": 0,
+            "splitLine": {
+                "show": false,
+                "lineStyle": {
+                    "show": true,
+                    "width": 1,
+                    "opacity": 1,
+                    "curveness": 0,
+                    "type": "solid"
+                }
+            }
+        },
+        {
             "show": true,
             "scale": false,
             "nameLocation": "end",
@@ -98666,7 +98690,7 @@
     "title": [
         {
             "text": "600031",
-            "subtext": "2003-11-21~2021-08-09",
+            "subtext": "2003-11-21~",
             "padding": 5,
             "itemGap": 10
         }
@@ -98694,7 +98718,7 @@
         }
     ]
 };
-        chart_11443967cd7048a9b070df05ad9104d2.setOption(option_11443967cd7048a9b070df05ad9104d2);
+        chart_8a0e5f684c7f43a4a643bd9cf60d6162.setOption(option_8a0e5f684c7f43a4a643bd9cf60d6162);
     </script>
 </body>
 </html>

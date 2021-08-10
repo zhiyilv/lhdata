@@ -7,11 +7,11 @@
 
 </head>
 <body>
-    <div id="4210e4396c3944808e32eab28c073c06" class="chart-container" style="width:1800px; height:900px;"></div>
+    <div id="75dc05e9d0d640ad8621d2311c1d2e2f" class="chart-container" style="width:1800px; height:900px;"></div>
     <script>
-        var chart_4210e4396c3944808e32eab28c073c06 = echarts.init(
-            document.getElementById('4210e4396c3944808e32eab28c073c06'), 'white', {renderer: 'canvas'});
-        var option_4210e4396c3944808e32eab28c073c06 = {
+        var chart_75dc05e9d0d640ad8621d2311c1d2e2f = echarts.init(
+            document.getElementById('75dc05e9d0d640ad8621d2311c1d2e2f'), 'white', {renderer: 'canvas'});
+        var option_75dc05e9d0d640ad8621d2311c1d2e2f = {
     "animation": true,
     "animationThreshold": 2000,
     "animationDuration": 1000,
@@ -15436,7 +15436,7 @@
         {
             "type": "bar",
             "name": "area1",
-            "yAxisIndex": 2,
+            "yAxisIndex": 3,
             "legendHoverLink": true,
             "data": [
                 null,
@@ -19302,7 +19302,7 @@
         {
             "type": "bar",
             "name": "area2",
-            "yAxisIndex": 2,
+            "yAxisIndex": 3,
             "legendHoverLink": true,
             "data": [
                 null,
@@ -69609,7 +69609,7 @@
             "type": "line",
             "name": "cum_area1",
             "connectNulls": false,
-            "yAxisIndex": 2,
+            "yAxisIndex": 3,
             "symbolSize": 4,
             "showSymbol": false,
             "smooth": false,
@@ -88953,7 +88953,7 @@
         },
         {
             "name": "price",
-            "show": true,
+            "show": false,
             "scale": true,
             "nameLocation": "end",
             "nameGap": 15,
@@ -88974,7 +88974,31 @@
             }
         },
         {
-            "name": "area",
+            "name": "cum_area2",
+            "show": true,
+            "scale": false,
+            "nameLocation": "end",
+            "nameGap": 15,
+            "interval": 5,
+            "gridIndex": 0,
+            "inverse": false,
+            "offset": 0,
+            "splitNumber": 5,
+            "min": 0,
+            "max": 100,
+            "minInterval": 0,
+            "splitLine": {
+                "show": false,
+                "lineStyle": {
+                    "show": true,
+                    "width": 1,
+                    "opacity": 1,
+                    "curveness": 0,
+                    "type": "solid"
+                }
+            }
+        },
+        {
             "show": true,
             "scale": false,
             "nameLocation": "end",
@@ -88999,7 +89023,7 @@
     "title": [
         {
             "text": "SHSZ300",
-            "subtext": "2005-10-28~2021-08-09",
+            "subtext": "2005-10-28~",
             "padding": 5,
             "itemGap": 10
         }
@@ -89027,7 +89051,7 @@
         }
     ]
 };
-        chart_4210e4396c3944808e32eab28c073c06.setOption(option_4210e4396c3944808e32eab28c073c06);
+        chart_75dc05e9d0d640ad8621d2311c1d2e2f.setOption(option_75dc05e9d0d640ad8621d2311c1d2e2f);
     </script>
 </body>
 </html>
